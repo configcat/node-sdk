@@ -2,6 +2,7 @@
 ConfigCat is a cloud based configuration as a service. It integrates with your apps, backends, websites, and other programs, so you can configure them through this website even after they are deployed.
 https://configcat.com  
 
+[![Build Status](https://travis-ci.org/configcat/node-sdk.svg?branch=master)](https://travis-ci.org/configcat/node-sdk)\
 [![NPM](https://nodei.co/npm/configcat-client.png)](https://nodei.co/npm/configcat-client/)
 
 ## Getting Started
