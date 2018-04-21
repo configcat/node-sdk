@@ -22,8 +22,8 @@ var client = configcat.createClient("#YOUR-PROJECT-SECRET#");
 ```
  4. Get your config value:
 ```javascript
-client.getValue("isMyAwesomeFeatureEnabled", false, (n) => {
-    if(isMyAwesomeFeatureEnabled) {
+client.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
+    if(value) {
         //show your awesome feature to the world!
     }
 });
