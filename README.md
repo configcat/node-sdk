@@ -11,14 +11,14 @@ https://configcat.com
  ```PowerShell
   npm i configcat-client
  ```
- 2. Get your Project secret from [configcat.com](https://configcat.com) portal:
-![ProjectSecret](https://raw.githubusercontent.com/ConfigCat/.net-sdk/master/media/readme02.png  "ProjectSecret")
+ 2. Get your Api Key from [configcat.com](https://configcat.com) portal:
+![API-KEY](https://raw.githubusercontent.com/ConfigCat/.net-sdk/master/media/readme02.png  "API-KEY")
 
  3. Create a **ConfigCatClient** instance:
 ```javascript
 var configcat = require("configcat");
 
-var client = configcat.createClient("#YOUR-PROJECT-SECRET#");
+var client = configcat.createClient("#YOUR-API-KEY#");
 ```
  4. Get your config value:
 ```javascript
@@ -66,7 +66,7 @@ var config = {
     "cacheTimeToLiveSeconds": 600
 };
 
-var client = configcat.createClientWithLazyLoad("#YOUR-PROJECT-SECRET#", config);
+var client = configcat.createClientWithLazyLoad("#YOUR-API-KEY#", config);
 ```
 ### Example - OnConfigurationChanged 
 In Auto polling mode you can subscribe an event to get notification about changes. We use "events" package to support event handling in our package.
@@ -80,7 +80,7 @@ var config = {
 
 config.configChanged.on(configcat.CONFIG_CHANGED_EVENT, () => console.log("config changed, update UI!"));
 
-var client = configcat.createClientWithAutoPoll("#YOUR-PROJECT-SECRET#", config);
+var client = configcat.createClientWithAutoPoll("#YOUR-API-KEY#", config);
 ```
 
 ## Members
