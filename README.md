@@ -54,7 +54,8 @@ Configuration parameters are different in each mode:
 | PropertyName        | Description           | Default  |
 | --- | --- | --- |
 | ```pollIntervalSeconds ```      | Polling interval in seconds.|   60 | 
-| ```maxInitWaitTimeSeconds```      | Maximum waiting time between the client initialization and the first config acquisition in seconds.|   5 |
+| ```maxInitWaitTimeSeconds```      | Maximum waiting time between the client initialization and the first config acquisition in seconds|   5 |
+| ```configChanged```      | event accessor to get notification about configuration changes |   - |
 ### Lazy loading
 | PropertyName        | Description           | Default  |
 | --- | --- | --- | 
@@ -68,7 +69,7 @@ var config = {
 
 var client = configcat.createClientWithLazyLoad("#YOUR-API-KEY#", config);
 ```
-### Example - OnConfigurationChanged 
+### Example - configChanged 
 In Auto polling mode you can subscribe an event to get notification about changes. We use "events" package to support event handling in our package.
 
 ``` javascript
