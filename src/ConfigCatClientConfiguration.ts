@@ -19,9 +19,9 @@ export abstract class ConfigurationBase {
         }
     }
 
-    getUrl(projectSecret: string): string {
-        if (projectSecret) {
-            return "https://cdn.betterconfig.com/configuration-files/" + projectSecret + "/config.json";
+    getUrl(apiKey: string): string {
+        if (apiKey) {
+            return "https://cdn.betterconfig.com/configuration-files/" + apiKey + "/config.json";
         }
 
         throw new Error("Invalid project secret");

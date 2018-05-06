@@ -21,23 +21,23 @@ export interface IConfigCatClient {
 }
 
 export class ConfigCatClientImpl implements IConfigCatClient {
-    private projectSecret: string;
+    private apiKey: string;
     private configService: IConfigService;
 
-    constructor(projectSecret: string, configuration?: AutoPollConfiguration | ManualPollConfiguration | LazyLoadConfiguration) {
+    constructor(apiKey: string, configuration?: AutoPollConfiguration | ManualPollConfiguration | LazyLoadConfiguration) {
 
-        if (!projectSecret) {
-            throw new Error("Invalid 'projectSecret' value");
+        if (!apiKey) {
+            throw new Error("Invalid 'apiKey' value");
         }
 
-        this.projectSecret = projectSecret;
+        this.apiKey = apiKey;
 
         if (configuration && configuration instanceof LazyLoadConfiguration) {
 
             let lc: LazyLoadConfiguration = <LazyLoadConfiguration>configuration;
 
             this.configService = new LazyLoadConfigSerivce(
-                new HttpConfigFetcher(lc.getUrl(projectSecret), "l-" + VERSION),
+                new HttpConfigFetcher(lc.getUrl(apiKey), "l-" + VERSION),
                 new InMemoryCache(),
                 lc);
 
@@ -46,7 +46,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             let mc: ManualPollConfiguration = <ManualPollConfiguration>configuration;
 
             this.configService = new ManualPollService(
-                new HttpConfigFetcher(mc.getUrl(projectSecret), "m-" + VERSION),
+                new HttpConfigFetcher(mc.getUrl(apiKey), "m-" + VERSION),
                 new InMemoryCache(),
                 mc);
 
@@ -59,7 +59,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             }
 
             let autoConfigService: AutoPollConfigService = new AutoPollConfigService(
-                new HttpConfigFetcher(ac.getUrl(projectSecret), "a-" + VERSION),
+                new HttpConfigFetcher(ac.getUrl(apiKey), "a-" + VERSION),
                 new InMemoryCache(),
                 ac);
 
