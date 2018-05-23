@@ -16,7 +16,7 @@ https://configcat.com
 
  3. Create a **ConfigCatClient** instance:
 ```javascript
-var configcat = require("configcat");
+var configcat = require("configcat-client");
 
 var client = configcat.createClient("#YOUR-API-KEY#");
 ```

@@ -1,0 +1,11 @@
+{
+  "name": "consoleapplication",
+  "version": "1.0.0",
+  "description": "Sample application for ConfigCat SDK",
+  "main": "index.js",  
+  "author": "configcat",
+  "license": "MIT",
+  "dependencies": {
+    "configcat-client": "0.0.2"
+  }
+}
