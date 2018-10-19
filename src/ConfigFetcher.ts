@@ -44,11 +44,12 @@ export class HttpConfigFetcher implements IConfigFetcher {
                 callback(new ProjectConfig(new Date().getTime(), body, response.headers.etag));
 
             } else {
-                callback(lastProjectConfig);
 
                 if (err) {
                     this.logger.error("httprequest error - " + err);
                 }
+
+                callback(lastProjectConfig);
             }
         });
     }

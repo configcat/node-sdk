@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require ts-node/register tests/**/*.ts --exit",
     "build": "tsc",
     "prepare": "npm run build"
   },
@@ -24,10 +24,16 @@
     "winston": "^2.4.1"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
+    "gulp-mocha": "^6.0.0",
     "gulp-typescript": "^4.0.2",
-    "typescript": "^2.8.1"
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^2.9.2"
   },
   "repository": {
     "type": "git",

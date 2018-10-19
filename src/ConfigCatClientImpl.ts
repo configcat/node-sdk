@@ -5,6 +5,7 @@ import { AutoPollConfigService } from "./AutoPollConfigService";
 import { InMemoryCache } from "./Cache";
 import { LazyLoadConfigSerivce } from "./LazyLoadConfigService";
 import { ManualPollService } from "./ManualPollService";
+import { User } from "./RolloutEvaluator";
 
 declare const require: any;
 
@@ -13,8 +14,9 @@ export const CONFIG_CHANGE_EVENT_NAME: string = "changed";
 
 /** Client for ConfigCat platform */
 export interface IConfigCatClient {
+
     /** Return a value of the key (Key for programs) */
-    getValue(key: string, defaultValue: any, callback: (value: any) => void): void;
+    getValue(key: string, defaultValue: any, user: User, callback: (value: any) => void): void;
 
     /** Refresh the configuration */
     forceRefresh(callback: () => void): void;
@@ -67,7 +69,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
         }
     }
 
-    getValue(key: string, defaultValue: any, callback: (value: any) => void): void {
+    getValue(key: string, defaultValue: any, user: User, callback: (value: any) => void): void {
 
         this.configService.getConfig((value) => {
             var result: any = defaultValue;
