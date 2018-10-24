@@ -39,7 +39,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             let lc: LazyLoadConfiguration = <LazyLoadConfiguration>configuration;
 
             this.configService = new LazyLoadConfigSerivce(
-                new HttpConfigFetcher(lc.getUrl(apiKey), "l-" + VERSION),
+                new HttpConfigFetcher(lc.getUrl(apiKey), "l-" + VERSION, lc.logger),
                 new InMemoryCache(),
                 lc);
 
@@ -48,7 +48,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             let mc: ManualPollConfiguration = <ManualPollConfiguration>configuration;
 
             this.configService = new ManualPollService(
-                new HttpConfigFetcher(mc.getUrl(apiKey), "m-" + VERSION),
+                new HttpConfigFetcher(mc.getUrl(apiKey), "m-" + VERSION, mc.logger),
                 new InMemoryCache(),
                 mc);
 
@@ -61,7 +61,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             }
 
             let autoConfigService: AutoPollConfigService = new AutoPollConfigService(
-                new HttpConfigFetcher(ac.getUrl(apiKey), "a-" + VERSION),
+                new HttpConfigFetcher(ac.getUrl(apiKey), "a-" + VERSION, ac.logger),
                 new InMemoryCache(),
                 ac);
 

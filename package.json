@@ -21,11 +21,12 @@
   "dependencies": {
     "events": "^2.0.0",
     "request": "^2.85.0",
-    "winston": "^2.4.1"
+    "winston": "^2.4.2"
   },
   "devDependencies": {
     "@types/chai": "^4.1.6",
     "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.0",
     "chai": "^4.2.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",

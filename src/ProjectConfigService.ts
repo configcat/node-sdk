@@ -1,4 +1,3 @@
-import { EventEmitter } from "events";
 import IConfigFetcher from "./ConfigFetcher";
 import ICache from "./Cache";
 import * as winston from "winston";
@@ -28,7 +27,7 @@ export interface IConfigService {
 export abstract class ConfigServiceBase {
     protected configFetcher: IConfigFetcher;
     protected cache: ICache;
-    protected logger: winston.logger;
+    protected logger: winston.LoggerInstance;
 
     constructor(configFetcher: IConfigFetcher, cache: ICache, baseConfig: ConfigurationBase) {
 

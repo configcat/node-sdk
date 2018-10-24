@@ -6,7 +6,7 @@ var tsProject = ts.createProject("tsconfig.json");
 var mocha = require('gulp-mocha');
 
 // clean
-gulp.task("clean:lib", function() {
+gulp.task("clean", function() {
  return del(['lib/**/*']);
 });
 
@@ -18,12 +18,12 @@ gulp.task("tsc", function () {
 });
 
 // test
-gulp.task('test', ['clean:lib', "tsc"], function () {
+gulp.task('test', ['clean', "tsc"], function () {
 	gulp.src(['tests/**/*.ts'], {read: false})
 		.pipe(mocha({reporter: 'list', exit: true, require: 'ts-node/register'}))
 		.on('error', console.error)
 });
 
 // adding default tasks as clean and build
-gulp.task('default', ['clean:lib','tsc'], function () {
+gulp.task('default', ['clean','tsc'], function () {
 });

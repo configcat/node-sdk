@@ -3,7 +3,7 @@ import * as EventEmitter from "events";
 
 export abstract class ConfigurationBase {
 
-    logger: any;
+    logger: winston.LoggerInstance;
 
     constructor() {
         this.logger = new winston.Logger({
@@ -15,7 +15,7 @@ export abstract class ConfigurationBase {
     protected validate(): void {
 
         if (!this.logger) {
-            throw new Error("Invalid 'logger'");
+            throw new Error("Invalid 'logger' instance");
         }
     }
 

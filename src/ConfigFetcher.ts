@@ -2,7 +2,6 @@ import * as httprequest from "request";
 import * as winston from "winston";
 import { ProjectConfig } from "./ProjectConfigService";
 
-
 declare const Promise: any;
 
 export interface IConfigFetcher {
@@ -15,7 +14,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
     productVersion: string;
     logger: any;
 
-    constructor(url: string, productVersion: string, logger?: any) {
+    constructor(url: string, productVersion: string, logger?: winston.LoggerInstance) {
         this.url = url;
         this.productVersion = productVersion;
         this.logger = logger ? logger : winston;

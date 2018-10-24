@@ -23,9 +23,9 @@ export class User {
 
 export class RolloutEvaluator implements IRolloutEvaluator {
 
-    private logger: winston.Logger;
+    private logger: winston.LoggerInstance;
 
-    constructor(logger: winston.Logger) {
+    constructor(logger: winston.LoggerInstance) {
         this.logger = logger;
     }
 
@@ -68,8 +68,9 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
             switch (rule.Comparator) {
                 case 0:
-                    if (rule.ComparisonValue.split(",").includes())
+                    if (rule.ComparisonValue.split(",").includes()) {
                         break;
+                    }
 
                 default:
                     break;
