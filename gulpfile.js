@@ -18,12 +18,16 @@ gulp.task("tsc", function () {
 });
 
 // test
-gulp.task('test', ['clean', "tsc"], function () {
-	gulp.src(['tests/**/*.ts'], {read: false})
-		.pipe(mocha({reporter: 'list', exit: true, require: 'ts-node/register'}))
+gulp.task("test", ["clean", "tsc", "test-only"], function () {	
+});
+
+// test-only
+gulp.task("test-only", function () {
+	gulp.src(["tests/**/*.ts"], {read: false})
+		.pipe(mocha({reporter: "list", exit: true, require: "ts-node/register"}))
 		.on('error', console.error)
 });
 
 // adding default tasks as clean and build
-gulp.task('default', ['clean','tsc'], function () {
+gulp.task("default", ["clean","tsc"], function () {
 });

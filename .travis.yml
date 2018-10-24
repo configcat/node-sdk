@@ -3,7 +3,7 @@ node_js:
  - "node"
 before_script:
  - npm install -g gulp-cli
-script: gulp
+script: gulp test
 notifications:
   email:
     on_success: never
