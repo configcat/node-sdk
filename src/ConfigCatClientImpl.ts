@@ -2,7 +2,7 @@ import { IConfigFetcher, HttpConfigFetcher } from "./ConfigFetcher";
 import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
 import { IConfigService, ProjectConfig } from "./ProjectConfigService";
 import { AutoPollConfigService } from "./AutoPollConfigService";
-import { InMemoryCache } from "./Cache";
+import { ICache, InMemoryCache } from "./Cache";
 import { LazyLoadConfigSerivce } from "./LazyLoadConfigService";
 import { ManualPollService } from "./ManualPollService";
 import { User } from "./RolloutEvaluator";
@@ -26,7 +26,11 @@ export class ConfigCatClientImpl implements IConfigCatClient {
     private apiKey: string;
     private configService: IConfigService;
 
-    constructor(apiKey: string, configuration?: AutoPollConfiguration | ManualPollConfiguration | LazyLoadConfiguration) {
+    constructor(
+        apiKey: string,
+        configuration?: AutoPollConfiguration | ManualPollConfiguration | LazyLoadConfiguration,
+        configFetcher?: IConfigFetcher,
+        cache?: ICache) {
 
         if (!apiKey) {
             throw new Error("Invalid 'apiKey' value");
@@ -39,8 +43,8 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             let lc: LazyLoadConfiguration = <LazyLoadConfiguration>configuration;
 
             this.configService = new LazyLoadConfigSerivce(
-                new HttpConfigFetcher(lc.getUrl(apiKey), "l-" + VERSION, lc.logger),
-                new InMemoryCache(),
+                configFetcher ? configFetcher : new HttpConfigFetcher(lc.getUrl(apiKey), "l-" + VERSION, lc.logger),
+                cache ? cache : new InMemoryCache(),
                 lc);
 
         } else if (configuration && configuration instanceof ManualPollConfiguration) {
@@ -48,8 +52,8 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             let mc: ManualPollConfiguration = <ManualPollConfiguration>configuration;
 
             this.configService = new ManualPollService(
-                new HttpConfigFetcher(mc.getUrl(apiKey), "m-" + VERSION, mc.logger),
-                new InMemoryCache(),
+                configFetcher ? configFetcher : new HttpConfigFetcher(mc.getUrl(apiKey), "m-" + VERSION, mc.logger),
+                cache ? cache : new InMemoryCache(),
                 mc);
 
         } else {
@@ -61,8 +65,8 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             }
 
             let autoConfigService: AutoPollConfigService = new AutoPollConfigService(
-                new HttpConfigFetcher(ac.getUrl(apiKey), "a-" + VERSION, ac.logger),
-                new InMemoryCache(),
+                configFetcher ? configFetcher : new HttpConfigFetcher(ac.getUrl(apiKey), "a-" + VERSION, ac.logger),
+                cache ? cache : new InMemoryCache(),
                 ac);
 
             this.configService = autoConfigService;

@@ -1,5 +1,6 @@
 import { ProjectConfig } from "./ProjectConfigService";
 import * as winston from "winston";
+import * as nodesha1 from "node-sha1";
 
 export interface IRolloutEvaluator {
     Evaluate(config: ProjectConfig, key: string, defaultValue: any, user: User): any;
@@ -7,6 +8,10 @@ export interface IRolloutEvaluator {
 
 /** Object for variation evaluation */
 export class User {
+
+    constructor(identifier: string) {
+        this.Identifier = identifier;
+    }
 
     /** Unique identifier for the User or Session. e.g. Email address, Primary key, Session Id */
     Identifier: string;
@@ -23,10 +28,10 @@ export class User {
 
 export class RolloutEvaluator implements IRolloutEvaluator {
 
-    private logger: winston.LoggerInstance;
+    private logger: any;
 
-    constructor(logger: winston.LoggerInstance) {
-        this.logger = logger;
+    constructor(logger?: winston.LoggerInstance) {
+        this.logger = logger ? logger : console;
     }
 
     Evaluate(config: ProjectConfig, key: string, defaultValue: any, user: User): any {
@@ -66,27 +71,30 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
         if (rolloutRules) {
 
-            rolloutRules.forEach(rule => {
+            for (let i: number = 0; i < rolloutRules.length; i++) {
+
+                let rule: any = rolloutRules[i];
 
                 let ca: string = this.GetUserAttribute(user, rule.ComparisonAttribute);
 
                 switch (rule.Comparator) {
                     case 0: // in
 
-                        rule.ComparisonValue.split(",").forEach(e => {
+                        let cvs: string[] = rule.ComparisonValue.split(",");
 
-                            if (e === ca) {
+                        for (let ci: number = 0; ci < cvs.length; ci++) {
+
+                            if (cvs[ci].trim() === ca) {
                                 return rule.Value;
                             }
-
-                        });
+                        }
 
                         break;
 
                     case 1: // notIn
 
                         if (rule.ComparisonValue.split(",").some(e => {
-                            if (e === ca) {
+                            if (e.trim() === ca) {
                                 return true;
                             }
 
@@ -117,7 +125,7 @@ export class RolloutEvaluator implements IRolloutEvaluator {
                     default:
                         break;
                 }
-            });
+            }
         }
 
         return null;
@@ -128,7 +136,20 @@ export class RolloutEvaluator implements IRolloutEvaluator {
         if (rolloutPercentageItems) {
 
             let hashCandidate: string = key + user.Identifier;
+            let hashValue: any = nodesha1(hashCandidate).substring(0, 15);
+            let hashScale: any = parseInt(hashValue, 16) % 100;
+            let bucket: number = 0;
+
+            for (let i: number = 0; i < rolloutPercentageItems.length; i++) {
+                const variation: any = rolloutPercentageItems[i];
+                bucket += +variation.Percentage;
+
+                if (hashScale < bucket) {
+                    return variation.Value;
+                }
+            }
         }
+
         return null;
     }
 
