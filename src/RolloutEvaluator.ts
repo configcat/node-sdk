@@ -64,24 +64,84 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
     private EvaluateRules(rolloutRules: any, user: User): any {
 
-        rolloutRules.forEach(rule => {
+        if (rolloutRules) {
 
-            switch (rule.Comparator) {
-                case 0:
-                    if (rule.ComparisonValue.split(",").includes()) {
+            rolloutRules.forEach(rule => {
+
+                let ca: string = this.GetUserAttribute(user, rule.ComparisonAttribute);
+
+                switch (rule.Comparator) {
+                    case 0: // in
+
+                        rule.ComparisonValue.split(",").forEach(e => {
+
+                            if (e === ca) {
+                                return rule.Value;
+                            }
+
+                        });
+
                         break;
-                    }
 
-                default:
-                    break;
-            }
+                    case 1: // notIn
 
-        });
+                        if (rule.ComparisonValue.split(",").some(e => {
+                            if (e === ca) {
+                                return true;
+                            }
+
+                            return false;
+                        })) {
+
+                            return rule.Value;
+                        }
+
+                        break;
+
+                    case 2: // contains
+
+                        if (rule.ComparisonValue.search(ca) !== -1) {
+                            return rule.Value;
+                        }
+
+                        break;
+
+                    case 3: // not contains
+
+                        if (rule.ComparisonValue.search(ca) === -1) {
+                            return rule.Value;
+                        }
+
+                        break;
+
+                    default:
+                        break;
+                }
+            });
+        }
 
         return null;
     }
 
     private EvaluateVariations(rolloutPercentageItems: any, key: string, user: User): any {
+
+        if (rolloutPercentageItems) {
+
+            let hashCandidate: string = key + user.Identifier;
+        }
         return null;
+    }
+
+    private GetUserAttribute(user: User, attribute: string): string {
+        switch (attribute) {
+            case "Identifier":
+                return user.Identifier;
+            case "Email":
+                return user.Email;
+            case "Country":
+                return user.Country;
+            default:
+                return user.Custom[attribute];
+        }
     }
 }
