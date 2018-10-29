@@ -14,7 +14,7 @@ stage:
 jobs:
  include:
   - stage: build
-    if: brach != master
+    if: branch != master
   - stage: release
     if: branch = master
     node_js: "8"    
