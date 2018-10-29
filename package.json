@@ -7,7 +7,8 @@
   "scripts": {
     "test": "mocha --require ts-node/register tests/**/*.ts --exit --timeout 30000",
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+	"test-only": "gulp test-only"
   },
   "keywords": [
     "configcat",

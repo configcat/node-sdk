@@ -1,7 +1,12 @@
 .vscode/
 node_modules/
 src/
+sample/
+tests/
+coverage/
 gulpfile.js
 package-lock.json
 tsconfig.json
 .gitignore
+.travis.yml
+*.tgz
