@@ -8,14 +8,13 @@ script:
  - gulp test-only
 stage:
  - build
- - name: release 
-   if: branch = master
-   if: tag IS present
+ - release    
 jobs:
  include:
   - stage: build
     if: brach != master
   - stage: release
+    if: brach = master
     node_js: "8"
     script: echo "Publishing..."
     deploy:
