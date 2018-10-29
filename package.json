@@ -1,6 +1,6 @@
 {
   "name": "configcat-client",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "ConfigCat is a cloud based configuration as a service. It integrates with your apps, backends, websites, and other programs, so you can configure them through this website (https://www.configcat.com) even after they are deployed.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
