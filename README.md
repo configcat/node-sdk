@@ -22,7 +22,7 @@ var client = configcat.createClient("#YOUR-API-KEY#");
 ```
  4. Get your config value:
 ```javascript
-client.getValue("isMyAwesomeFeatureEnabled", false, {identifier : "userIdentifier"} (value) => {
+client.getValue("isMyAwesomeFeatureEnabled", false, {identifier : "userIdentifier"}, (value) => {
     if(value) {
         //show your awesome feature to the world!
     }
@@ -108,7 +108,7 @@ Example simple user object:
 ``` javascript
 var myUser = {
     Identifier : "435170f4-8a8b-4b67-a723-505ac7cdea92"
-}   
+};   
 ```
 
 Example user object with optional custom attributes:  
