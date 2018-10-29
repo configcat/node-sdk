@@ -15,13 +15,12 @@ jobs:
     if: branch != master
   - stage: release    
     node_js: "8"
-    script: echo "Publishing..."
+    script: npm run build
     deploy:
        provider: npm
        api_key: "$NPM_API_KEY"
        email: "$NPM_EMAIL"
-       on:
-         tags: true
+       on:         
          branch: master
  
 notifications:
