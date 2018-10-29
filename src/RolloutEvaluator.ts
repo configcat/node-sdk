@@ -1,40 +1,41 @@
 import { ProjectConfig } from "./ProjectConfigService";
 import * as winston from "winston";
 import * as nodesha1 from "node-sha1";
+import * as bigInt from "big-integer";
 
 export interface IRolloutEvaluator {
-    Evaluate(config: ProjectConfig, key: string, defaultValue: any, user: User): any;
+    Evaluate(config: ProjectConfig, key: string, defaultValue: any, User: User): any;
 }
 
 /** Object for variation evaluation */
 export class User {
 
     constructor(identifier: string) {
-        this.Identifier = identifier;
+        this.identifier = identifier;
     }
 
     /** Unique identifier for the User or Session. e.g. Email address, Primary key, Session Id */
-    Identifier: string;
+    identifier: string;
 
     /** Optional parameter for easier targeting rule definitions */
-    Email: string;
+    email: string;
 
     /** Optional parameter for easier targeting rule definitions */
-    Country: string;
+    country: string;
 
     /** Optional dictionary for custom attributes of the User for advanced targeting rule definitions. e.g. User role, Subscription type */
-    Custom: { [key: string]: string } = {};
+    custom: { [key: string]: string } = {};
 }
 
 export class RolloutEvaluator implements IRolloutEvaluator {
 
-    private logger: any;
+    private logger: winston.LoggerInstance;
 
-    constructor(logger?: winston.LoggerInstance) {
-        this.logger = logger ? logger : console;
+    constructor(logger: winston.LoggerInstance) {
+        this.logger = logger;
     }
 
-    Evaluate(config: ProjectConfig, key: string, defaultValue: any, user: User): any {
+    Evaluate(config: ProjectConfig, key: string, defaultValue: any, User: User): any {
 
         if (!config || !config.JSONConfig) {
 
@@ -54,28 +55,28 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
         let result: any;
 
-        if (user) {
+        if (User) {
 
-            result = this.EvaluateRules(json[key].RolloutRules, user);
+            result = this.EvaluateRules(json[key].RolloutRules, User);
 
             if (result == null) {
 
-                result = this.EvaluateVariations(json[key].RolloutPercentageItems, key, user);
+                result = this.EvaluateVariations(json[key].RolloutPercentageItems, key, User);
             }
         }
 
         return result == null ? json[key].Value : result;
     }
 
-    private EvaluateRules(rolloutRules: any, user: User): any {
+    private EvaluateRules(rolloutRules: any, User: User): any {
 
-        if (rolloutRules) {
+        if (rolloutRules && rolloutRules.length > 0) {
 
             for (let i: number = 0; i < rolloutRules.length; i++) {
 
                 let rule: any = rolloutRules[i];
 
-                let ca: string = this.GetUserAttribute(user, rule.ComparisonAttribute);
+                let ca: string = this.GetUserAttribute(User, rule.ComparisonAttribute);
 
                 switch (rule.Comparator) {
                     case 0: // in
@@ -93,7 +94,7 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
                     case 1: // notIn
 
-                        if (rule.ComparisonValue.split(",").some(e => {
+                        if (!rule.ComparisonValue.split(",").some(e => {
                             if (e.trim() === ca) {
                                 return true;
                             }
@@ -108,7 +109,7 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
                     case 2: // contains
 
-                        if (rule.ComparisonValue.search(ca) !== -1) {
+                        if (ca.search(rule.ComparisonValue) !== -1) {
                             return rule.Value;
                         }
 
@@ -116,7 +117,7 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
                     case 3: // not contains
 
-                        if (rule.ComparisonValue.search(ca) === -1) {
+                        if (ca.search(rule.ComparisonValue) === -1) {
                             return rule.Value;
                         }
 
@@ -131,13 +132,13 @@ export class RolloutEvaluator implements IRolloutEvaluator {
         return null;
     }
 
-    private EvaluateVariations(rolloutPercentageItems: any, key: string, user: User): any {
+    private EvaluateVariations(rolloutPercentageItems: any, key: string, User: User, ro?: number): any {
 
-        if (rolloutPercentageItems) {
+        if (rolloutPercentageItems && rolloutPercentageItems.length > 0) {
 
-            let hashCandidate: string = key + user.Identifier;
+            let hashCandidate: string = key + User.identifier;
             let hashValue: any = nodesha1(hashCandidate).substring(0, 15);
-            let hashScale: any = parseInt(hashValue, 16) % 100;
+            let hashScale: number = bigInt(hashValue, 16).mod(100).toJSNumber();
             let bucket: number = 0;
 
             for (let i: number = 0; i < rolloutPercentageItems.length; i++) {
@@ -153,16 +154,16 @@ export class RolloutEvaluator implements IRolloutEvaluator {
         return null;
     }
 
-    private GetUserAttribute(user: User, attribute: string): string {
+    private GetUserAttribute(User: User, attribute: string): string {
         switch (attribute) {
             case "Identifier":
-                return user.Identifier;
+                return User.identifier;
             case "Email":
-                return user.Email;
+                return User.email;
             case "Country":
-                return user.Country;
+                return User.country;
             default:
-                return user.Custom[attribute];
+                return User.custom[attribute];
         }
     }
 }

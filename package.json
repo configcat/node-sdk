@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "mocha --require ts-node/register tests/**/*.ts --exit",
+    "test": "mocha --require ts-node/register tests/**/*.ts --exit --timeout 30000",
     "build": "tsc",
     "prepare": "npm run build"
   },
@@ -19,6 +19,7 @@
   "author": "ConfigCat",
   "license": "MIT",
   "dependencies": {
+    "big-integer": "^1.6.36",
     "events": "^2.0.0",
     "node-sha1": "^1.0.1",
     "request": "^2.85.0",

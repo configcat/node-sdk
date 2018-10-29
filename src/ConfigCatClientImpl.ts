@@ -5,7 +5,7 @@ import { AutoPollConfigService } from "./AutoPollConfigService";
 import { ICache, InMemoryCache } from "./Cache";
 import { LazyLoadConfigSerivce } from "./LazyLoadConfigService";
 import { ManualPollService } from "./ManualPollService";
-import { User } from "./RolloutEvaluator";
+import { User, IRolloutEvaluator, RolloutEvaluator } from "./RolloutEvaluator";
 
 declare const require: any;
 
@@ -25,12 +25,14 @@ export interface IConfigCatClient {
 export class ConfigCatClientImpl implements IConfigCatClient {
     private apiKey: string;
     private configService: IConfigService;
+    private evaluator: IRolloutEvaluator;
 
     constructor(
         apiKey: string,
         configuration?: AutoPollConfiguration | ManualPollConfiguration | LazyLoadConfiguration,
         configFetcher?: IConfigFetcher,
-        cache?: ICache) {
+        cache?: ICache,
+        evaluator?: IRolloutEvaluator) {
 
         if (!apiKey) {
             throw new Error("Invalid 'apiKey' value");
@@ -47,6 +49,8 @@ export class ConfigCatClientImpl implements IConfigCatClient {
                 cache ? cache : new InMemoryCache(),
                 lc);
 
+            this.evaluator = new RolloutEvaluator(lc.logger);
+
         } else if (configuration && configuration instanceof ManualPollConfiguration) {
 
             let mc: ManualPollConfiguration = <ManualPollConfiguration>configuration;
@@ -55,6 +59,8 @@ export class ConfigCatClientImpl implements IConfigCatClient {
                 configFetcher ? configFetcher : new HttpConfigFetcher(mc.getUrl(apiKey), "m-" + VERSION, mc.logger),
                 cache ? cache : new InMemoryCache(),
                 mc);
+
+            this.evaluator = new RolloutEvaluator(mc.logger);
 
         } else {
 
@@ -70,6 +76,8 @@ export class ConfigCatClientImpl implements IConfigCatClient {
                 ac);
 
             this.configService = autoConfigService;
+
+            this.evaluator = new RolloutEvaluator(ac.logger);
         }
     }
 
@@ -78,13 +86,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
         this.configService.getConfig((value) => {
             var result: any = defaultValue;
 
-            if (value && value.JSONConfig) {
-                var j: any = JSON.parse(value.JSONConfig);
-
-                if (j[key]) {
-                    result = JSON.parse(value.JSONConfig)[key];
-                }
-            }
+            result = this.evaluator.Evaluate(value, key, defaultValue, user);
 
             callback(result);
         });

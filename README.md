@@ -22,7 +22,7 @@ var client = configcat.createClient("#YOUR-API-KEY#");
 ```
  4. Get your config value:
 ```javascript
-client.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
+client.getValue("isMyAwesomeFeatureEnabled", false, {identifier : "userIdentifier"} (value) => {
     if(value) {
         //show your awesome feature to the world!
     }
@@ -48,7 +48,7 @@ Configuration parameters are different in each mode:
 ### Base configuration
 | PropertyName        | Description           | Default  |
 | --- | --- | --- |
-| ```projectSecret```      | Project secret to access your configuration.  | REQUIRED |
+| ```apiKey```      | Api Key to access your configuration.  | REQUIRED |
 | ```logger``` | 'winston' logger instance        | no default tracing method | 
 ### Auto polling
 | PropertyName        | Description           | Default  |
@@ -88,8 +88,40 @@ var client = configcat.createClientWithAutoPoll("#YOUR-API-KEY#", config);
 ### Methods
 | Name        | Description           |
 | :------- | :--- |
-| ``` getValue(key: string, defaultValue: any, callback: (value: any) => void): void; ``` | Returns the value of the key |
+| ``` getValue(key: string, defaultValue: any, user: User, callback: (value: any) => void): void; ``` | Returns the value of the key |
 | ``` forceRefresh(callback: () => void): void ``` | Fetches the latest configuration from the server. You can use this method with WebHooks to ensure up to date configuration values in your application.|
+
+## User object
+If you want to get advantage from our percentage rollout and targeted rollout features, you should pass a ```user``` object to the ```getValue(key: string, defaultValue: any, user: user, callback: (value: any) => void)``` calls.
+We strongly recommend you to pass the ```user``` object in every call so later you can use these awesome features without rebuilding your application.
+
+### User
+
+| ParameterName        | Description           | Default  |
+| --- | --- | --- |
+| ```identifier```      | Mandatory, unique identifier for the User or Session. e.g. Email address, Primary key, Session Id  | REQUIRED |
+| ```email ```      | Optional parameter for easier targeting rule definitions |   None |
+| ```country```      | Optional parameter for easier targeting rule definitions |   None | 
+| ```custom```      | Optional dictionary for custom attributes of the User for advanced targeting rule definitions. e.g. User role, Subscription type. |   None |
+
+Example simple user object:  
+``` javascript
+var myUser = {
+    Identifier : "435170f4-8a8b-4b67-a723-505ac7cdea92"
+}   
+```
+
+Example user object with optional custom attributes:  
+``` javascript
+var myUser = {
+    Identifier : "435170f4-8a8b-4b67-a723-505ac7cdea92",
+    Email : "readme.user@configcat.com",
+    Country : "United Kingdom",
+    Custom : {
+        "SubscriptionType": "Pro"
+    }
+};
+```
 
 ## Lifecycle of the client
 We're recommend to use client as a singleton in your application.
