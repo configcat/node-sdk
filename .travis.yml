@@ -3,25 +3,29 @@ node_js:
  - "8"
 before_script:
  - npm install -g gulp-cli
+ - npm run build
 script:
- - gulp
- - gulp test-only
+ - npm run test-only
+after_success:
+ - npm pack 
 stage:
  - build
- - release    
+ - release
 jobs:
  include:
   - stage: build
-    if: branch != master
-  - stage: release    
-    node_js: "8"
-    script: npm run build
-    deploy:
-       provider: npm
-       api_key: "$NPM_API_KEY"
-       email: "$NPM_EMAIL"
-       on:         
-         branch: master
+    if: brach != master
+  - stage: release
+    if: branch = master
+    node_js: "8"    
+deploy:
+  provider: npm
+  api_key: "$NPM_API_KEY"
+  email: "$NPM_EMAIL"
+  skip_cleanup: true
+  on:
+    tags: true
+    branch: master
  
 notifications:
   email:
