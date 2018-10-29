@@ -12,9 +12,8 @@ stage:
 jobs:
  include:
   - stage: build
-    if: brach != master
-  - stage: release
-    if: brach = master
+    if: branch != master
+  - stage: release    
     node_js: "8"
     script: echo "Publishing..."
     deploy:
@@ -23,6 +22,7 @@ jobs:
        email: "$NPM_EMAIL"
        on:
          tags: true
+         branch: master
  
 notifications:
   email:
