@@ -7,9 +7,9 @@ import * as winston from "winston";
 
 describe("MatrixTests", () => {
 
-    const sample_v2: string = fs.readFileSync("tests/sample_v2.json", "utf8");
+    const sample_v2: string = fs.readFileSync("test/sample_v2.json", "utf8");
     const CONFIG: ProjectConfig = new ProjectConfig(0, sample_v2, null);
-    const testmatrix: string[] = require("fs").readFileSync("tests/testmatrix.csv").toString().split("\r\n");
+    const testmatrix: string[] = require("fs").readFileSync("test/testmatrix.csv").toString().split("\r\n");
 
     var logger: winston.LoggerInstance = new winston.Logger({
         level: "info",
