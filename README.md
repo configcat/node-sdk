@@ -107,17 +107,17 @@ We strongly recommend you to pass the ```user``` object in every call so later y
 Example simple user object:  
 ``` javascript
 var myUser = {
-    Identifier : "435170f4-8a8b-4b67-a723-505ac7cdea92"
+    identifier : "435170f4-8a8b-4b67-a723-505ac7cdea92"
 };   
 ```
 
 Example user object with optional custom attributes:  
 ``` javascript
 var myUser = {
-    Identifier : "435170f4-8a8b-4b67-a723-505ac7cdea92",
-    Email : "readme.user@configcat.com",
-    Country : "United Kingdom",
-    Custom : {
+    identifier : "435170f4-8a8b-4b67-a723-505ac7cdea92",
+    email : "readme.user@configcat.com",
+    country : "United Kingdom",
+    custom : {
         "SubscriptionType": "Pro"
     }
 };
