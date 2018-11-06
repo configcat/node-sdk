@@ -1,12 +1,15 @@
 language: node_js
 node_js:
  - "8"
-before_script:
+install:
+ - npm install codecov -g
+before_script: 
  - npm run build
 script:
  - npm run test
 after_success:
- - npm pack 
+ - codecov
+ - test $TRAVIS_BRANCH = "master" && npm pack 
 stage:
  - build
  - release
@@ -28,4 +31,4 @@ deploy:
 notifications:
   email:
     on_success: never
-    on_failure: email
+    on_failure: never

@@ -21,10 +21,10 @@ export abstract class ConfigurationBase {
 
     getUrl(apiKey: string): string {
         if (apiKey) {
-            return "https://cdn.betterconfig.com/configuration-files/" + apiKey + "/config_v2.json";
+            return "https://cdn.configcat.com/configuration-files/" + apiKey + "/config_v2.json";
         }
 
-        throw new Error("Invalid project secret");
+        throw new Error("Invalid 'apiKey'");
     }
 }
 

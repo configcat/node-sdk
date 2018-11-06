@@ -1,9 +1,9 @@
 import { IConfigService, ConfigServiceBase, ProjectConfig } from "./ProjectConfigService";
 import IConfigFetcher from "./ConfigFetcher";
 import ICache from "./Cache";
-import { ConfigurationBase, LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
+import { LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
 
-export class LazyLoadConfigSerivce extends ConfigServiceBase implements IConfigService {
+export class LazyLoadConfigService extends ConfigServiceBase implements IConfigService {
 
     private cacheTimeToLiveSeconds: number;
 
@@ -21,11 +21,12 @@ export class LazyLoadConfigSerivce extends ConfigServiceBase implements IConfigS
 
         if (p && p.Timestamp < new Date().getTime() + (this.cacheTimeToLiveSeconds * 1000)) {
             callback(p);
-        }
+        } else {
 
-        this.refreshLogicBase(p, (newConfig) => {
-            callback(newConfig);
-        });
+            this.refreshLogicBase(p, (newConfig) => {
+                callback(newConfig);
+            });
+        }
     }
 
     refreshConfig(callback?: (value: ProjectConfig) => void): void {
