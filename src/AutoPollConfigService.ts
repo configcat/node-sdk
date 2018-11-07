@@ -14,13 +14,9 @@ export class AutoPollConfigService extends ConfigServiceBase implements IConfigS
 
     constructor(configFetcher: IConfigFetcher, cache: ICache, autoPollConfig: AutoPollConfiguration) {
 
-        super(configFetcher, cache, autoPollConfig);
-
-        if (!autoPollConfig) {
-            throw new Error("Invalid 'autoPollConfig' value");
-        }
-
         autoPollConfig.validate();
+
+        super(configFetcher, cache, autoPollConfig);
 
         this.timer = setInterval(() => this.refreshConfig(), autoPollConfig.pollIntervalSeconds * 1000);
         this.maxInitWaitExpire = new Date(new Date().getTime() + autoPollConfig.maxInitWaitTimeSeconds * 1000);

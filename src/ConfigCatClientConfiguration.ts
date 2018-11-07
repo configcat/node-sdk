@@ -24,7 +24,7 @@ export abstract class ConfigurationBase {
             return "https://cdn.configcat.com/configuration-files/" + apiKey + "/config_v2.json";
         }
 
-        throw new Error("Invalid project secret");
+        throw new Error("Invalid 'apiKey'");
     }
 }
 

@@ -3,7 +3,7 @@ import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration }
 import { IConfigService, ProjectConfig } from "./ProjectConfigService";
 import { AutoPollConfigService } from "./AutoPollConfigService";
 import { ICache, InMemoryCache } from "./Cache";
-import { LazyLoadConfigSerivce } from "./LazyLoadConfigService";
+import { LazyLoadConfigService } from "./LazyLoadConfigService";
 import { ManualPollService } from "./ManualPollService";
 import { User, IRolloutEvaluator, RolloutEvaluator } from "./RolloutEvaluator";
 
@@ -44,12 +44,12 @@ export class ConfigCatClientImpl implements IConfigCatClient {
 
             let lc: LazyLoadConfiguration = <LazyLoadConfiguration>configuration;
 
-            this.configService = new LazyLoadConfigSerivce(
+            this.configService = new LazyLoadConfigService(
                 configFetcher ? configFetcher : new HttpConfigFetcher(lc.getUrl(apiKey), "l-" + VERSION, lc.logger),
                 cache ? cache : new InMemoryCache(),
                 lc);
 
-            this.evaluator = new RolloutEvaluator(lc.logger);
+            this.evaluator = evaluator ? evaluator : new RolloutEvaluator(lc.logger);
 
         } else if (configuration && configuration instanceof ManualPollConfiguration) {
 
@@ -60,7 +60,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
                 cache ? cache : new InMemoryCache(),
                 mc);
 
-            this.evaluator = new RolloutEvaluator(mc.logger);
+            this.evaluator = evaluator ? evaluator : new RolloutEvaluator(mc.logger);
 
         } else {
 
@@ -77,7 +77,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
 
             this.configService = autoConfigService;
 
-            this.evaluator = new RolloutEvaluator(ac.logger);
+            this.evaluator = evaluator ? evaluator : new RolloutEvaluator(ac.logger);
         }
     }
 

@@ -1,13 +1,16 @@
 language: node_js
 node_js:
  - "8"
-before_script:
- - npm install -g gulp-cli
+install:
+ - npm install codecov -g
+ - npm install
+before_script: 
  - npm run build
 script:
- - npm run test-only
+ - npm run test
 after_success:
- - npm pack 
+ - codecov
+ - test $TRAVIS_BRANCH = "master" && npm pack 
 stage:
  - build
  - release
@@ -16,8 +19,7 @@ jobs:
   - stage: build
     if: branch != master
   - stage: release
-    if: branch = master
-    node_js: "8"    
+    if: branch = master      
 deploy:
   provider: npm
   api_key: "$NPM_API_KEY"
