@@ -137,8 +137,8 @@ export class RolloutEvaluator implements IRolloutEvaluator {
         if (rolloutPercentageItems && rolloutPercentageItems.length > 0) {
 
             let hashCandidate: string = key + User.identifier;
-            let hashValue: any = nodesha1(hashCandidate).substring(0, 15);
-            let hashScale: number = bigInt(hashValue, 16).mod(100).toJSNumber();
+            let hashValue: any = nodesha1(hashCandidate).substring(0, 12);
+            let hashScale: number = parseInt(hashValue, 16) % 100;
             let bucket: number = 0;
 
             for (let i: number = 0; i < rolloutPercentageItems.length; i++) {
