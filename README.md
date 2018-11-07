@@ -7,7 +7,7 @@ https://configcat.com
 
 ## Getting Started
 
- 1. Install [NPM](https://docs.npmjs.com/cli/install) package: [ConfigCat-Client]( https://npmjs.com/package/configcat-client)
+ 1. Install [NPM](https://docs.npmjs.com/cli/install) package: [configcat-client-node]( https://npmjs.com/package/configcat-client-node)
  ```PowerShell
   npm i configcat-client-node
  ```
