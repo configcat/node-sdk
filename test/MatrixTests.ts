@@ -9,13 +9,13 @@ describe("MatrixTests", () => {
 
     const sample_v2: string = fs.readFileSync("test/sample_v2.json", "utf8");
     const CONFIG: ProjectConfig = new ProjectConfig(0, sample_v2, null);
-    const testmatrix: string[] = require("fs").readFileSync("test/testmatrix.csv").toString().split("\r\n");
 
     var logger: winston.LoggerInstance = new winston.Logger({
         level: "info",
         transports: [
             new winston.transports.Console({ timestamp: true })
-        ]});
+        ]
+    });
 
     let evaluator: RolloutEvaluator = new RolloutEvaluator(logger);
 
@@ -24,49 +24,56 @@ describe("MatrixTests", () => {
         let header: string[];
         let rowNo: number = 1;
 
-        testmatrix.forEach(function (line: string): void {
+        var endOfLine: string = require("os").EOL;
 
-            // testmatrix.on("line", line => {
+        fs.readFile("test/testmatrix.csv", "utf8", (e, data) => {
 
-            if (header) {
-
-                if (!line) {
-                    return;
-                }
-
-                let user: User = Helper.CreateUser(line, header);
-
-                for (let i: number = 4; i < header.length; i++) {
-
-                    let key: string = header[i];
-
-                    let actual: any = evaluator.Evaluate(CONFIG, key, Helper.GetTypedDefaultValue(key), user);
-
-                    let expected: any = Helper.GetTypedValue(line.split(";")[i], key);
-
-                    if (actual !== expected) {
-
-                        // tslint:disable-next-line:max-line-length
-                        let l: string = <string><any>rowNo + "." + " User -  " + user + "(" + <string>key + ") " + <string><any>actual + " === " + <string><any>expected + " = " + <string><any>(actual === expected);
-
-                        console.log(l);
-                    }
-
-                    // assert
-                    assert.strictEqual(actual, expected);
-                    // console.log(actual);
-                }
-
-            } else {
-
-                header = line.split(";");
+            if (e) {
+                throw e;
             }
 
-            rowNo++;
+            var lines: string[] = data.toString().split(require("os").EOL);
+
+            lines.forEach(function (line: string): void {
+
+                if (header) {
+
+                    if (!line) {
+                        return;
+                    }
+
+                    let user: User = Helper.CreateUser(line, header);
+
+                    for (let i: number = 4; i < header.length; i++) {
+
+                        let key: string = header[i];
+
+                        let actual: any = evaluator.Evaluate(CONFIG, key, Helper.GetTypedDefaultValue(key), user);
+
+                        let expected: any = Helper.GetTypedValue(line.split(";")[i], key);
+
+                        if (actual !== expected) {
+
+                            // tslint:disable-next-line:max-line-length
+                            let l: string = <string><any>rowNo + "." + " User -  " + user + "(" + <string>key + ") " + <string><any>actual + " === " + <string><any>expected + " = " + <string><any>(actual === expected);
+
+                            console.log(l);
+                        }
+
+                        // assert
+                        assert.strictEqual(actual, expected);
+                    }
+
+                } else {
+
+                    header = line.split(";");
+                }
+
+                rowNo++;
+            });
+
+            done();
         });
-
-        done();
-
     });
 
     class Helper {
