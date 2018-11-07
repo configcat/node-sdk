@@ -3,7 +3,9 @@ ConfigCat is a cloud based configuration as a service. It integrates with your a
 https://configcat.com  
 
 [![Build Status](https://travis-ci.org/configcat/node-sdk.svg?branch=master)](https://travis-ci.org/configcat/node-sdk)\
-[![NPM](https://nodei.co/npm/configcat-client.png)](https://nodei.co/npm/configcat-client/)
+[![codecov](https://codecov.io/gh/configcat/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/configcat/node-sdk)
+[![Known Vulnerabilities](https://snyk.io/test/github/configcat/node-sdk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/configcat/node-sdk?targetFile=package.json)\
+[![NPM](https://nodei.co/npm/configcat-client-node.png)](https://nodei.co/npm/configcat-client-node/)
 
 ## Getting Started
 
