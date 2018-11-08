@@ -1,7 +1,7 @@
 {
-  "name": "configcat-client-node",
+  "name": "configcat-node",
   "version": "2.0.11",
-  "description": "ConfigCat is a cloud based configuration as a service. It integrates with your apps, backends, websites, and other programs, so you can configure them through this website (https://www.configcat.com) even after they are deployed.",
+  "description": "ConfigCat is a configuration as a service that lets you manage your features and configurations without actually deploying new code.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -13,13 +13,19 @@
     "configcat",
     "config",
     "configuration",
-    "remoteconfiguration",
-    "configcatclient"
+    "remote configuration",
+    "configcat client",
+    "feature flags",
+    "feature toggle",
+    "feature switch",
+    "canary release",
+    "soft launch",
+    "release strategy"
   ],
   "author": "ConfigCat",
   "license": "MIT",
   "dependencies": {
-    "big-integer": "^1.6.36",
+    "configcat-common": "^1.0.2",
     "events": "^2.0.0",
     "node-sha1": "^1.0.1",
     "request": "^2.85.0",
@@ -28,7 +34,7 @@
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
-    "@types/node": "^10.12.2",
+    "@types/node": "^10.12.3",
     "chai": "^4.2.0",
     "del": "^3.0.0",
     "mocha": "^5.2.0",
