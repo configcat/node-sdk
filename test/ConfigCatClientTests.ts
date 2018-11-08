@@ -2,7 +2,7 @@ import { ConfigCatClientImpl, IConfigCatClient } from "../src/ConfigCatClientImp
 import { assert, expect } from "chai";
 import "mocha";
 import { ManualPollConfiguration, AutoPollConfiguration, LazyLoadConfiguration } from "../src/ConfigCatClientConfiguration";
-import { IConfigFetcher } from "../src/ConfigFetcher";
+import { IConfigFetcher } from "../src/.";
 import { ProjectConfig } from "../src/ProjectConfigService";
 
 describe("Configuration", () => {
@@ -26,7 +26,7 @@ describe("Configuration", () => {
     }).to.throw("Invalid 'apiKey' value");
   });
 
-  it("Initialization With NULL 'configuration' Should create an instance", () => {
+  it("Initialization With NULL 'configuration' Should crea(e an ins,ance", () => {
 
     let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new FakeConfigFetcher());
 

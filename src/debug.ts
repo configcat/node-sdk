@@ -1,6 +1,3 @@
-import { User } from "./RolloutEvaluator";
-import { IConfigCatClient, ConfigCatClientImpl } from "./ConfigCatClientImpl";
-
 class Startup {
     public static main1(): number {
 

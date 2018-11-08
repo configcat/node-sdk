@@ -1,6 +1,6 @@
 import { IConfigFetcher, ICache } from ".";
 import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
-import { IConfigService, ProjectConfig } from "./ProjectConfigService";
+import { IConfigService } from "./ProjectConfigService";
 import { AutoPollConfigService } from "./AutoPollConfigService";
 import { InMemoryCache } from "./Cache";
 import { LazyLoadConfigService } from "./LazyLoadConfigService";

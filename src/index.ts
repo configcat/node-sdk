@@ -1,6 +1,5 @@
 import { ConfigCatClientImpl, IConfigCatClient } from "./ConfigCatClientImpl";
 import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
-import { EventEmitter } from "events";
 import { ProjectConfig } from "./ProjectConfigService";
 
 /** Create an instance of ConfigCatClient and setup AutoPool mode with default settings */
