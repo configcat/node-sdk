@@ -1,10 +1,5 @@
 import { ProjectConfig } from "./ProjectConfigService";
-
-export interface ICache {
-    Set(config: ProjectConfig): void;
-
-    Get(): ProjectConfig;
-}
+import { ICache } from ".";
 
 export class InMemoryCache implements ICache {
     cache: ProjectConfig;
@@ -18,5 +13,3 @@ export class InMemoryCache implements ICache {
         return c;
     }
 }
-
-export default ICache;

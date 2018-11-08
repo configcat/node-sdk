@@ -1,9 +1,7 @@
 import { ConfigCatClientImpl, IConfigCatClient } from "./ConfigCatClientImpl";
 import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
 import { EventEmitter } from "events";
-import { IConfigCatLogger } from "./ConfigCatLogger";
-import IConfigFetcher from "./ConfigFetcher";
-import ICache from "./Cache";
+import { ProjectConfig } from "./ProjectConfigService";
 
 /** Create an instance of ConfigCatClient and setup AutoPool mode with default settings */
 export function createClient(apiKey: string, configCatKernel: IConfigCatKernel): IConfigCatClient {
@@ -96,4 +94,20 @@ export interface IConfigurationOptions {
     configChanged?: () => void;
 
     cacheTimeToLiveSeconds?: number;
+}
+
+export interface IConfigFetcher {
+    fetchLogic(lastProjectConfig: ProjectConfig, callback: (newProjectConfig: ProjectConfig) => void): void;
+}
+
+export interface ICache {
+    Set(config: ProjectConfig): void;
+
+    Get(): ProjectConfig;
+}
+
+export interface IConfigCatLogger {
+    log(message: string): void;
+
+    error(message: string): void;
 }

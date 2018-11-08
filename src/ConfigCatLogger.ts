@@ -1,7 +1,4 @@
-export interface IConfigCatLogger {
-    log(message: string): void;
-    error(message: string): void;
-}
+import { IConfigCatLogger } from ".";
 
 export class ConfigCatConsoleLogger implements IConfigCatLogger {
     log(message: string): void {
