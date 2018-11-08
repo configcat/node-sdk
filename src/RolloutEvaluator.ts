@@ -1,6 +1,6 @@
 import { ProjectConfig } from "./ProjectConfigService";
 import * as winston from "winston";
-import * as sha1 from "node-sha1";
+import * as sha1 from "js-sha1";
 
 export interface IRolloutEvaluator {
     Evaluate(config: ProjectConfig, key: string, defaultValue: any, User: User): any;
