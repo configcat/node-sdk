@@ -7,16 +7,16 @@ https://configcat.com
 
 ## Getting Started
 
- 1. Install [NPM](https://docs.npmjs.com/cli/install) package: [ConfigCat-Client]( https://npmjs.com/package/configcat-client)
+ 1. Install [NPM](https://docs.npmjs.com/cli/install) package: [configcat-client-node]( https://npmjs.com/package/configcat-client-node)
  ```PowerShell
-  npm i configcat-client
+  npm i configcat-client-node
  ```
  2. Get your Api Key from [configcat.com](https://configcat.com) portal:
 ![API-KEY](https://raw.githubusercontent.com/ConfigCat/.net-sdk/master/media/readme02.png  "API-KEY")
 
  3. Create a **ConfigCatClient** instance:
 ```javascript
-var configcat = require("configcat-client");
+var configcat = require("configcat-client-node");
 
 var client = configcat.createClient("#YOUR-API-KEY#");
 ```
