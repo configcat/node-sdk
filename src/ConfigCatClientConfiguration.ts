@@ -1,5 +1,5 @@
-import * as EventEmitter from "events";
-import { IConfigCatLogger, ConfigCatConsoleLogger } from "./ConfigCatLogger";
+import { ConfigCatConsoleLogger } from "./ConfigCatLogger";
+import { IConfigCatLogger } from ".";
 
 export abstract class ConfigurationBase {
 

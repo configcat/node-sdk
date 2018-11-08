@@ -8,8 +8,6 @@ export class AutoPollConfigService extends ConfigServiceBase implements IConfigS
     private maxInitWaitExpire: Date;
     private configChanged: () => void;
 
-    public static readonly ON_CHANGED_EVENT: string = "AutoPollConfigService_OnChanged";
-
     constructor(configFetcher: IConfigFetcher, cache: ICache, autoPollConfig: AutoPollConfiguration) {
 
         autoPollConfig.validate();

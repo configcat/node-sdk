@@ -1,6 +1,6 @@
 import { ProjectConfig } from "./ProjectConfigService";
 import * as sha1 from "js-sha1";
-import { IConfigCatLogger } from "./ConfigCatLogger";
+import { IConfigCatLogger } from ".";
 
 export interface IRolloutEvaluator {
     Evaluate(config: ProjectConfig, key: string, defaultValue: any, User: User): any;
