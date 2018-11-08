@@ -1,4 +1,4 @@
-import { IConfigFetcher, HttpConfigFetcher } from "./ConfigFetcher";
+import { IConfigFetcher } from "./ConfigFetcher";
 import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
 import { IConfigService, ProjectConfig } from "./ProjectConfigService";
 import { AutoPollConfigService } from "./AutoPollConfigService";
@@ -29,8 +29,8 @@ export class ConfigCatClientImpl implements IConfigCatClient {
 
     constructor(
         apiKey: string,
+        configFetcher: IConfigFetcher,
         configuration?: AutoPollConfiguration | ManualPollConfiguration | LazyLoadConfiguration,
-        configFetcher?: IConfigFetcher,
         cache?: ICache,
         evaluator?: IRolloutEvaluator) {
 
@@ -45,7 +45,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             let lc: LazyLoadConfiguration = <LazyLoadConfiguration>configuration;
 
             this.configService = new LazyLoadConfigService(
-                configFetcher ? configFetcher : new HttpConfigFetcher(lc.getUrl(apiKey), "l-" + VERSION, lc.logger),
+                configFetcher,
                 cache ? cache : new InMemoryCache(),
                 lc);
 
@@ -56,7 +56,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             let mc: ManualPollConfiguration = <ManualPollConfiguration>configuration;
 
             this.configService = new ManualPollService(
-                configFetcher ? configFetcher : new HttpConfigFetcher(mc.getUrl(apiKey), "m-" + VERSION, mc.logger),
+                configFetcher,
                 cache ? cache : new InMemoryCache(),
                 mc);
 
@@ -71,7 +71,7 @@ export class ConfigCatClientImpl implements IConfigCatClient {
             }
 
             let autoConfigService: AutoPollConfigService = new AutoPollConfigService(
-                configFetcher ? configFetcher : new HttpConfigFetcher(ac.getUrl(apiKey), "a-" + VERSION, ac.logger),
+                configFetcher,
                 cache ? cache : new InMemoryCache(),
                 ac);
 

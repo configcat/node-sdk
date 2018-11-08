@@ -3,21 +3,14 @@ import "mocha";
 import { RolloutEvaluator, User } from "../src/RolloutEvaluator";
 import { ProjectConfig } from "../src/ProjectConfigService";
 import * as fs from "fs";
-import * as winston from "winston";
+import { ConfigCatConsoleLogger } from "../src/ConfigCatLogger";
 
 describe("MatrixTests", () => {
 
     const sample_v2: string = fs.readFileSync("test/sample_v2.json", "utf8");
     const CONFIG: ProjectConfig = new ProjectConfig(0, sample_v2, null);
 
-    var logger: winston.LoggerInstance = new winston.Logger({
-        level: "info",
-        transports: [
-            new winston.transports.Console({ timestamp: true })
-        ]
-    });
-
-    let evaluator: RolloutEvaluator = new RolloutEvaluator(logger);
+    let evaluator: RolloutEvaluator = new RolloutEvaluator(new ConfigCatConsoleLogger());
 
     it("GetValue", (done) => {
 

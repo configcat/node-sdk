@@ -2,10 +2,17 @@ import { ConfigCatClientImpl, IConfigCatClient } from "./ConfigCatClientImpl";
 import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
 import { EventEmitter } from "events";
 import { IConfigCatLogger } from "./ConfigCatLogger";
+import IConfigFetcher from "./ConfigFetcher";
+import ICache from "./Cache";
 
 /** Create an instance of ConfigCatClient and setup AutoPool mode with default settings */
-export function createClient(apiKey: string): IConfigCatClient {
-    return createClientWithAutoPoll(apiKey, new AutoPollConfiguration());
+export function createClient(apiKey: string, configCatKernel: IConfigCatKernel): IConfigCatClient {
+    return createClientWithAutoPoll(apiKey, configCatKernel, new AutoPollConfiguration());
+}
+
+export interface IConfigCatKernel{
+    configFetcher: IConfigFetcher;
+    cache: ICache;
 }
 
 /**
@@ -13,7 +20,7 @@ export function createClient(apiKey: string): IConfigCatClient {
  * @param {string} apiKey - ApiKey to access your configuration.
  * @param config - Configuration for autoPoll mode
  */
-export function createClientWithAutoPoll(apiKey: string, config?: IConfigurationOptions): IConfigCatClient {
+export function createClientWithAutoPoll(apiKey: string, configCatKernel: IConfigCatKernel, config?: IConfigurationOptions): IConfigCatClient {
 
     let c: AutoPollConfiguration = new AutoPollConfiguration();
 
@@ -33,17 +40,17 @@ export function createClientWithAutoPoll(apiKey: string, config?: IConfiguration
         c.logger = config.logger;
     }
 
-    var result: ConfigCatClientImpl = new ConfigCatClientImpl(apiKey, c);
+    var result: ConfigCatClientImpl = new ConfigCatClientImpl(apiKey, configCatKernel.configFetcher, c, configCatKernel.cache);
 
     return result;
 }
 
 /**
- * Create an instance of ConfigCatClient and setup ManulaPoll mode
+ * Create an instance of ConfigCatClient and setup ManualPoll mode
  * @param {string} apiKey - ApiKey to access your configuration.
  * @param config - Configuration for manualPoll mode
  */
-export function createClientWithManualPoll(apiKey: string, config?: IConfigurationOptions): IConfigCatClient {
+export function createClientWithManualPoll(apiKey: string, configCatKernel: IConfigCatKernel, config?: IConfigurationOptions): IConfigCatClient {
 
     let c: ManualPollConfiguration = new ManualPollConfiguration();
 
@@ -51,7 +58,7 @@ export function createClientWithManualPoll(apiKey: string, config?: IConfigurati
         c.logger = config.logger;
     }
 
-    var result: ConfigCatClientImpl = new ConfigCatClientImpl(apiKey, c);
+    var result: ConfigCatClientImpl = new ConfigCatClientImpl(apiKey, configCatKernel.configFetcher, c, configCatKernel.cache);
 
     return result;
 }
@@ -61,7 +68,7 @@ export function createClientWithManualPoll(apiKey: string, config?: IConfigurati
  * @param {string} apiKey - ApiKey to access your configuration.
  * @param config - Configuration for lazyLoad mode
  */
-export function createClientWithLazyLoad(apiKey: string, config?: IConfigurationOptions): IConfigCatClient {
+export function createClientWithLazyLoad(apiKey: string, configCatKernel: IConfigCatKernel, config?: IConfigurationOptions): IConfigCatClient {
 
     let c: LazyLoadConfiguration = new LazyLoadConfiguration();
 
@@ -73,7 +80,7 @@ export function createClientWithLazyLoad(apiKey: string, config?: IConfiguration
         c.cacheTimeToLiveSeconds = config.cacheTimeToLiveSeconds;
     }
 
-    var result: ConfigCatClientImpl = new ConfigCatClientImpl(apiKey, c);
+    var result: ConfigCatClientImpl = new ConfigCatClientImpl(apiKey, configCatKernel.configFetcher, c, configCatKernel.cache);
 
     return result;
 }

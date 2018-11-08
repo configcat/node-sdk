@@ -2,6 +2,8 @@ import { ConfigCatClientImpl, IConfigCatClient } from "../src/ConfigCatClientImp
 import { assert, expect } from "chai";
 import "mocha";
 import { ManualPollConfiguration, AutoPollConfiguration, LazyLoadConfiguration } from "../src/ConfigCatClientConfiguration";
+import { IConfigFetcher } from "../src/ConfigFetcher";
+import { ProjectConfig } from "../src/ProjectConfigService";
 
 describe("Configuration", () => {
 
@@ -12,7 +14,7 @@ describe("Configuration", () => {
       let config: ManualPollConfiguration = new ManualPollConfiguration();
       config.logger = null;
 
-      let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", config);
+      let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new FakeConfigFetcher(), config);
     }).to.throw("Invalid 'logger' instance");
   });
 
@@ -20,42 +22,50 @@ describe("Configuration", () => {
 
     expect(() => {
 
-      let client: IConfigCatClient = new ConfigCatClientImpl(null, new ManualPollConfiguration());
+      let client: IConfigCatClient = new ConfigCatClientImpl(null, new FakeConfigFetcher(), new ManualPollConfiguration());
     }).to.throw("Invalid 'apiKey' value");
   });
 
   it("Initialization With NULL 'configuration' Should create an instance", () => {
 
-    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", null);
+    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new FakeConfigFetcher());
 
     assert.isDefined(client);
   });
 
   it("Initialization With 'LazyLoadConfiguration' Should create an instance", () => {
 
-    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new LazyLoadConfiguration());
+    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new FakeConfigFetcher(), new LazyLoadConfiguration());
 
     assert.isDefined(client);
   });
 
   it("Initialization With 'ManualPollConfiguration' Should create an instance", () => {
 
-    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new ManualPollConfiguration());
+    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new FakeConfigFetcher(), new ManualPollConfiguration());
 
     assert.isDefined(client);
   });
 
   it("Initialization With 'LazyLoadConfiguration' Should create an instance", () => {
 
-    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new LazyLoadConfiguration());
+    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new FakeConfigFetcher(), new LazyLoadConfiguration());
 
     assert.isDefined(client);
   });
 
   it("Initialization With 'AutoPollConfiguration' Should create an instance", () => {
 
-    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new AutoPollConfiguration());
+    let client: IConfigCatClient = new ConfigCatClientImpl("APIKEY", new FakeConfigFetcher(), new AutoPollConfiguration());
 
     assert.isDefined(client);
   });
 });
+
+export class FakeConfigFetcher implements IConfigFetcher {
+  fetchLogic(lastProjectConfig: ProjectConfig, callback: (newProjectConfig: ProjectConfig) => void): void {
+    if (callback) {
+      callback(new ProjectConfig(0, "", ""));
+    }
+  }
+}
