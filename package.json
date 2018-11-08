@@ -13,8 +13,14 @@
     "configcat",
     "config",
     "configuration",
-    "remoteconfiguration",
-    "configcatclient"
+    "remote configuration",
+    "configcat client",
+    "feature flags",
+    "feature toggle",
+    "feature switch",
+    "canary release",
+    "soft launch",
+    "release strategy"
   ],
   "author": "ConfigCat",
   "license": "MIT",
