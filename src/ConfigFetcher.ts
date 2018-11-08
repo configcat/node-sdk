@@ -1,12 +1,9 @@
 import * as httprequest from "request";
-import * as winston from "winston";
-import { ProjectConfig } from "./ProjectConfigService";
+import { IConfigFetcher, IConfigCatLogger } from "configcat-common";
+import { ProjectConfig } from "configcat-common/lib/ProjectConfigService";
 
 declare const Promise: any;
 
-export interface IConfigFetcher {
-    fetchLogic(lastProjectConfig: ProjectConfig, callback: (newProjectConfig: ProjectConfig) => void): void;
-}
 
 export class HttpConfigFetcher implements IConfigFetcher {
 
@@ -14,10 +11,10 @@ export class HttpConfigFetcher implements IConfigFetcher {
     productVersion: string;
     logger: any;
 
-    constructor(url: string, productVersion: string, logger?: winston.LoggerInstance) {
+    constructor(url: string, productVersion: string, logger: IConfigCatLogger) {
         this.url = url;
         this.productVersion = productVersion;
-        this.logger = logger ? logger : winston;
+        this.logger = logger;
     }
 
     fetchLogic(lastProjectConfig: ProjectConfig, callback: (newProjectConfig: ProjectConfig) => void): void {

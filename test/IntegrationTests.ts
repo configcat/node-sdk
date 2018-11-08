@@ -1,22 +1,21 @@
 import { assert } from "chai";
 import "mocha";
-import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "../src/ConfigCatClientConfiguration";
-import { ConfigCatClientImpl, IConfigCatClient } from "../src/ConfigCatClientImpl";
-import { User } from "../src/RolloutEvaluator";
+import { IConfigCatClient, } from "configcat-common/lib/ConfigCatClientImpl";
+import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "configcat-common/lib/ConfigCatClientConfiguration";
+import { HttpConfigFetcher } from "../src/ConfigFetcher";
+import { ConfigCatConsoleLogger } from "configcat-common/lib/ConfigCatLogger";
+import * as configcatClient from "../src/index";
+import { User } from "configcat-common/lib/RolloutEvaluator";
 
 describe("Integration - ConfigCatClient", () => {
 
-  let clientAutoPoll: IConfigCatClient = new ConfigCatClientImpl(
-    "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A",
-    new AutoPollConfiguration());
+  let apiKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
 
-  let clientManualPoll: IConfigCatClient = new ConfigCatClientImpl(
-    "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A",
-    new ManualPollConfiguration());
+  let clientAutoPoll: IConfigCatClient = configcatClient.createClientWithAutoPoll(apiKey);
 
-  let clientLazyLoad: IConfigCatClient = new ConfigCatClientImpl(
-    "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A",
-    new LazyLoadConfiguration());
+  let clientManualPoll: IConfigCatClient = configcatClient.createClientWithManualPoll(apiKey);
+
+  let clientLazyLoad: IConfigCatClient = configcatClient.createClientWithLazyLoad(apiKey);
 
   it("GetValue - AutoPoll - With 'stringDefaultCat' ShouldReturnCat", (done) => {
 
@@ -102,7 +101,7 @@ describe("Integration - ConfigCatClient", () => {
 
     clientAutoPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
 
-      assert.equal(actual, "Dog");
+      assert.equal(actual, "Horse");
 
       done();
     });
@@ -113,7 +112,7 @@ describe("Integration - ConfigCatClient", () => {
     clientManualPoll.forceRefresh(() => {
       clientManualPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
 
-        assert.equal(actual, "Dog");
+        assert.equal(actual, "Horse");
 
         done();
       });
@@ -124,7 +123,7 @@ describe("Integration - ConfigCatClient", () => {
 
     clientLazyLoad.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
 
-      assert.equal(actual, "Dog");
+      assert.equal(actual, "Horse");
 
       done();
     });
