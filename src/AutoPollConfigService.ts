@@ -1,14 +1,13 @@
 import IConfigFetcher from "./ConfigFetcher";
 import ICache from "./Cache";
 import { AutoPollConfiguration } from "./ConfigCatClientConfiguration";
-import { EventEmitter } from "events";
 import { IConfigService, ProjectConfig, ConfigServiceBase } from "./ProjectConfigService";
 
 export class AutoPollConfigService extends ConfigServiceBase implements IConfigService {
 
     private timer;
     private maxInitWaitExpire: Date;
-    private configChanged: EventEmitter;
+    private configChanged: () => void;
 
     public static readonly ON_CHANGED_EVENT: string = "AutoPollConfigService_OnChanged";
 
@@ -48,7 +47,7 @@ export class AutoPollConfigService extends ConfigServiceBase implements IConfigS
             }
 
             if (!p || p.HttpETag !== newConfig.HttpETag) {
-                this.configChanged.emit(AutoPollConfiguration.CONFIG_CHANGED_EVENT);
+                this.configChanged();
             }
         });
     }

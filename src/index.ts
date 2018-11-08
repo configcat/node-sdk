@@ -93,9 +93,7 @@ export interface IConfigurationOptions {
 
     maxInitWaitTimeSeconds?: number;
 
-    configChanged?: EventEmitter;
+    configChanged?: () => void;
 
     cacheTimeToLiveSeconds?: number;
 }
-
-export const CONFIG_CHANGED_EVENT: string = AutoPollConfiguration.CONFIG_CHANGED_EVENT;

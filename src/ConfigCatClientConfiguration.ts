@@ -22,13 +22,12 @@ export abstract class ConfigurationBase {
 }
 
 export class AutoPollConfiguration extends ConfigurationBase {
+
     public pollIntervalSeconds: number;
 
     public maxInitWaitTimeSeconds: number;
 
-    public configChanged: EventEmitter;
-
-    public static readonly CONFIG_CHANGED_EVENT: string = "AutoPoll_EventChanged";
+    public configChanged: () => void = () => { };
 
     constructor() {
 
@@ -37,8 +36,6 @@ export class AutoPollConfiguration extends ConfigurationBase {
         this.maxInitWaitTimeSeconds = 5;
 
         this.pollIntervalSeconds = 60;
-
-        this.configChanged = new EventEmitter();
     }
 
     validate(): void {
