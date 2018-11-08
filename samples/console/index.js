@@ -1,4 +1,4 @@
-var configcat = require("configcat-client");
+var configcat = require("configcat-node");
 
 // Insert your API key
 var client = configcat.createClient("PKDVCLf-Hq-h-kCzMp-L7Q/PaDVCFk9EpmD6sLpGLltTA");
@@ -9,5 +9,10 @@ var myUser = {
 
 // Get your config value:
 client.getValue("keySampleText", "N/A", myUser, (value) => {
+    console.log("keySampleText: " + value);
+});
+
+// Get your config value:
+client.getValue("keySampleText_NOTEXISTS", "N/A", myUser, (value) => {
     console.log("keySampleText: " + value);
 });
