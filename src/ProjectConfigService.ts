@@ -1,7 +1,7 @@
 import IConfigFetcher from "./ConfigFetcher";
 import ICache from "./Cache";
-import * as winston from "winston";
 import { ConfigurationBase } from "./ConfigCatClientConfiguration";
+import { IConfigCatLogger } from "./ConfigCatLogger";
 
 export class ProjectConfig {
     /** Entity identifier */
@@ -27,10 +27,10 @@ export interface IConfigService {
 export abstract class ConfigServiceBase {
     protected configFetcher: IConfigFetcher;
     protected cache: ICache;
-    protected logger: winston.LoggerInstance;
+    protected logger: IConfigCatLogger;
 
     constructor(configFetcher: IConfigFetcher, cache: ICache, baseConfig: ConfigurationBase) {
-
+        
         if (!configFetcher) {
             throw new Error("Invalid 'configFetcher' value");
         }

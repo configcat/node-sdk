@@ -1,6 +1,6 @@
 import { ProjectConfig } from "./ProjectConfigService";
-import * as winston from "winston";
 import * as sha1 from "js-sha1";
+import { IConfigCatLogger } from "./ConfigCatLogger";
 
 export interface IRolloutEvaluator {
     Evaluate(config: ProjectConfig, key: string, defaultValue: any, User: User): any;
@@ -28,9 +28,9 @@ export class User {
 
 export class RolloutEvaluator implements IRolloutEvaluator {
 
-    private logger: winston.LoggerInstance;
+    private logger: IConfigCatLogger;
 
-    constructor(logger: winston.LoggerInstance) {
+    constructor(logger: IConfigCatLogger) {
         this.logger = logger;
     }
 
@@ -38,7 +38,7 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
         if (!config || !config.JSONConfig) {
 
-            this.logger.warn("JSONConfig is not present, returning defaultValue");
+            this.logger.error("JSONConfig is not present, returning defaultValue");
 
             return defaultValue;
         }
@@ -47,7 +47,7 @@ export class RolloutEvaluator implements IRolloutEvaluator {
 
         if (!json[key]) {
 
-            this.logger.warn("Unknown key: '" + key + "'");
+            this.logger.error("Unknown key: '" + key + "'");
 
             return defaultValue;
         }

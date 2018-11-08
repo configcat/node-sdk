@@ -1,16 +1,9 @@
-import * as winston from "winston";
 import * as EventEmitter from "events";
+import { IConfigCatLogger, ConfigCatConsoleLogger } from "./ConfigCatLogger";
 
 export abstract class ConfigurationBase {
 
-    logger: winston.LoggerInstance;
-
-    constructor() {
-        this.logger = new winston.Logger({
-            level: "error",
-            transports: []
-        });
-    }
+    public logger: IConfigCatLogger = new ConfigCatConsoleLogger();
 
     protected validate(): void {
 

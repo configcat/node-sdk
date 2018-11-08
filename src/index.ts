@@ -1,7 +1,7 @@
 import { ConfigCatClientImpl, IConfigCatClient } from "./ConfigCatClientImpl";
 import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "./ConfigCatClientConfiguration";
 import { EventEmitter } from "events";
-import * as winston from "winston";
+import { IConfigCatLogger } from "./ConfigCatLogger";
 
 /** Create an instance of ConfigCatClient and setup AutoPool mode with default settings */
 export function createClient(apiKey: string): IConfigCatClient {
@@ -80,7 +80,7 @@ export function createClientWithLazyLoad(apiKey: string, config?: IConfiguration
 
 export interface IConfigurationOptions {
 
-    logger?: winston.LoggerInstance;
+    logger?: IConfigCatLogger;
 
     pollIntervalSeconds?: number;
 
