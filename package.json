@@ -26,10 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "configcat-common": "^1.0.2",
-    "events": "^2.0.0",
-    "node-sha1": "^1.0.1",
-    "request": "^2.85.0",
-    "winston": "^2.4.2"
+    "request": "^2.85.0"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
