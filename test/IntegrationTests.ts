@@ -102,7 +102,7 @@ describe("Integration - ConfigCatClient", () => {
 
     clientAutoPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
 
-      assert.equal(actual, "Dog");
+      assert.equal(actual, "Horse");
 
       done();
     });
@@ -113,7 +113,7 @@ describe("Integration - ConfigCatClient", () => {
     clientManualPoll.forceRefresh(() => {
       clientManualPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
 
-        assert.equal(actual, "Dog");
+        assert.equal(actual, "Horse");
 
         done();
       });
@@ -124,7 +124,7 @@ describe("Integration - ConfigCatClient", () => {
 
     clientLazyLoad.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
 
-      assert.equal(actual, "Dog");
+      assert.equal(actual, "Horse");
 
       done();
     });

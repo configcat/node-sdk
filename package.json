@@ -19,7 +19,6 @@
   "author": "ConfigCat",
   "license": "MIT",
   "dependencies": {
-    "big-integer": "^1.6.36",
     "events": "^2.0.0",
     "node-sha1": "^1.0.1",
     "request": "^2.85.0",

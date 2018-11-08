@@ -1,7 +1,6 @@
 import { ProjectConfig } from "./ProjectConfigService";
 import * as winston from "winston";
-import * as nodesha1 from "node-sha1";
-import * as bigInt from "big-integer";
+import * as sha1 from "node-sha1";
 
 export interface IRolloutEvaluator {
     Evaluate(config: ProjectConfig, key: string, defaultValue: any, User: User): any;
@@ -137,7 +136,7 @@ export class RolloutEvaluator implements IRolloutEvaluator {
         if (rolloutPercentageItems && rolloutPercentageItems.length > 0) {
 
             let hashCandidate: string = key + User.identifier;
-            let hashValue: any = nodesha1(hashCandidate).substring(0, 12);
+            let hashValue: any = sha1(hashCandidate).substring(0, 7);
             let hashScale: number = parseInt(hashValue, 16) % 100;
             let bucket: number = 0;
 
