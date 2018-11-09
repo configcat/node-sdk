@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import "mocha";
 import * as configcatClient from "../src/index";
-import { IConfigCatClient } from "configcat-common/lib/ConfigCatClientImpl";
+import { IConfigCatClient } from "configcat-common/lib/ConfigCatClient";
 
 describe("ConfigCatClient index (main)", () => {
 
@@ -28,7 +28,7 @@ describe("ConfigCatClient index (main)", () => {
 
     it("createClientWithManualPoll ShouldCreateInstance", () => {
 
-        var client: IConfigCatClient = configcatClient.createClientWithManualPoll("APIKEY", { "maxInitWaitTimeSeconds": 15 });
+        var client: IConfigCatClient = configcatClient.createClientWithManualPoll("APIKEY");
 
         assert.isDefined(client);
     });

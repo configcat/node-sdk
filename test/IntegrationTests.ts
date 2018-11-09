@@ -1,9 +1,6 @@
 import { assert } from "chai";
 import "mocha";
-import { IConfigCatClient, } from "configcat-common/lib/ConfigCatClientImpl";
-import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "configcat-common/lib/ConfigCatClientConfiguration";
-import { HttpConfigFetcher } from "../src/ConfigFetcher";
-import { ConfigCatConsoleLogger } from "configcat-common/lib/ConfigCatLogger";
+import { IConfigCatClient, } from "configcat-common/lib/ConfigCatClient";
 import * as configcatClient from "../src/index";
 import { User } from "configcat-common/lib/RolloutEvaluator";
 

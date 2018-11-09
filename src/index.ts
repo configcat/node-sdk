@@ -1,57 +1,50 @@
 import * as configcatcommon from "configcat-common";
 import { IConfigFetcher } from "configcat-common";
 import { EventEmitter } from "events";
-import { AutoPollConfiguration, ManualPollConfiguration, LazyLoadConfiguration } from "configcat-common/lib/ConfigCatClientConfiguration";
+import { AutoPollOptions, ManualPollOptions, LazyLoadOptions } from "configcat-common/lib/ConfigCatClientOptions";
 import { HttpConfigFetcher } from "./ConfigFetcher";
 import { InMemoryCache } from "configcat-common/lib/Cache";
-import { IConfigCatClient } from "configcat-common/lib/ConfigCatClientImpl";
+import { IConfigCatClient } from "configcat-common/lib/ConfigCatClient";
 
 const VERSION: string = require("../package.json").version;
 
-/** Create an instance of ConfigCatClient and setup AutoPool mode with default settings */
+/** Create an instance of ConfigCatClient and setup Auto Poll mode with default options */
 export function createClient(apiKey: string): IConfigCatClient {
-
-    let lc: AutoPollConfiguration = new AutoPollConfiguration();
-
-    return configcatcommon.createClient(apiKey, { configFetcher: new HttpConfigFetcher(lc.getUrl(apiKey), "a-" + VERSION, lc.logger), cache: new InMemoryCache() });
+    return this.createClientWithAutoPoll(apiKey);
 }
 
 /**
- * Create an instance of ConfigCatClient and setup AutoPoll mode
- * @param {string} apiKey - ApiKey to access your configuration.
- * @param config - Configuration for autoPoll mode
+ * Create an instance of ConfigCatClient and setup Auto Poll mode with custom options
+ * @param {string} apiKey - ConfigCat ApiKey to access your configuration.
+ * @param options - Options for Auto Polling
  */
-export function createClientWithAutoPoll(apiKey: string, config?: INodeConfigurationOptions): IConfigCatClient {
-
-    let c: AutoPollConfiguration = new AutoPollConfiguration();
-
-    return configcatcommon.createClientWithAutoPoll(apiKey, { configFetcher: new HttpConfigFetcher(c.getUrl(apiKey), "a-" + VERSION, c.logger), cache: new InMemoryCache() }, config);
+export function createClientWithAutoPoll(apiKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
+    return configcatcommon.createClientWithAutoPoll(apiKey, { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() }, options);
 }
 
 /**
- * Create an instance of ConfigCatClient and setup ManulaPoll mode
- * @param {string} apiKey - ApiKey to access your configuration.
- * @param config - Configuration for manualPoll mode
+ * Create an instance of ConfigCatClient and setup Manual Poll mode with custom options
+ * @param {string} apiKey - ConfigCat ApiKey to access your configuration.
+ * @param options - Options for Manual Polling
  */
-export function createClientWithManualPoll(apiKey: string, config?: INodeConfigurationOptions): IConfigCatClient {
-
-    let c: ManualPollConfiguration = new ManualPollConfiguration();
-
-    return configcatcommon.createClientWithManualPoll(apiKey, { configFetcher: new HttpConfigFetcher(c.getUrl(apiKey), "m-" + VERSION, c.logger), cache: new InMemoryCache() }, config)
+export function createClientWithManualPoll(apiKey: string, options?: INodeManualPollOptions): IConfigCatClient {
+    return configcatcommon.createClientWithManualPoll(apiKey, { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() }, options)
 }
 
 /**
- * Create an instance of ConfigCatClient and setup LazyLoad mode
- * @param {string} apiKey - ApiKey to access your configuration.
- * @param config - Configuration for lazyLoad mode
+ * Create an instance of ConfigCatClient and setup Lazy Load mode with custom options
+ * @param {string} apiKey - ConfigCat ApiKey to access your configuration.
+ * @param options - Option for Lazy Loading
  */
-export function createClientWithLazyLoad(apiKey: string, config?: INodeConfigurationOptions): IConfigCatClient {
-
-    let c: LazyLoadConfiguration = new LazyLoadConfiguration();
-
-    return configcatcommon.createClientWithLazyLoad(apiKey, { configFetcher: new HttpConfigFetcher(c.getUrl(apiKey), "l-" + VERSION, c.logger), cache: new InMemoryCache() }, config);
+export function createClientWithLazyLoad(apiKey: string, options?: INodeLazyLoadingOptions): IConfigCatClient {
+    return configcatcommon.createClientWithLazyLoad(apiKey, { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() }, options);
 }
 
-export interface INodeConfigurationOptions extends configcatcommon.IConfigurationOptions {
+export interface INodeAutoPollOptions extends configcatcommon.IAutoPollOptions {
+}
 
+export interface INodeLazyLoadingOptions extends configcatcommon.ILazyLoadingOptions {
+}
+
+export interface INodeManualPollOptions extends configcatcommon.IManualPollOptions {
 }
