@@ -2,11 +2,12 @@
 node_modules/
 src/
 sample/
-tests/
+test/
 coverage/
-gulpfile.js
 package-lock.json
 tsconfig.json
 .gitignore
 .travis.yml
 *.tgz
+media/
+DEPLOY.md

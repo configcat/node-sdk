@@ -12,7 +12,7 @@ https://configcat.com
   npm i configcat-client-node
  ```
  2. Get your Api Key from [configcat.com](https://configcat.com) portal:
-![API-KEY](https://raw.githubusercontent.com/ConfigCat/.net-sdk/master/media/readme02.png  "API-KEY")
+![API-KEY](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/media/readme01.png  "API-KEY")
 
  3. Create a **ConfigCatClient** instance:
 ```javascript
