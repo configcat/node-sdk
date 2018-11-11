@@ -1,7 +1,7 @@
 .vscode/
 node_modules/
 src/
-sample/
+samples/
 test/
 coverage/
 package-lock.json
@@ -9,5 +9,8 @@ tsconfig.json
 .gitignore
 .travis.yml
 *.tgz
+*.log
+.idea/
+.nyc_output/
 media/
 DEPLOY.md

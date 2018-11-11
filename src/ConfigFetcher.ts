@@ -1,38 +1,26 @@
 import * as httprequest from "request";
-import * as winston from "winston";
-import { ProjectConfig } from "./ProjectConfigService";
+import { IConfigFetcher, IConfigCatLogger } from "configcat-common";
+import { ProjectConfig } from "configcat-common/lib/ProjectConfigService";
+import { OptionsBase } from "configcat-common/lib/ConfigCatClientOptions";
 
 declare const Promise: any;
 
-export interface IConfigFetcher {
-    fetchLogic(lastProjectConfig: ProjectConfig, callback: (newProjectConfig: ProjectConfig) => void): void;
-}
 
 export class HttpConfigFetcher implements IConfigFetcher {
 
-    url: string;
-    productVersion: string;
-    logger: any;
-
-    constructor(url: string, productVersion: string, logger?: winston.LoggerInstance) {
-        this.url = url;
-        this.productVersion = productVersion;
-        this.logger = logger ? logger : winston;
-    }
-
-    fetchLogic(lastProjectConfig: ProjectConfig, callback: (newProjectConfig: ProjectConfig) => void): void {
+    fetchLogic(options: OptionsBase, lastProjectConfig: ProjectConfig, callback: (newProjectConfig: ProjectConfig) => void): void {
 
         // tslint:disable-next-line:typedef
-        var options = {
-            url: this.url,
+        var httpOptions = {
+            url: options.getUrl(),
             headers: {
-                "User-Agent": "ConfigCat-node/" + this.productVersion,
-                "X-ConfigCat-UserAgent": "ConfigCat-node/" + this.productVersion,
+                "User-Agent": "ConfigCat-node/" + options.clientVersion,
+                "X-ConfigCat-UserAgent": "ConfigCat-node/" + options.clientVersion,
                 "If-None-Match": lastProjectConfig ? lastProjectConfig.HttpETag : null
             }
         };
 
-        httprequest(options, (err, response, body) => {
+        httprequest(httpOptions, (err, response, body) => {
 
             if (!err && response.statusCode === 304) {
 
@@ -45,7 +33,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
             } else {
 
                 if (err) {
-                    this.logger.error("httprequest error - " + err);
+                    options.logger.error("httprequest error - " + err);
                 }
 
                 callback(lastProjectConfig);

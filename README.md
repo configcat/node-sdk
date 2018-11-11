@@ -2,21 +2,21 @@
 ConfigCat is a cloud based configuration as a service. It integrates with your apps, backends, websites, and other programs, so you can configure them through this website even after they are deployed.
 https://configcat.com  
 
-[![Build Status](https://travis-ci.org/configcat/node-sdk.svg?branch=master)](https://travis-ci.org/configcat/node-sdk) [![codecov](https://codecov.io/gh/configcat/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/configcat/node-sdk) [![Known Vulnerabilities](https://snyk.io/test/github/configcat/node-sdk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/configcat/node-sdk?targetFile=package.json) \
-[![NPM](https://nodei.co/npm/configcat-client-node.png)](https://nodei.co/npm/configcat-client-node/)
+[![Build Status](https://travis-ci.org/configcat/node-sdk.svg?branch=master)](https://travis-ci.org/configcat/node-sdk) [![codecov](https://codecov.io/gh/configcat/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/configcat/node-sdk) [![Known Vulnerabilities](https://snyk.io/test/github/configcat/node-sdk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/configcat/node-sdk?targetFile=package.json) ![License](https://img.shields.io/github/license/configcat/node-sdk.svg) \
+[![NPM](https://nodei.co/npm/configcat-node.png)](https://nodei.co/npm/configcat-node/)
 
 ## Getting Started
 
- 1. Install [NPM](https://docs.npmjs.com/cli/install) package: [configcat-client-node]( https://npmjs.com/package/configcat-client-node)
+ 1. Install [NPM](https://docs.npmjs.com/cli/install) package: [configcat-node]( https://npmjs.com/package/configcat-node)
  ```PowerShell
-  npm i configcat-client-node
+  npm i configcat-node
  ```
  2. Get your Api Key from [configcat.com](https://configcat.com) portal:
 ![API-KEY](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/media/readme01.png  "API-KEY")
 
  3. Create a **ConfigCatClient** instance:
 ```javascript
-var configcat = require("configcat-client-node");
+var configcat = require("configcat-node");
 
 var client = configcat.createClient("#YOUR-API-KEY#");
 ```
@@ -125,18 +125,6 @@ var myUser = {
 
 ## Lifecycle of the client
 We're recommend to use client as a singleton in your application.
-
-## Logging
-We use Winston for logging you can setup with 'logger' attribute.
-``` javascript
-var config = {
-    "logger": new winston.Logger({
-            level: "info",
-            transports: [
-                new winston.transports.Console({ timestamp: true })
-            ]})
-};
-```
 
 ## License
 [MIT](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/LICENSE)
