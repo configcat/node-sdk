@@ -4,7 +4,6 @@ src/
 samples/
 test/
 coverage/
-gulpfile.js
 package-lock.json
 tsconfig.json
 .gitignore
@@ -13,3 +12,5 @@ tsconfig.json
 *.log
 .idea/
 .nyc_output/
+media/
+DEPLOY.md
