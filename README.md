@@ -25,7 +25,7 @@ var client = configcat.createClient("#YOUR-API-KEY#");
 ```
  4. Get your config value:
 ```javascript
-client.getValue("isMyAwesomeFeatureEnabled", false, {identifier : "userIdentifier"}, (value) => {
+client.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
     if(value) {
         //show your awesome feature to the world!
     }
@@ -33,7 +33,7 @@ client.getValue("isMyAwesomeFeatureEnabled", false, {identifier : "userIdentifie
 ```
 
 ## Configuration
-Client supports three different caching policies to acquire the configuration from ConfigCat. When the client downloads the latest configuration, puts it into the internal cache and serves any configuration acquisition from cache. With these caching policies you can manage your configurations' lifetimes easily.
+The ConfigCat SDK supports three different caching policies to acquire the configuration values from ConfigCat. When the client downloads the latest configuration value, puts it into the internal cache and then serves all requests the from cache. With the following caching policies you can customize the caching to suit your needs.
 
 ### Auto polling (default)
 Client downloads the latest configuration and puts into a cache repeatedly. Use ```pollingIntervalSeconds``` parameter to manage polling interval.
