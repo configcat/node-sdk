@@ -1,7 +1,4 @@
 import * as configcatcommon from "configcat-common";
-import { IConfigFetcher } from "configcat-common";
-import { EventEmitter } from "events";
-import { AutoPollOptions, ManualPollOptions, LazyLoadOptions } from "configcat-common/lib/ConfigCatClientOptions";
 import { HttpConfigFetcher } from "./ConfigFetcher";
 import { InMemoryCache } from "configcat-common/lib/Cache";
 import { IConfigCatClient } from "configcat-common/lib/ConfigCatClient";

@@ -18,7 +18,7 @@ describe("Integration - ConfigCatClient", () => {
 
     const defaultValue: string = "NOT_CAT";
 
-    clientAutoPoll.getValue("stringDefaultCat", defaultValue, null, actual => {
+    clientAutoPoll.getValue("stringDefaultCat", defaultValue, actual => {
 
       assert.strictEqual(actual, "Cat");
       assert.notStrictEqual(actual, defaultValue);
@@ -32,7 +32,7 @@ describe("Integration - ConfigCatClient", () => {
     const defaultValue: string = "NOT_CAT";
     clientManualPoll.forceRefresh(() => {
 
-      clientManualPoll.getValue("stringDefaultCat", defaultValue, null, actual => {
+      clientManualPoll.getValue("stringDefaultCat", defaultValue, actual => {
 
         assert.strictEqual(actual, "Cat");
 
@@ -47,7 +47,7 @@ describe("Integration - ConfigCatClient", () => {
 
     const defaultValue: string = "NOT_CAT";
 
-    clientLazyLoad.getValue("stringDefaultCat", defaultValue, null, actual => {
+    clientLazyLoad.getValue("stringDefaultCat", defaultValue, actual => {
 
       assert.strictEqual(actual, "Cat");
       assert.notStrictEqual(actual, defaultValue);
@@ -60,7 +60,7 @@ describe("Integration - ConfigCatClient", () => {
 
     const defaultValue: string = "NOT_CAT";
 
-    clientAutoPoll.getValue("NotExistsKey", defaultValue, null, actual => {
+    clientAutoPoll.getValue("NotExistsKey", defaultValue, actual => {
 
       assert.equal(actual, defaultValue);
 
@@ -73,7 +73,7 @@ describe("Integration - ConfigCatClient", () => {
     const defaultValue: string = "NOT_CAT";
 
     clientManualPoll.forceRefresh(() => {
-      clientManualPoll.getValue("NotExistsKey", defaultValue, null, actual => {
+      clientManualPoll.getValue("NotExistsKey", defaultValue, actual => {
 
         assert.equal(actual, defaultValue);
 
@@ -86,7 +86,7 @@ describe("Integration - ConfigCatClient", () => {
 
     const defaultValue: string = "NOT_CAT";
 
-    clientLazyLoad.getValue("NotExistsKey", defaultValue, null, actual => {
+    clientLazyLoad.getValue("NotExistsKey", defaultValue, actual => {
 
       assert.equal(actual, defaultValue);
 
@@ -96,33 +96,36 @@ describe("Integration - ConfigCatClient", () => {
 
   it("GetValue - AutoPoll - With 'RolloutEvaluate' ShouldReturnDefaultValue", (done) => {
 
-    clientAutoPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
+    clientAutoPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", actual => {
 
       assert.equal(actual, "Horse");
 
       done();
-    });
+    },
+    new User("nacho@gmail.com"));
   });
 
   it("GetValue - ManualPoll - With 'RolloutEvaluate' ShouldReturnDefaultValue", (done) => {
 
     clientManualPoll.forceRefresh(() => {
-      clientManualPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
+      clientManualPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", actual => {
 
         assert.equal(actual, "Horse");
 
         done();
-      });
+      },
+      new User("nacho@gmail.com"));
     });
   });
 
   it("GetValue - LazyLoad - With 'RolloutEvaluate' ShouldReturnDefaultValue", (done) => {
 
-    clientLazyLoad.getValue("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"), actual => {
+    clientLazyLoad.getValue("string25Cat25Dog25Falcon25Horse", "N/A", actual => {
 
       assert.equal(actual, "Horse");
 
       done();
-    });
+    },
+    new User("nacho@gmail.com"));
   });
 });
