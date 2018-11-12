@@ -14,7 +14,7 @@ https://configcat.com
  ```PowerShell
   npm i configcat-node
  ```
-2. Get your Api Key from [configcat.com](https://configcat.com) portal:
+2. <a href="https://configcat.com/Account/Login" target="_blank">Log in</a> to access the *Management Console*, go to your *Project* to access the *API Key*:
 ![API-KEY](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/media/readme01.png  "API-KEY")
 
 1. Create a **ConfigCatClient** instance:
