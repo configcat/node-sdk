@@ -8,11 +8,11 @@ var myUser = {
 }; 
 
 // Get your config value:
-client.getValue("keySampleText", "N/A", myUser, (value) => {
+client.getValue("keySampleText", "N/A", (value) => {
     console.log("keySampleText: " + value);
-});
+}, myUser);
 
 // Get your config value:
-client.getValue("keySampleText_NOTEXISTS", "N/A", myUser, (value) => {
+client.getValue("keySampleText_NOTEXISTS", "N/A", (value) => {
     console.log("keySampleText: " + value);
-});
+}, myUser);
