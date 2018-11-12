@@ -34,16 +34,19 @@ https://configcat.com
     });
     ```
 
-## Targeting: Getting user specific setting values
-Using this feature you will be able get different setting values for different users in your application.
+## Getting user specific setting values with Targeting
+Using this feature you will be able get different setting values for different users in your application by passing a `User Object` to the `getValue()` function.
+
 Read more about [Targeting here](https://docs.configcat.com/docs/advanced/targeting/).
 ```js
-client.getValue("isMyAwesomeFeatureEnabled", false, {identifier : "userIdentifier"}, (value) => {
+client.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
     if(value) {
         do_the_new_thing();
     } else {
         do_the_old_thing();
-    }
+    },
+    {identifier : "#USER-IDENTIFIER#"}
+});
 ```
 
 ## Caching Policies
