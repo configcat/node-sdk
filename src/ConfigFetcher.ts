@@ -31,11 +31,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
                 callback(new ProjectConfig(new Date().getTime(), body, response.headers.etag));
 
             } else {
-
-                if (err) {
-                    options.logger.error("httprequest error - " + err);
-                }
-
+                options.logger.error("ConfigCat HTTPRequest error - " + response.statusCode + ". Error: " + err);
                 callback(lastProjectConfig);
             }
         });
