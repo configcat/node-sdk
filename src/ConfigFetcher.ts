@@ -12,6 +12,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
         // tslint:disable-next-line:typedef
         var httpOptions = {
             url: options.getUrl(),
+            timeout: options.requestTimeoutMs,
             headers: {
                 "User-Agent": "ConfigCat-node/" + options.clientVersion,
                 "X-ConfigCat-UserAgent": "ConfigCat-node/" + options.clientVersion,
