@@ -23,7 +23,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
 
             if (!err && response.statusCode === 304) {
 
-                callback(new ProjectConfig(new Date().getTime(), lastProjectConfig.JSONConfig, response.headers.etag));
+                callback(new ProjectConfig(new Date().getTime(), JSON.stringify(lastProjectConfig.ConfigJSON), response.headers.etag));
 
             } else if (!err && response.statusCode === 200) {
 
