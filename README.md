@@ -20,14 +20,6 @@ npm i configcat-node
 var configcat = require("configcat-node");
 ```
 
-*via Yarn [package](https://yarnpkg.com/package/configcat-node):*
-```PowerShell
-yarn add configcat-node
-```
-```js
-var configcat = require("configcat-node");
-```
-
 **2. <a href="https://configcat.com/Account/Login" target="_blank">Log in to ConfigCat Management Console</a> and go to your *Project* to get your *API Key*:**
 ![API-KEY](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/media/readme01.png  "API-KEY")
 
