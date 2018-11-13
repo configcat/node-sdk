@@ -17,7 +17,7 @@ https://configcat.com
 npm i configcat-node
 ```
 ```js
-import * as configcat from "configcat-node";
+var configcat = require("configcat-node");
 ```
 
 *via Yarn [package](https://yarnpkg.com/package/configcat-node):*
@@ -25,7 +25,7 @@ import * as configcat from "configcat-node";
 yarn add configcat-node
 ```
 ```js
-import * as configcat from "configcat-node";
+var configcat = require("configcat-node");
 ```
 
 **2. <a href="https://configcat.com/Account/Login" target="_blank">Log in to ConfigCat Management Console</a> and go to your *Project* to get your *API Key*:**
@@ -33,8 +33,6 @@ import * as configcat from "configcat-node";
 
 **3. Create a *ConfigCat* client instance:**
 ```js
-var configcat = require("configcat-node");
-
 var client = configcat.createClient("#YOUR-API-KEY#");
 ```
 **4. Get your setting value:**
@@ -62,6 +60,9 @@ client.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
     {identifier : "#USER-IDENTIFIER#"}
 });
 ```
+
+## Sample/Demo app
+  [Node.js](https://github.com/configcat/node-sdk/tree/master/samples/console/index.js)
 
 ## Caching Policies
 The ConfigCat SDK supports three different caching policies to acquire the configuration values from ConfigCat. When the client downloads the latest configuration value, puts it into the internal cache and then serves all requests from the cache. With the following caching policies you can customize the caching to suit your needs.
