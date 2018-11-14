@@ -10,7 +10,7 @@ https://configcat.com
 
 ## Getting Started
 
-**1. Install and import package:**
+### 1. Install and import package:
 
 *via NPM [package](https://npmjs.com/package/configcat-node):*
 ```PowerShell
@@ -20,14 +20,14 @@ npm i configcat-node
 const configcat = require("configcat-node");
 ```
 
-**2. <a href="https://configcat.com/Account/Login" target="_blank">Log in to ConfigCat Management Console</a> and go to your *Project* to get your *API Key*:**
+### 2. <a href="https://configcat.com/Account/Login" target="_blank">Log in to ConfigCat Management Console</a> and go to your *Project* to get your *API Key*:
 ![API-KEY](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/media/readme01.png  "API-KEY")
 
-**3. Create a *ConfigCat* client instance:**
+### 3. Create a *ConfigCat* client instance:
 ```js
 let configCatClient = configcat.createClient("#YOUR-API-KEY#");
 ```
-**4. Get your setting value:**
+### 4. Get your setting value:
 ```js
 configCatClient.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
     if(value) {
@@ -57,9 +57,7 @@ configCatClient.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
   [Console App](https://github.com/configcat/node-sdk/tree/master/samples/console/index.js)
 
 ## Caching Policies
-The ConfigCat SDK supports three different caching policies to acquire the configuration values from ConfigCat. When the client downloads the latest configuration value, puts it into the internal cache and then serves all requests from the cache. With the following caching policies you can customize the caching to suit your needs.
-
-Read more in the [ConfigCat Docs](https://docs.configcat.com/docs/sdk-reference/node/).
+The ConfigCat SDK supports 3 different caching policies to acquire the setting values from ConfigCat. After latest setting values are downloaded, they are stored in internal cache and then all requests are served from there. Read more about Caching Policies and how to use them at [ConfigCat Docs](https://docs.configcat.com/docs/sdk-reference/node/).
 
 ---
 
