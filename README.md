@@ -64,7 +64,6 @@ If you need help how to use this SDK feel free to to contact the ConfigCat Staff
 
 ## Contributing
 Contributions are welcome.
----
 
 ## License
 [MIT](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/LICENSE)
