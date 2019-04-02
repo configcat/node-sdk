@@ -32,9 +32,4 @@ describe("ConfigCatClient index (main)", () => {
 
         assert.isDefined(client);
     });
-
-    it("DUMMY simulate fail test", () => {
-
-        assert.fail("THIS TEST");
-    });
 });
