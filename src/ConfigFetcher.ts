@@ -22,16 +22,16 @@ export class HttpConfigFetcher implements IConfigFetcher {
 
         httprequest(httpOptions, (err, response, body) => {
 
-            if (!err && response.statusCode === 304) {
+            if (!err && response && response.statusCode === 304) {
 
                 callback(new ProjectConfig(new Date().getTime(), JSON.stringify(lastProjectConfig.ConfigJSON), response.headers.etag));
 
-            } else if (!err && response.statusCode === 200) {
+            } else if (!err && response && response.statusCode === 200) {
 
                 callback(new ProjectConfig(new Date().getTime(), body, response.headers.etag));
 
             } else {
-                options.logger.error("ConfigCat HTTPRequest error - " + response && response.statusCode + ". Error: " + err);
+                options.logger.error("ConfigCat HTTPRequest error - " + (response && response.statusCode)+ ". Error: " + err);
                 callback(lastProjectConfig);
             }
         });
