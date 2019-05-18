@@ -12,4 +12,4 @@ npm version patch
  ```
 
 ### 3. That's it ;)
-You can follow the build status here -> https://travis-ci.org/configcat/node-sdk
+You can follow the build status here -> https://travis-ci.com/configcat/node-sdk
