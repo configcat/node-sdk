@@ -21,6 +21,10 @@ Increase version number by using `npm version patch | minor | major`
     *Example: git push origin v1.1.17*
 
     You can follow the build status here -> https://travis-ci.com/configcat/node-sdk
-1. Update `configcat-node` dependency in all sample applications:
+
+1. Make sure new package is available via NPM: https://www.npmjs.com/package/configcat-node
+
+2. Update `configcat-node` dependency in all sample applications:
    1. In `package.json`: `"configcat-node": "^1.1.14"` -> `"configcat-js": "^1.1.17"`
    2. Test sample applications by following their `README.md`.
+
