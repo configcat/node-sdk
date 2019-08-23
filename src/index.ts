@@ -3,8 +3,6 @@ import { HttpConfigFetcher } from "./ConfigFetcher";
 import { InMemoryCache } from "configcat-common/lib/Cache";
 import { IConfigCatClient } from "configcat-common/lib/ConfigCatClient";
 
-const VERSION: string = require("../package.json").version;
-
 /** Create an instance of ConfigCatClient and setup Auto Poll mode with default options */
 export function createClient(apiKey: string): IConfigCatClient {
     return this.createClientWithAutoPoll(apiKey);
