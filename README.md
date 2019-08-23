@@ -21,7 +21,7 @@ npm i configcat-node
 ```js
 const configcat = require("configcat-node");
 ```
-In case of SSR (Server-Side Rendering) applications use:
+*In case of SSR (Server-Side Rendering) Universal applications:*
 ```js
 import * as configcat from "configcat-node";
 ```
