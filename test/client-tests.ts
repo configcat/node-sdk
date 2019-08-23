@@ -1,32 +1,32 @@
 import { assert } from "chai";
 import "mocha";
-import * as configcatClient from "../src/index";
+import * as configcatClient from "../src/client";
 import { IConfigCatClient } from "configcat-common/lib/ConfigCatClient";
 
-describe("ConfigCatClient index (main)", () => {
+describe("ConfigCatClient tests", () => {
 
-    it("createClient ShouldCreateInstance", () => {
+    it("createClient() should createInstance", () => {
 
         var client: IConfigCatClient = configcatClient.createClient("APIKEY");
 
         assert.isDefined(client);
     });
 
-    it("createClientWithAutoPoll ShouldCreateInstance", () => {
+    it("createClientWithAutoPoll() should createInstance", () => {
 
         var client: IConfigCatClient = configcatClient.createClientWithAutoPoll("APIKEY", { "pollIntervalSeconds": 15 });
 
         assert.isDefined(client);
     });
 
-    it("createClientWithLazyLoad ShouldCreateInstance", () => {
+    it("createClientWithLazyLoad() should createInstance", () => {
 
         var client: IConfigCatClient = configcatClient.createClientWithLazyLoad("APIKEY", { "cacheTimeToLiveSeconds": 15 });
 
         assert.isDefined(client);
     });
 
-    it("createClientWithManualPoll ShouldCreateInstance", () => {
+    it("createClientWithManualPoll() should createInstance", () => {
 
         var client: IConfigCatClient = configcatClient.createClientWithManualPoll("APIKEY");
 

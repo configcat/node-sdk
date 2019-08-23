@@ -1,10 +1,10 @@
 import { assert } from "chai";
 import "mocha";
 import { IConfigCatClient, } from "configcat-common/lib/ConfigCatClient";
-import * as configcatClient from "../src/index";
+import * as configcatClient from "../src/client";
 import { User } from "configcat-common/lib/RolloutEvaluator";
 
-describe("Integration - ConfigCatClient", () => {
+describe("Integration tests", () => {
 
   let apiKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
 
@@ -14,7 +14,7 @@ describe("Integration - ConfigCatClient", () => {
 
   let clientLazyLoad: IConfigCatClient = configcatClient.createClientWithLazyLoad(apiKey);
 
-  it("GetValue - AutoPoll - With 'stringDefaultCat' ShouldReturnCat", (done) => {
+  it("Auto poll - getValue() with key: 'stringDefaultCat' should return 'Cat'", (done) => {
 
     const defaultValue: string = "NOT_CAT";
 
@@ -27,7 +27,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - ManualPoll - With 'stringDefaultCat' ShouldReturnCat", (done) => {
+  it("Manual poll - getValue() with key: 'stringDefaultCat' should return 'Cat'", (done) => {
 
     const defaultValue: string = "NOT_CAT";
     clientManualPoll.forceRefresh(() => {
@@ -43,7 +43,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - LazyLoad - With 'stringDefaultCat' ShouldReturnCat", (done) => {
+  it("Lazy load - getValue() with  key: 'stringDefaultCat' should return 'Cat'", (done) => {
 
     const defaultValue: string = "NOT_CAT";
 
@@ -56,7 +56,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - AutoPoll - With 'NotExistsKey' ShouldReturnDefaultValue", (done) => {
+  it("Auto poll - getValue() with key: 'NotExistsKey' should return default value", (done) => {
 
     const defaultValue: string = "NOT_CAT";
 
@@ -68,7 +68,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - ManualPoll - With 'NotExistsKey' ShouldReturnDefaultValue", (done) => {
+  it("Manual poll - getValue() with  with key: 'NotExistsKey' should return default value", (done) => {
 
     const defaultValue: string = "NOT_CAT";
 
@@ -82,7 +82,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - LazyLoad - With 'NotExistsKey' ShouldReturnDefaultValue", (done) => {
+  it("Lazy load - getValue() with  key: 'NotExistsKey' should return default value", (done) => {
 
     const defaultValue: string = "NOT_CAT";
 
@@ -94,7 +94,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - AutoPoll - With 'RolloutEvaluate' ShouldReturnDefaultValue", (done) => {
+  it("Auto poll - getValue() with key: 'RolloutEvaluate' should return default value", (done) => {
 
     clientAutoPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", actual => {
 
@@ -105,7 +105,7 @@ describe("Integration - ConfigCatClient", () => {
       new User("nacho@gmail.com"));
   });
 
-  it("GetValue - ManualPoll - With 'RolloutEvaluate' ShouldReturnDefaultValue", (done) => {
+  it("Manual poll - getValue() with key: 'RolloutEvaluate' should return default value", (done) => {
 
     clientManualPoll.forceRefresh(() => {
       clientManualPoll.getValue("string25Cat25Dog25Falcon25Horse", "N/A", actual => {
@@ -118,7 +118,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - LazyLoad - With 'RolloutEvaluate' ShouldReturnDefaultValue", (done) => {
+  it("Lazy load - getValue() with key: 'RolloutEvaluate' should return default value", (done) => {
 
     clientLazyLoad.getValue("string25Cat25Dog25Falcon25Horse", "N/A", actual => {
 
@@ -129,7 +129,7 @@ describe("Integration - ConfigCatClient", () => {
       new User("nacho@gmail.com"));
   });
 
-  it("GetValue - AutoPoll - With wrong apikey - Returns NOT_CAT", (done) => {
+  it("Auto poll with wrong API key - getValue() should return default value", (done) => {
 
     const defaultValue: string = "NOT_CAT";
     let client: IConfigCatClient = configcatClient.createClientWithAutoPoll("WRONG_API_KEY", { requestTimeoutMs: 500 });
@@ -142,7 +142,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - ManualPoll - With wrong apikey - Returns NOT_CAT", (done) => {
+  it("Manual poll with wrong API key - getValue() should return default value", (done) => {
 
     const defaultValue: string = "NOT_CAT";
     let client: IConfigCatClient = configcatClient.createClientWithManualPoll("WRONG_API_KEY", { requestTimeoutMs: 500 });
@@ -161,7 +161,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetValue - LazyLoad - With wrong apikey - Returns NOT_CAT", (done) => {
+  it("Lazy load with wrong API key - getValue() should return default value", (done) => {
 
     const defaultValue: string = "NOT_CAT";
     let client: IConfigCatClient = configcatClient.createClientWithLazyLoad("WRONG_API_KEY", { requestTimeoutMs: 500 });
@@ -173,7 +173,7 @@ describe("Integration - ConfigCatClient", () => {
     });
   });
 
-  it("GetAllKeys - works without config", (done) => {
+  it("getAllKeys() should not crash with wrong API key", (done) => {
 
     let client: IConfigCatClient = configcatClient.createClientWithManualPoll("WRONG_API_KEY", { requestTimeoutMs: 500 });
 
@@ -185,7 +185,7 @@ describe("Integration - ConfigCatClient", () => {
   });
 
   
-  it("GetAllKeys - works", (done) => {
+  it("getAllKeys() should return all keys", (done) => {
 
     clientAutoPoll.getAllKeys(keys => {
 
