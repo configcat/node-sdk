@@ -25,7 +25,7 @@
   "author": "ConfigCat",
   "license": "MIT",
   "dependencies": {
-    "configcat-common": "^1.1.20",
+    "configcat-common": "^1.1.22",
     "ky": "^0.12.0",
     "ky-universal": "^0.3.0"
   },
