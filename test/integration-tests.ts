@@ -51,11 +51,10 @@ describe("Integration tests", () => {
   it("Manual poll - getValueAsync() with key: 'stringDefaultCat' should return 'Cat'", async () => {
 
     const defaultValue: string = "NOT_CAT";
-    clientManualPoll.forceRefresh(async () => {
-      const actual = await clientManualPoll.getValueAsync("stringDefaultCat", defaultValue);
-      assert.strictEqual(actual, "Cat");
-      assert.notStrictEqual(actual, defaultValue);
-    });
+    await clientManualPoll.forceRefreshAsync()
+    const actual = await clientManualPoll.getValueAsync("stringDefaultCat", defaultValue);
+    assert.strictEqual(actual, "Cat");
+    assert.notStrictEqual(actual, defaultValue);
   });
 
   it("Lazy load - getValue() with  key: 'stringDefaultCat' should return 'Cat'", (done) => {
@@ -111,10 +110,9 @@ describe("Integration tests", () => {
 
     const defaultValue: string = "NOT_CAT";
 
-    clientManualPoll.forceRefresh(async () => {
-      const actual = await clientManualPoll.getValueAsync("NotExistsKey", defaultValue);
-      assert.equal(actual, defaultValue);;
-    });
+    await clientManualPoll.forceRefreshAsync();
+    const actual = await clientManualPoll.getValueAsync("NotExistsKey", defaultValue);
+    assert.equal(actual, defaultValue);;
   });
 
   it("Lazy load - getValue() with  key: 'NotExistsKey' should return default value", (done) => {
@@ -166,10 +164,9 @@ describe("Integration tests", () => {
 
   it("Manual poll - getValueAsync() with key: 'RolloutEvaluate' should return default value", async () => {
 
-    clientManualPoll.forceRefresh(async () => {
-      const actual = await clientManualPoll.getValueAsync("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"));
-      assert.equal(actual, "Horse");
-    });
+    await clientManualPoll.forceRefreshAsync();
+    const actual = await clientManualPoll.getValueAsync("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"));
+    assert.equal(actual, "Horse");
   });
 
   it("Lazy load - getValue() with key: 'RolloutEvaluate' should return default value", (done) => {
@@ -237,10 +234,9 @@ describe("Integration tests", () => {
 
     const actual = await client.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, defaultValue);
-    client.forceRefresh(async () => {
-      const actual2 = await client.getValueAsync("stringDefaultCat", defaultValue);
-      assert.strictEqual(actual2, defaultValue);
-    });
+    await client.forceRefreshAsync();
+    const actual2 = await client.getValueAsync("stringDefaultCat", defaultValue);
+    assert.strictEqual(actual2, defaultValue);
   });
 
   it("Lazy load with wrong API key - getValue() should return default value", (done) => {
@@ -275,6 +271,13 @@ describe("Integration tests", () => {
     });
   });
 
+  it("getAllKeysAsync() should not crash with wrong API key", async () => {
+
+    let client: IConfigCatClient = configcatClient.createClientWithManualPoll("WRONG_API_KEY", { requestTimeoutMs: 500 });
+
+    const keys = await client.getAllKeysAsync();
+    assert.equal(keys.length, 0);
+  });
 
   it("getAllKeys() should return all keys", (done) => {
 
@@ -303,5 +306,32 @@ describe("Integration tests", () => {
       ]);
       done();
     });
+  });
+
+  it("getAllKeysAsync() should return all keys", async () => {
+
+    const keys = await clientAutoPoll.getAllKeysAsync();
+
+    assert.equal(keys.length, 16);
+    const keysObject = {};
+    keys.forEach(value => keysObject[value] = {});
+    assert.containsAllKeys(keysObject, [
+      'stringDefaultCat',
+      'stringIsInDogDefaultCat',
+      'stringIsNotInDogDefaultCat',
+      'stringContainsDogDefaultCat',
+      'stringNotContainsDogDefaultCat',
+      'string25Cat25Dog25Falcon25Horse',
+      'string75Cat0Dog25Falcon0Horse',
+      'string25Cat25Dog25Falcon25HorseAdvancedRules',
+      'boolDefaultTrue',
+      'boolDefaultFalse',
+      'bool30TrueAdvancedRules',
+      'integer25One25Two25Three25FourAdvancedRules',
+      'integerDefaultOne',
+      'doubleDefaultPi',
+      'double25Pi25E25Gr25Zero',
+      'keySampleText'
+    ]);
   });
 });
