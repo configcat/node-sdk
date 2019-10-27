@@ -20,16 +20,21 @@ export class HttpConfigFetcher implements IConfigFetcher {
                 response.json().then((body) => {
                     callback(new ProjectConfig(new Date().getTime(), JSON.stringify(body), response.headers.get('etag')));
                 }).catch((reason) => {
-                    options.logger.log("ConfigCat HTTPResponse body parsing error. Reason: " + reason);
+                    options.logger.log("Error while parsing response JSON. Reason: " + reason);
                     callback(lastProjectConfig);
                 });
             } else {
-                options.logger.log("ConfigCat HTTPRequest error - " + (response && response.status) + ". Error: " + response.statusText);
+                options.logger.log("Failed to download config from ConfigCat. Status:" + (response && response.status) + " - " + response.statusText);
                 callback(lastProjectConfig);
             }
         }).catch((reason) => {
-            options.logger.log("ConfigCat HTTPRequest error. Reason: " + reason);
-            callback(lastProjectConfig);
+            const response = reason.response;
+            if (response && response.status === 304) {
+                callback(new ProjectConfig(new Date().getTime(), JSON.stringify(lastProjectConfig.ConfigJSON), response.headers.get('etag')));
+            } else {
+                options.logger.log("Failed to download config from ConfigCat. Status:" + (response && response.status) + " - " + response.statusText);
+                callback(lastProjectConfig);
+            }
         });
     }
 }
