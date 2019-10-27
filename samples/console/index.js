@@ -1,18 +1,16 @@
 var configcat = require("configcat-node");
 
-// Insert your API key
-var configCatClient = configcat.createClient("PKDVCLf-Hq-h-kCzMp-L7Q/PaDVCFk9EpmD6sLpGLltTA");
+var configCatClient = configcat.createClientWithAutoPoll('PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb30i9wi17GQ', { pollIntervalSeconds: 2 });
+// You can instantiate the client with different polling modes. See the Docs: https://docs.configcat.com/docs/sdk-reference/js/#polling-modes
 
-var myUser = {
-    identifier : "435170f4-8a8b-4b67-a723-505ac7cdea92"
-}; 
+configCatClient.getValueAsync("isAwesomeFeatureEnabled", false).then(value => {
+    console.log("isAwesomeFeatureEnabled: " + value);
+});
 
-// Get your config value:
-configCatClient.getValue("keySampleText", "N/A", (value) => {
-    console.log("keySampleText: " + value);
-}, myUser);
-
-// Get your config value:
-configCatClient.getValue("keySampleText_NOTEXISTS", "N/A", (value) => {
-    console.log("keySampleText: " + value);
-}, myUser);
+var userObject = { identifier: "#SOME-USER-ID#", email: "configcat@example.com" };
+// Read more about the User Object: https://docs.configcat.com/docs/sdk-reference/js/#user-object
+configCatClient.getValueAsync("isPOCFeatureEnabled", false).then(value => {
+    console.log("isPOCFeatureEnabled: " + value);
+},
+    userObject
+);
