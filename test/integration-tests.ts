@@ -109,10 +109,10 @@ describe("Integration tests", () => {
   it("Manual poll - getValueAsync() with  with key: 'NotExistsKey' should return default value", async () => {
 
     const defaultValue: string = "NOT_CAT";
-
+    
     await clientManualPoll.forceRefreshAsync();
     const actual = await clientManualPoll.getValueAsync("NotExistsKey", defaultValue);
-    assert.equal(actual, defaultValue);;
+    assert.equal(actual, defaultValue);
   });
 
   it("Lazy load - getValue() with  key: 'NotExistsKey' should return default value", (done) => {
