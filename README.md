@@ -1,9 +1,11 @@
-# ConfigCat SDK for Node.js
+# ConfigCat SDK for Node.js and SSR
 https://configcat.com
 
-ConfigCat SDK for Node.js provides easy integration for your application to ConfigCat.
+ConfigCat SDK for Node.js and SSR (Server-Side Rendering) provides easy integration for your application to ConfigCat.
 
-ConfigCat is a feature flag and configuration management service that lets you separate releases from deployments. You can turn your features ON/OFF using <a href="http://app.configcat.com" target="_blank">ConfigCat Management Console</a> even after they are deployed. ConfigCat lets you target specific groups of users based on region, email or any other custom user attribute.
+ConfigCat is a feature flag and configuration management service that lets you separate releases from deployments. You can turn your features ON/OFF using <a href="https://app.configcat.com" target="_blank">ConfigCat Management Console</a> even after they are deployed. ConfigCat lets you target specific groups of users based on region, email or any other custom user attribute.
+
+ConfigCat is a <a href="https://configcat.com" target="_blank">hosted feature flag service</a>. Manage feature toggles across frontend, backend, mobile, desktop apps. <a href="https://configcat.com" target="_blank">Alternative to LaunchDarkly</a>. Management app + feature flag SDKs.
 
 [![Build Status](https://travis-ci.com/configcat/node-sdk.svg?branch=master)](https://travis-ci.com/configcat/node-sdk) [![codecov](https://codecov.io/gh/configcat/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/configcat/node-sdk) [![Known Vulnerabilities](https://snyk.io/test/github/configcat/node-sdk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/configcat/node-sdk?targetFile=package.json) ![License](https://img.shields.io/github/license/configcat/node-sdk.svg) \
 [![NPM](https://nodei.co/npm/configcat-node.png)](https://nodei.co/npm/configcat-node/)
@@ -19,6 +21,10 @@ npm i configcat-node
 ```js
 const configcat = require("configcat-node");
 ```
+*In case of SSR (Server-Side Rendering) Universal applications:*
+```js
+import * as configcat from "configcat-node";
+```
 
 ### 2. Go to <a href="https://app.configcat.com/connect" target="_blank">Connect your application</a> tab to get your *API Key*:
 ![API-KEY](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/media/readme01.png  "API-KEY")
@@ -32,7 +38,8 @@ let configCatClient = configcat.createClient("#YOUR-API-KEY#");
 
 ### 4. Get your setting value:
 ```js
-configCatClient.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
+configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false)
+.then((value) => {
     if(value) {
         do_the_new_thing();
     } else {
@@ -42,17 +49,18 @@ configCatClient.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
 ```
 
 ## Getting user specific setting values with Targeting
-Using this feature, you will be able to get different setting values for different users in your application by passing a `User Object` to the `getValue()` function.
+Using this feature, you will be able to get different setting values for different users in your application by passing a `User Object` to `getValueAsync()`.
 
 Read more about [Targeting here](https://docs.configcat.com/docs/advanced/targeting/).
 ```js
-configCatClient.getValue("isMyAwesomeFeatureEnabled", false, (value) => {
+const userObject = { identifier : "#USER-IDENTIFIER#" };
+configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false, userObject)
+.then((value) => {
     if(value) {
         do_the_new_thing();
     } else {
         do_the_old_thing();
-    },
-    {identifier : "#USER-IDENTIFIER#"}
+    }
 });
 ```
 

@@ -1,9 +1,9 @@
 {
   "name": "configcat-node",
-  "version": "2.1.11",
-  "description": "ConfigCat is a configuration as a service that lets you manage your features and configurations without actually deploying new code.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "version": "2.3.0",
+  "description": "Official ConfigCat SDK to help you access your feature flags from a Node.js or an SSR (Server-Side Rendering) application.",
+  "main": "lib/client.js",
+  "types": "lib/client.d.ts",
   "scripts": {
     "test": "nyc mocha --require ts-node/register test/**/*.ts --exit --timeout 30000",
     "build": "tsc",
@@ -25,20 +25,21 @@
   "author": "ConfigCat",
   "license": "MIT",
   "dependencies": {
-    "configcat-common": "^1.1.18",
-    "request": "^2.85.0"
+    "configcat-common": "^1.2.0",
+    "got": "^9.6.0",
+    "tunnel": "0.0.6"
   },
   "devDependencies": {
-    "@types/chai": "^4.1.7",
+    "@types/chai": "^4.2.0",
     "@types/mocha": "^5.2.7",
-    "@types/node": "^10.14.12",
+    "@types/node": "^12.7.2",
     "chai": "^4.2.0",
-    "del": "^3.0.0",
-    "mocha": "^5.2.0",
+    "del": "^5.1.0",
+    "mocha": "^6.2.0",
     "nyc": "^14.1.1",
-    "source-map-support": "^0.5.12",
-    "ts-node": "^7.0.1",
-    "typescript": "^2.9.2"
+    "source-map-support": "^0.5.13",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   },
   "repository": {
     "type": "git",
