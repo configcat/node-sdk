@@ -40,7 +40,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
             } else if (response && response.statusCode === 200) {
                 callback(new ProjectConfig(new Date().getTime(), response.body, response.headers.etag as string));
             } else {
-                options.logger.log("Failed to download config from ConfigCat. Status:" + (response && response.statusCode) + " - " + response.statusMessage);
+                options.logger.log("Failed to download config from ConfigCat. Status:" + (response && response.statusCode) + " - " + (response && response.statusMessage));
                 callback(lastProjectConfig);
             }
         }).catch((reason) => {
@@ -48,7 +48,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
             if (response && response.status === 304) {
                 callback(new ProjectConfig(new Date().getTime(), JSON.stringify(lastProjectConfig.ConfigJSON), response.headers.get('etag')));
             } else {
-                options.logger.log("Failed to download config from ConfigCat. Status:" + (response && response.statusCode) + " - " + response.statusMessage);
+                options.logger.log("Failed to download config from ConfigCat. Status:" + (response && response.statusCode) + " - " + (response && response.statusMessage));
                 callback(lastProjectConfig);
             }
         });
