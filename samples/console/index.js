@@ -9,8 +9,6 @@ configCatClient.getValueAsync("isAwesomeFeatureEnabled", false).then(value => {
 
 var userObject = { identifier: "#SOME-USER-ID#", email: "configcat@example.com" };
 // Read more about the User Object: https://docs.configcat.com/docs/sdk-reference/js/#user-object
-configCatClient.getValueAsync("isPOCFeatureEnabled", false).then(value => {
+configCatClient.getValueAsync("isPOCFeatureEnabled", false, userObject).then(value => {
     console.log("isPOCFeatureEnabled: " + value);
-},
-    userObject
-);
+});
