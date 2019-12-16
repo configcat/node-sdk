@@ -1,0 +1,17 @@
+{
+  "name": "expresswithdocker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "configcat",
+  "license": "MIT",
+  "description": "Sample application for ConfigCat SDK",
+  "dependencies": {
+    "configcat-node": "^3.0.0",
+    "express": "^4.17.1",
+    "semver": "^7.0.0"
+  }
+}
