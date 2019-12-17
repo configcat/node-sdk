@@ -6,17 +6,13 @@ This is a simple nodeJS application to demostrates how to use the configcat SDK 
 ## Install dependencies
 
 ```
-
 npm i
-
 ```
 
 ## Start webserver
 
 ```
-
 npm start
-
 ```
 
 # Run web application in docker
