@@ -1,6 +1,6 @@
-# Express (with docker)
+# Sample application using Express and Docker
 
-This is a simple nodeJS application to demostrates how to use the configcat SDK on nodeJS platform with express and docker.
+This is a simple nodeJS application to demonstrate how to use the ConfigCat SDK on NodeJS with Express and Docker.
 
 # Run web application on local machine
 ## Install dependencies
@@ -15,21 +15,21 @@ npm i
 npm start
 ```
 
-# Run web application in docker
+# Run web application in Docker
 
-## Build your docker image
+## Build your Docker image
 
 ```
 docker build -t configcat/expressdemo .
 ```
 
-## Run docker image
+## Run Docker image
 
 ```
 docker run -p 8088:8088 -d configcat/expressdemo
 ```
 
-# Send some GET request to webserver
+# Try it by sending GET requests
 
 Open these urls:
 
