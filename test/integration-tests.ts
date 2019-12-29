@@ -1,18 +1,22 @@
 import { assert } from "chai";
 import "mocha";
-import { IConfigCatClient, } from "configcat-common/lib/ConfigCatClient";
+import { IConfigCatClient} from "configcat-common/lib/ConfigCatClient";
 import * as configcatClient from "../src/client";
 import { User } from "configcat-common/lib/RolloutEvaluator";
+import { LogLevel } from "configcat-common/lib/index";
+import { createConsoleLogger } from "../src/client";
 
 describe("Integration tests", () => {
 
   let apiKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
 
-  let clientAutoPoll: IConfigCatClient = configcatClient.createClientWithAutoPoll(apiKey);
+  let config = { logger : createConsoleLogger(LogLevel.Off) };
 
-  let clientManualPoll: IConfigCatClient = configcatClient.createClientWithManualPoll(apiKey);
+  let clientAutoPoll: IConfigCatClient = configcatClient.createClientWithAutoPoll(apiKey, config);
 
-  let clientLazyLoad: IConfigCatClient = configcatClient.createClientWithLazyLoad(apiKey);
+  let clientManualPoll: IConfigCatClient = configcatClient.createClientWithManualPoll(apiKey, config);
+
+  let clientLazyLoad: IConfigCatClient = configcatClient.createClientWithLazyLoad(apiKey, config);
 
   it("Auto poll - getValue() with key: 'stringDefaultCat' should return 'Cat'", (done) => {
 

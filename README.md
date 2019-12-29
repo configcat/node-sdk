@@ -51,7 +51,7 @@ configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false)
 ## Getting user specific setting values with Targeting
 Using this feature, you will be able to get different setting values for different users in your application by passing a `User Object` to `getValueAsync()`.
 
-Read more about [Targeting here](https://docs.configcat.com/docs/advanced/targeting/).
+Read more about [Targeting here](https://configcat.com/docs/advanced/targeting/).
 ```js
 const userObject = { identifier : "#USER-IDENTIFIER#" };
 configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false, userObject)
@@ -65,10 +65,11 @@ configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false, userObject)
 ```
 
 ## Sample/Demo app
-  [Sample Console App](https://github.com/configcat/node-sdk/tree/master/samples/console)
+  [Sample Console application](https://github.com/configcat/node-sdk/tree/master/samples/console)
+  [Sample application using Express and Docker](https://github.com/configcat/node-sdk/tree/master/samples/expresswithdocker)
 
 ## Polling Modes
-The ConfigCat SDK supports 3 different polling mechanisms to acquire the setting values from ConfigCat. After latest setting values are downloaded, they are stored in the internal cache then all requests are served from there. Read more about Polling Modes and how to use them at [ConfigCat Docs](https://docs.configcat.com/docs/sdk-reference/node/).
+The ConfigCat SDK supports 3 different polling mechanisms to acquire the setting values from ConfigCat. After latest setting values are downloaded, they are stored in the internal cache then all requests are served from there. Read more about Polling Modes and how to use them at [ConfigCat Docs](https://configcat.com/docs/sdk-reference/node/).
 
 ## Support
 If you need help how to use this SDK feel free to to contact the ConfigCat Staff on https://configcat.com. We're happy to help.
@@ -78,5 +79,5 @@ Contributions are welcome.
 
 ## About ConfigCat
 - [Official ConfigCat SDK's for other platforms](https://github.com/configcat)
-- [Documentation](https://docs.configcat.com)
-- [Blog](https://blog.configcat.com)
+- [Documentation](https://configcat.com/docs)
+- [Blog](https://configcat.com/blog)
