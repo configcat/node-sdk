@@ -3,7 +3,8 @@ const pubnubSubscriberKey = "demo";
 const pubnubPublishKey = "demo";
 const configcatSettingKey = "demoswitch";
 
-// On ConfigCat Dashboard create a webhook with a following URL (HTTP-GET) 
+// On ConfigCat Dashboard (https://app.configcat.com/webhooks) create a HTTP-GET webhook with your PubNub URL.
+// Your PubNub URL should be something like this 
 // https://ps.pndsn.com/publish/demo/demo/0/configcat-channel/myCallback/%7B%22CMD%22%3A%22FORCEUPDATE%22%7D
 
 
@@ -13,10 +14,6 @@ var PubNub = require('pubnub');
 var configCatOptions = {
     configChanged: () => {console.log("[ConfigCat] : config changed!")}   
 }
-
-// On ConfigCat Dashboard create a webhook with a following URL (HTTP-GET) 
-// https://ps.pndsn.com/publish/demo/demo/0/configcat-channel/myCallback/%7B%22CMD%22%3A%22FORCEUPDATE%22%7D
-
 
 // ConfigCat instance
 
@@ -54,7 +51,7 @@ function readValueFromCache(i){
     });    
 }
 
-// get a latest config (only once)
+// get the latest config (only once)
 configCatClient.forceRefreshAsync().then(value => {
 
     // start the loop to read config from cache in every 5000 ms
