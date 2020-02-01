@@ -2,6 +2,7 @@ import * as configcatcommon from "configcat-common";
 import { HttpConfigFetcher } from "./config-fetcher";
 import { InMemoryCache } from "configcat-common/lib/Cache";
 import { IConfigCatClient } from "configcat-common/lib/ConfigCatClient";
+import { LogLevel } from "configcat-common/lib/index";
 
 /** Create an instance of ConfigCatClient and setup Auto Polling mode with default options */
 export function createClient(apiKey: string): IConfigCatClient {
@@ -33,6 +34,14 @@ export function createClientWithManualPoll(apiKey: string, options?: INodeManual
  */
 export function createClientWithLazyLoad(apiKey: string, options?: INodeLazyLoadingOptions): IConfigCatClient {
     return configcatcommon.createClientWithLazyLoad(apiKey, { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() }, options);
+}
+
+/**
+ * Create an instance of ConfigCatConsoleLogger
+ * @param logLevel Specifies message's filtering to output for the CofigCatConsoleLogger.
+ */
+export function createConsoleLogger(logLevel: LogLevel): configcatcommon.IConfigCatLogger {
+    return configcatcommon.createConsoleLogger(logLevel)
 }
 
 export interface INodeAutoPollOptions extends configcatcommon.IAutoPollOptions {
