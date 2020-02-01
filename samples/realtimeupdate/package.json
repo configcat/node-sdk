@@ -1,0 +1,15 @@
+{
+  "name": "realtimeupdate",
+  "version": "1.0.0",
+  "description": "Sample application for ConfigCat SDK to use real time notification with PunNub",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "developer@configcat.com",
+  "license": "MIT",
+  "dependencies": {
+    "configcat-node": "^3.0.4",
+    "pubnub": "^4.27.3"
+  }
+}
