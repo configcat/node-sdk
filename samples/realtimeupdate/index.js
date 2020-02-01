@@ -1,59 +1,51 @@
-const configcatApiKey = "rlPVCCuDMlXYrZsu5t36FQ/9V3VCA4g2GepqkiG_MPZ5w";
-const pubnubSubscriberKey = "demo";
-const pubnubPublishKey = "demo";
-const configcatSettingKey = "demoswitch";
-
-// On ConfigCat Dashboard (https://app.configcat.com/webhooks) create a HTTP-GET webhook with your PubNub URL.
-// Your PubNub URL should be something like this 
-// https://ps.pndsn.com/publish/demo/demo/0/configcat-channel/myCallback/%7B%22CMD%22%3A%22FORCEUPDATE%22%7D
-
-
 var configcat = require("configcat-node");
 var PubNub = require('pubnub');
 
-var configCatOptions = {
-    configChanged: () => {console.log("[ConfigCat] : config changed!")}   
-}
+// ConfigCat related variables
+const configcatSettingKey = "isAwesomeFeatureEnabled"; // Copy your feature flag or setting key from https://app.configcat.com
+const configcatApiKey = "PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb30i9wi17GQ"; // Copy your Configcat API Key: https://app.configcat.com/apikey
 
-// ConfigCat instance
+// PubNub related variables
+const pubnubSubscriberKey = "demo";
+const pubnubPublishKey = "demo";
 
+// ConfigCat instance with manual poll. Polls ConfigCat and updates the cache only when forceRefresh() is called.
 var configCatClient = configcat.createClientWithManualPoll(configcatApiKey);
 
 // PubNub instance
-
 var pubnub = new PubNub({
-        subscribeKey: pubnubSubscriberKey,
-        publishKey: pubnubPublishKey,
-        uuid: "configCat-pubNub-sample"
+    subscribeKey: pubnubSubscriberKey,
+    publishKey: pubnubPublishKey,
+    uuid: "configCat-pubNub-sample"
 })
 
+// Adding a listener for PubNub messages
 pubnub.addListener({
-    message: function(m) {
-        var msg = m.message; 
+    message: function (m) {
+        var msg = m.message;
         console.log(msg);
-        if (msg.CMD == "FORCEUPDATE"){
+        if (msg.CMD == "FORCEUPDATE") {
+            // Updates the cache if the message is: { CMD: 'FORCEUPDATE' }
             configCatClient.forceRefreshAsync().then(value => {
-                console.log("[PubNub] : refresh my config cache");
+                console.log("Force update message received from PubNub. Updated cache.");
             })
         }
     }
 });
 
+// Subscribing to the working demo channel
 pubnub.subscribe({
-    channels: ['configcat-channel'] 
+    channels: ['configcat-channel']
 });
 
-function readValueFromCache(i){
-    
+// Reading the cached feature flag value.
+function readValueFromCache() {
     configCatClient.getValueAsync(configcatSettingKey, false).then(value => {
         console.log(configcatSettingKey + ": " + value);
-        setTimeout(w => readValueFromCache(w), i, i);
-    });    
+    });
 }
 
-// get the latest config (only once)
-configCatClient.forceRefreshAsync().then(value => {
-
-    // start the loop to read config from cache in every 5000 ms
-    readValueFromCache(5000);
+// Updating the cache once when the app starts to make sure ConfigCat service is accessible and a valid value gets cached.
+configCatClient.forceRefreshAsync().then(() => {
+    setInterval(() => { readValueFromCache() }, 5000);
 });
