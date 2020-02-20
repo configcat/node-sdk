@@ -1,11 +1,21 @@
-## Deploy steps
+# How to deploy
 
-1. Run tests
+## Via shell script
+
+1. Run `./deploy.sh`
+
+2. Update `configcat-node` dependency in all sample applications:
+   And test them by following their `README.md`.
+
+or
+
+## Manually
+2. Run tests
    ```PowerShell
     npm test
     ```
 
-1. Create a new version (patch, minor, major)
+3. Create a new version (patch, minor, major)
 Increase version number by using `npm version patch | minor | major`
 
     *Example: increasing patch version* 
@@ -27,6 +37,5 @@ Increase version number by using `npm version patch | minor | major`
 1. Add release notes: https://github.com/configcat/node-sdk/releases
 
 2. Update `configcat-node` dependency in all sample applications:
-   1. In `package.json`: `"configcat-node": "^1.1.14"` -> `"configcat-js": "^1.1.17"`
-   2. Test sample applications by following their `README.md`.
+   And test them by following their `README.md`.
 
