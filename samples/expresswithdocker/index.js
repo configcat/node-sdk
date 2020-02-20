@@ -8,7 +8,7 @@ var app = express();
 
 var logger = configcat.createConsoleLogger(3); // Setting log level to 3 (= Info) to show detailed feature flag evaluation
 
-let configCatClient = configcat.createClient(APIKEY, { logger: logger });
+let configCatClient = configcat.createClientWithAutoPoll(APIKEY, { logger: logger, pollIntervalSeconds: 2 });
 
 app.get("/", function (req, res) {
     res.send("Express is running...");
