@@ -4,6 +4,10 @@
 
 1. Run `./deploy.sh`
 
+1. Make sure new package is available via NPM: https://www.npmjs.com/package/configcat-node
+
+1. Add release notes: https://github.com/configcat/node-sdk/releases
+
 2. Update `configcat-node` dependency in all sample applications:
    And test them by following their `README.md`.
 
