@@ -40,7 +40,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
             } else if (response && response.statusCode === 200) {
                 callback(new ProjectConfig(new Date().getTime(), response.body, response.headers.etag as string));
             } else {
-                options.logger.error("Failed to download feature flags & settings from ConfigCat. Status:" + (response && response.statusCode) + " - " + (response && response.statusMessage));
+                options.logger.error("Failed to download feature flags & settings from ConfigCat. Status: " + (response && response.statusCode) + " - " + (response && response.statusMessage));
                 options.logger.info("Double-check your API KEY on https://app.configcat.com/apikey");
                 callback(lastProjectConfig);
             }
@@ -49,7 +49,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
             if (response && response.status === 304) {
                 callback(new ProjectConfig(new Date().getTime(), JSON.stringify(lastProjectConfig.ConfigJSON), response.headers.get('etag')));
             } else {
-                options.logger.error("Failed to download feature flags & settings from ConfigCat. Status:" + (response && response.statusCode) + " - " + (response && response.statusMessage));
+                options.logger.error("Failed to download feature flags & settings from ConfigCat. Status: " + (response && response.statusCode) + " - " + (response && response.statusMessage));
                 options.logger.info("Double-check your API KEY on https://app.configcat.com/apikey");
                 callback(lastProjectConfig);
             }
