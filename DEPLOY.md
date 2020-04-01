@@ -1,7 +1,7 @@
 # How to deploy
 
-## Via shell script
-
+## Updating `configcat-common` only
+  
 1. Run `./deploy.sh`
 
 1. Make sure new package is available via NPM: https://www.npmjs.com/package/configcat-node
@@ -13,7 +13,8 @@
 
 or
 
-## Manually
+## Steps to deploy manually
+
 2. Run tests
    ```PowerShell
     npm test
