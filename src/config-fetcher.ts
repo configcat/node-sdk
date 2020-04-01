@@ -32,7 +32,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
             headers: {
                 "User-Agent": "ConfigCat-Node/" + options.clientVersion,
                 "X-ConfigCat-UserAgent": "ConfigCat-Node/" + options.clientVersion,
-                "If-None-Match": lastProjectConfig ? lastProjectConfig.HttpETag : null
+                "If-None-Match": (lastProjectConfig && lastProjectConfig.HttpETag) ? lastProjectConfig.HttpETag : null
             }
         }).then((response) => {
             if (response && response.statusCode === 304) {
@@ -40,16 +40,16 @@ export class HttpConfigFetcher implements IConfigFetcher {
             } else if (response && response.statusCode === 200) {
                 callback(new ProjectConfig(new Date().getTime(), response.body, response.headers.etag as string));
             } else {
-                options.logger.error("Failed to download feature flags & settings from ConfigCat. Status: " + (response && response.statusCode) + " - " + (response && response.statusMessage));
+                options.logger.error(`Failed to download feature flags & settings from ConfigCat. Status: ${response && response.statusCode} - ${response && response.statusMessage}`);
                 options.logger.info("Double-check your API KEY on https://app.configcat.com/apikey");
                 callback(lastProjectConfig);
             }
         }).catch((reason) => {
             const response = reason.response;
             if (response && response.status === 304) {
-                callback(new ProjectConfig(new Date().getTime(), JSON.stringify(lastProjectConfig.ConfigJSON), response.headers.get('etag')));
+                callback(new ProjectConfig(new Date().getTime(), JSON.stringify(lastProjectConfig.ConfigJSON), response.headers.etag as string));
             } else {
-                options.logger.error("Failed to download feature flags & settings from ConfigCat. Status: " + (response && response.statusCode) + " - " + (response && response.statusMessage));
+                options.logger.error(`Failed to download feature flags & settings from ConfigCat. Status: ${response && response.statusCode} - ${response && response.statusMessage}`);
                 options.logger.info("Double-check your API KEY on https://app.configcat.com/apikey");
                 callback(lastProjectConfig);
             }
