@@ -1,7 +1,7 @@
-# ConfigCat SDK for Node.js and SSR
+# ConfigCat SDK for Node.js
 https://configcat.com
 
-ConfigCat SDK for Node.js and SSR (Server-Side Rendering) provides easy integration for your application to ConfigCat.
+ConfigCat SDK for Node.js provides easy integration for your application to ConfigCat.
 
 ConfigCat is a feature flag and configuration management service that lets you separate releases from deployments. You can turn your features ON/OFF using <a href="https://app.configcat.com" target="_blank">ConfigCat Dashboard</a> even after they are deployed. ConfigCat lets you target specific groups of users based on region, email or any other custom user attribute.
 
@@ -20,10 +20,6 @@ npm i configcat-node
 ```
 ```js
 const configcat = require("configcat-node");
-```
-*In case of SSR (Server-Side Rendering) Universal applications:*
-```js
-import * as configcat from "configcat-node";
 ```
 
 ### 2. Go to the <a href="https://app.configcat.com/apikey" target="_blank">Dashboard</a> tab to get your *API Key*:
