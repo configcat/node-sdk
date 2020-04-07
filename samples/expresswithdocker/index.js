@@ -1,4 +1,4 @@
-const APIKEY = "PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb30i9wi17GQ";
+const SDKKEY = "PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb30i9wi17GQ";
 const PORT = 8088;
 const SAMPLE_KEY = "isAwesomeFeatureEnabled";
 
@@ -8,7 +8,7 @@ var app = express();
 
 var logger = configcat.createConsoleLogger(3); // Setting log level to 3 (= Info) to show detailed feature flag evaluation
 
-let configCatClient = configcat.createClientWithAutoPoll(APIKEY, { logger: logger, pollIntervalSeconds: 2 });
+let configCatClient = configcat.createClientWithAutoPoll(SDKKEY, { logger: logger, pollIntervalSeconds: 2 });
 
 app.get("/", function (req, res) {
     res.send("Express is running...");

@@ -11,9 +11,9 @@ Running the sample app with own ConfigCat account:
    const configcatSettingKey = "<YOUR-FEATURE-FLAG-KEY>";
    ```
     
-3. Copy your Configcat API Key from https://app.configcat.com/apikey to `index.js`
+3. Copy your Configcat SDK Key from https://app.configcat.com/sdkkey to `index.js`
    ```js
-   const configcatApiKey = "<YOUR-API-KEY>"; 
+   const configcatSdkKey = "<YOUR-SDK-KEY>"; 
    ```
 4. Add a `HTTP GET` webhook (https://app.configcat.com/webhooks) with a PubNub URL.
    The PubNub URL can be either your own or the following working demo URL to make 

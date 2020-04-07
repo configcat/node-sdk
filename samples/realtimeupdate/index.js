@@ -3,14 +3,14 @@ var PubNub = require('pubnub');
 
 // ConfigCat related variables
 const configcatSettingKey = "isAwesomeFeatureEnabled"; // Copy your feature flag or setting key from https://app.configcat.com
-const configcatApiKey = "PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb30i9wi17GQ"; // Copy your Configcat API Key: https://app.configcat.com/apikey
+const configcatSdkKey = "PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb30i9wi17GQ"; // Copy your Configcat SDK Key: https://app.configcat.com/sdkkey
 
 // PubNub related variables
 const pubnubSubscriberKey = "demo";
 const pubnubPublishKey = "demo";
 
 // ConfigCat instance with manual poll. Polls ConfigCat and updates the cache only when forceRefresh() is called.
-var configCatClient = configcat.createClientWithManualPoll(configcatApiKey);
+var configCatClient = configcat.createClientWithManualPoll(configcatSdkKey);
 
 // PubNub instance
 var pubnub = new PubNub({
