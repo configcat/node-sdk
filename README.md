@@ -15,7 +15,7 @@ ConfigCat is a <a href="https://configcat.com" target="_blank">hosted feature fl
 ### 1. Install and import package:
 
 *via NPM [package](https://npmjs.com/package/configcat-node):*
-```PowerShell
+```bash
 npm i configcat-node
 ```
 ```js
@@ -63,6 +63,7 @@ configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false, userObject)
 ## Sample/Demo app
   * [Sample Console application](https://github.com/configcat/node-sdk/tree/master/samples/console)
   * [Sample application using Express and Docker](https://github.com/configcat/node-sdk/tree/master/samples/expresswithdocker)
+  * [Sample on how to get real time updates on feature flag changes](https://github.com/configcat/node-sdk/tree/master/samples/realtimeupdate)
 
 ## Polling Modes
 The ConfigCat SDK supports 3 different polling mechanisms to acquire the setting values from ConfigCat. After latest setting values are downloaded, they are stored in the internal cache then all requests are served from there. Read more about Polling Modes and how to use them at [ConfigCat Docs](https://configcat.com/docs/sdk-reference/node/).
