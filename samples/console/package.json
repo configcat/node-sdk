@@ -6,6 +6,6 @@
   "author": "configcat",
   "license": "MIT",
   "dependencies": {
-    "configcat-node": "^5.0.1"
+    "configcat-node": "^5.0.2"
   }
 }
