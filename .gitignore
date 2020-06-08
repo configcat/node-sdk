@@ -58,7 +58,5 @@ typings/
 .env
 
 lib/
-package-lock.json
 .idea/
-
 .DS_Store
