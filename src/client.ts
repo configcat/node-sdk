@@ -52,3 +52,5 @@ export interface INodeLazyLoadingOptions extends configcatcommon.ILazyLoadingOpt
 
 export interface INodeManualPollOptions extends configcatcommon.IManualPollOptions {
 }
+
+export type DataGovernance = configcatcommon.DataGovernance;
