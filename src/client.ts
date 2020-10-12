@@ -4,9 +4,12 @@ import { InMemoryCache } from "configcat-common/lib/Cache";
 import { IConfigCatClient } from "configcat-common/lib/ConfigCatClient";
 import { LogLevel } from "configcat-common/lib/index";
 
-/** Create an instance of ConfigCatClient and setup Auto Polling mode with default options */
-export function createClient(sdkKey: string): IConfigCatClient {
-    return this.createClientWithAutoPoll(sdkKey);
+/** Create an instance of ConfigCatClient and setup Auto Polling mode with default options
+ * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
+ * @param options - Options for Auto Polling
+ */
+export function createClient(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
+    return this.createClientWithAutoPoll(sdkKey, options);
 }
 
 /**
@@ -52,3 +55,5 @@ export interface INodeLazyLoadingOptions extends configcatcommon.ILazyLoadingOpt
 
 export interface INodeManualPollOptions extends configcatcommon.IManualPollOptions {
 }
+
+export type DataGovernance = configcatcommon.DataGovernance;
