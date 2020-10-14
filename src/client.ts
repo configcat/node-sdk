@@ -56,4 +56,9 @@ export interface INodeLazyLoadingOptions extends configcatcommon.ILazyLoadingOpt
 export interface INodeManualPollOptions extends configcatcommon.IManualPollOptions {
 }
 
-export type DataGovernance = configcatcommon.DataGovernance;
+export const DataGovernance = {
+    /** Select this if your feature flags are published to all global CDN nodes. */
+    Global: configcatcommon.DataGovernance.Global,
+    /** Select this if your feature flags are published to CDN nodes only in the EU. */
+    EuOnly: configcatcommon.DataGovernance.EuOnly
+}
