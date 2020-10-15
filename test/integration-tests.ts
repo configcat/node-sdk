@@ -1,9 +1,9 @@
 import { assert } from "chai";
 import "mocha";
-import { IConfigCatClient} from "configcat-common/lib/ConfigCatClient";
+import { IConfigCatClient} from "configcat-common";
 import * as configcatClient from "../src/client";
 import { User } from "configcat-common/lib/RolloutEvaluator";
-import { LogLevel } from "configcat-common/lib/index";
+import { LogLevel } from "configcat-common";
 import { createConsoleLogger } from "../src/client";
 
 describe("Integration tests", () => {
@@ -193,7 +193,9 @@ describe("Integration tests", () => {
   it("Auto poll with wrong SDK Key - getValue() should return default value", (done) => {
 
     const defaultValue: string = "NOT_CAT";
-    let client: IConfigCatClient = configcatClient.createClientWithAutoPoll("WRONG_SDK_KEY", { requestTimeoutMs: 500 });
+    let client: IConfigCatClient = configcatClient.createClientWithAutoPoll(
+      "WRONG_SDK_KEY",
+       { requestTimeoutMs: 500, maxInitWaitTimeSeconds: 1 });
 
     client.getValue("stringDefaultCat", defaultValue, actual => {
 
@@ -206,7 +208,9 @@ describe("Integration tests", () => {
   it("Auto poll with wrong SDK Key - getValueAsync() should return default value", async () => {
 
     const defaultValue: string = "NOT_CAT";
-    let client: IConfigCatClient = configcatClient.createClientWithAutoPoll("WRONG_SDK_KEY", { requestTimeoutMs: 500 });
+    let client: IConfigCatClient = configcatClient.createClientWithAutoPoll(
+      "WRONG_SDK_KEY",
+       { requestTimeoutMs: 500, maxInitWaitTimeSeconds: 1 });
 
     const actual = await client.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, defaultValue);

@@ -18,7 +18,10 @@ export function createClient(sdkKey: string, options?: INodeAutoPollOptions): IC
  * @param options - Options for Auto Polling
  */
 export function createClientWithAutoPoll(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
-    return configcatcommon.createClientWithAutoPoll(sdkKey, { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() }, options);
+    return configcatcommon.createClientWithAutoPoll(
+        sdkKey,
+        { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() },
+        options);
 }
 
 /**
@@ -27,7 +30,10 @@ export function createClientWithAutoPoll(sdkKey: string, options?: INodeAutoPoll
  * @param options - Options for Manual Polling
  */
 export function createClientWithManualPoll(sdkKey: string, options?: INodeManualPollOptions): IConfigCatClient {
-    return configcatcommon.createClientWithManualPoll(sdkKey, { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() }, options)
+    return configcatcommon.createClientWithManualPoll(
+        sdkKey,
+        { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() },
+        options);
 }
 
 /**
@@ -36,7 +42,10 @@ export function createClientWithManualPoll(sdkKey: string, options?: INodeManual
  * @param options - Option for Lazy Loading
  */
 export function createClientWithLazyLoad(sdkKey: string, options?: INodeLazyLoadingOptions): IConfigCatClient {
-    return configcatcommon.createClientWithLazyLoad(sdkKey, { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() }, options);
+    return configcatcommon.createClientWithLazyLoad(
+        sdkKey,
+        { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() },
+        options);
 }
 
 /**
@@ -44,7 +53,7 @@ export function createClientWithLazyLoad(sdkKey: string, options?: INodeLazyLoad
  * @param logLevel Specifies message's filtering to output for the CofigCatConsoleLogger.
  */
 export function createConsoleLogger(logLevel: LogLevel): configcatcommon.IConfigCatLogger {
-    return configcatcommon.createConsoleLogger(logLevel)
+    return configcatcommon.createConsoleLogger(logLevel);
 }
 
 export interface INodeAutoPollOptions extends configcatcommon.IAutoPollOptions {
