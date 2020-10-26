@@ -70,4 +70,4 @@ export const DataGovernance = {
     Global: configcatcommon.DataGovernance.Global,
     /** Select this if your feature flags are published to CDN nodes only in the EU. */
     EuOnly: configcatcommon.DataGovernance.EuOnly
-}
+};
