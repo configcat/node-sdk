@@ -17,6 +17,8 @@ describe("ConfigCatClient tests", () => {
         var client: IConfigCatClient = configcatClient.createClientWithAutoPoll("SDKKEY", { "pollIntervalSeconds": 15 });
 
         assert.isDefined(client);
+
+        client.dispose();
     });
 
     it("createClientWithLazyLoad() should createInstance", () => {

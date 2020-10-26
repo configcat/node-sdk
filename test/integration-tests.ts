@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import "mocha";
-import { IConfigCatClient} from "configcat-common";
+import { IConfigCatClient, OptionsBase} from "configcat-common";
 import * as configcatClient from "../src/client";
 import { User } from "configcat-common/lib/RolloutEvaluator";
 import { LogLevel } from "configcat-common";
@@ -10,7 +10,7 @@ describe("Integration tests", () => {
 
   let sdkKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
 
-  let config = { logger : createConsoleLogger(LogLevel.Off) };
+  let config: any = { logger : createConsoleLogger(LogLevel.Off) };
 
   let clientAutoPoll: IConfigCatClient = configcatClient.createClientWithAutoPoll(sdkKey, config);
 
@@ -33,7 +33,7 @@ describe("Integration tests", () => {
 
     const defaultValue: string = "NOT_CAT";
 
-    const actual = await clientAutoPoll.getValueAsync("stringDefaultCat", defaultValue);
+    const actual: string = await clientAutoPoll.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, "Cat");
     assert.notStrictEqual(actual, defaultValue);
 
@@ -55,8 +55,8 @@ describe("Integration tests", () => {
   it("Manual poll - getValueAsync() with key: 'stringDefaultCat' should return 'Cat'", async () => {
 
     const defaultValue: string = "NOT_CAT";
-    await clientManualPoll.forceRefreshAsync()
-    const actual = await clientManualPoll.getValueAsync("stringDefaultCat", defaultValue);
+    await clientManualPoll.forceRefreshAsync();
+    const actual: string = await clientManualPoll.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, "Cat");
     assert.notStrictEqual(actual, defaultValue);
   });
@@ -76,7 +76,7 @@ describe("Integration tests", () => {
   it("Lazy load - getValueAsync() with  key: 'stringDefaultCat' should return 'Cat'", async () => {
 
     const defaultValue: string = "NOT_CAT";
-    const actual = await clientLazyLoad.getValueAsync("stringDefaultCat", defaultValue);
+    const actual: string = await clientLazyLoad.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, "Cat");
     assert.notStrictEqual(actual, defaultValue);
   });
@@ -94,7 +94,7 @@ describe("Integration tests", () => {
   it("Auto poll - getValueAsync() with key: 'NotExistsKey' should return default value", async () => {
 
     const defaultValue: string = "NOT_CAT";
-    const actual = await clientAutoPoll.getValueAsync("NotExistsKey", defaultValue);
+    const actual: string = await clientAutoPoll.getValueAsync("NotExistsKey", defaultValue);
     assert.equal(actual, defaultValue);
   });
 
@@ -115,7 +115,7 @@ describe("Integration tests", () => {
     const defaultValue: string = "NOT_CAT";
 
     await clientManualPoll.forceRefreshAsync();
-    const actual = await clientManualPoll.getValueAsync("NotExistsKey", defaultValue);
+    const actual: string = await clientManualPoll.getValueAsync("NotExistsKey", defaultValue);
     assert.equal(actual, defaultValue);
   });
 
@@ -132,8 +132,8 @@ describe("Integration tests", () => {
   it("Lazy load - getValueAsync() with  key: 'NotExistsKey' should return default value", async () => {
 
     const defaultValue: string = "NOT_CAT";
-    const actual = await clientManualPoll.getValueAsync("NotExistsKey", defaultValue);
-    assert.equal(actual, defaultValue);;
+    const actual: string = await clientManualPoll.getValueAsync("NotExistsKey", defaultValue);
+    assert.equal(actual, defaultValue);
   });
 
   it("Auto poll - getValue() with key: 'RolloutEvaluate' should return default value", (done) => {
@@ -149,7 +149,7 @@ describe("Integration tests", () => {
 
   it("Auto poll - getValueAsync() with key: 'RolloutEvaluate' should return default value", async () => {
 
-    const actual = await clientAutoPoll.getValueAsync("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"));
+    const actual: string = await clientAutoPoll.getValueAsync("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"));
     assert.equal(actual, "Horse");
   });
 
@@ -169,7 +169,7 @@ describe("Integration tests", () => {
   it("Manual poll - getValueAsync() with key: 'RolloutEvaluate' should return default value", async () => {
 
     await clientManualPoll.forceRefreshAsync();
-    const actual = await clientManualPoll.getValueAsync("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"));
+    const actual: string = await clientManualPoll.getValueAsync("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"));
     assert.equal(actual, "Horse");
   });
 
@@ -186,7 +186,7 @@ describe("Integration tests", () => {
 
   it("Lazy load - getValueAsync() with key: 'RolloutEvaluate' should return default value", async () => {
 
-    const actual = await clientLazyLoad.getValueAsync("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"));
+    const actual: string = await clientLazyLoad.getValueAsync("string25Cat25Dog25Falcon25Horse", "N/A", new User("nacho@gmail.com"));
     assert.equal(actual, "Horse");
   });
 
@@ -212,7 +212,7 @@ describe("Integration tests", () => {
       "WRONG_SDK_KEY",
        { requestTimeoutMs: 500, maxInitWaitTimeSeconds: 1 });
 
-    const actual = await client.getValueAsync("stringDefaultCat", defaultValue);
+    const actual: string = await client.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, defaultValue);
   });
 
@@ -225,7 +225,7 @@ describe("Integration tests", () => {
 
       assert.strictEqual(actual, defaultValue);
 
-      client.forceRefresh(function () {
+      client.forceRefresh(() => {
         client.getValue("stringDefaultCat", defaultValue, actual => {
 
           assert.strictEqual(actual, defaultValue);
@@ -240,10 +240,10 @@ describe("Integration tests", () => {
     const defaultValue: string = "NOT_CAT";
     let client: IConfigCatClient = configcatClient.createClientWithManualPoll("WRONG_SDK_KEY", { requestTimeoutMs: 500 });
 
-    const actual = await client.getValueAsync("stringDefaultCat", defaultValue);
+    const actual: string = await client.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, defaultValue);
     await client.forceRefreshAsync();
-    const actual2 = await client.getValueAsync("stringDefaultCat", defaultValue);
+    const actual2: string = await client.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual2, defaultValue);
   });
 
@@ -264,7 +264,7 @@ describe("Integration tests", () => {
     const defaultValue: string = "NOT_CAT";
     let client: IConfigCatClient = configcatClient.createClientWithLazyLoad("WRONG_SDK_KEY", { requestTimeoutMs: 500 });
 
-    const actual = await client.getValueAsync("stringDefaultCat", defaultValue);
+    const actual: string = await client.getValueAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, defaultValue);
   });
 
@@ -283,7 +283,7 @@ describe("Integration tests", () => {
 
     let client: IConfigCatClient = configcatClient.createClientWithManualPoll("WRONG_SDK_KEY", { requestTimeoutMs: 500 });
 
-    const keys = await client.getAllKeysAsync();
+    const keys: string[] = await client.getAllKeysAsync();
     assert.equal(keys.length, 0);
   });
 
@@ -292,25 +292,25 @@ describe("Integration tests", () => {
     clientAutoPoll.getAllKeys(keys => {
 
       assert.equal(keys.length, 16);
-      const keysObject = {};
+      const keysObject: any = {};
       keys.forEach(value => keysObject[value] = {});
       assert.containsAllKeys(keysObject, [
-        'stringDefaultCat',
-        'stringIsInDogDefaultCat',
-        'stringIsNotInDogDefaultCat',
-        'stringContainsDogDefaultCat',
-        'stringNotContainsDogDefaultCat',
-        'string25Cat25Dog25Falcon25Horse',
-        'string75Cat0Dog25Falcon0Horse',
-        'string25Cat25Dog25Falcon25HorseAdvancedRules',
-        'boolDefaultTrue',
-        'boolDefaultFalse',
-        'bool30TrueAdvancedRules',
-        'integer25One25Two25Three25FourAdvancedRules',
-        'integerDefaultOne',
-        'doubleDefaultPi',
-        'double25Pi25E25Gr25Zero',
-        'keySampleText'
+        "stringDefaultCat",
+        "stringIsInDogDefaultCat",
+        "stringIsNotInDogDefaultCat",
+        "stringContainsDogDefaultCat",
+        "stringNotContainsDogDefaultCat",
+        "string25Cat25Dog25Falcon25Horse",
+        "string75Cat0Dog25Falcon0Horse",
+        "string25Cat25Dog25Falcon25HorseAdvancedRules",
+        "boolDefaultTrue",
+        "boolDefaultFalse",
+        "bool30TrueAdvancedRules",
+        "integer25One25Two25Three25FourAdvancedRules",
+        "integerDefaultOne",
+        "doubleDefaultPi",
+        "double25Pi25E25Gr25Zero",
+        "keySampleText"
       ]);
       done();
     });
@@ -318,28 +318,28 @@ describe("Integration tests", () => {
 
   it("getAllKeysAsync() should return all keys", async () => {
 
-    const keys = await clientAutoPoll.getAllKeysAsync();
+    const keys: string[] = await clientAutoPoll.getAllKeysAsync();
 
     assert.equal(keys.length, 16);
-    const keysObject = {};
+    const keysObject: any = {};
     keys.forEach(value => keysObject[value] = {});
     assert.containsAllKeys(keysObject, [
-      'stringDefaultCat',
-      'stringIsInDogDefaultCat',
-      'stringIsNotInDogDefaultCat',
-      'stringContainsDogDefaultCat',
-      'stringNotContainsDogDefaultCat',
-      'string25Cat25Dog25Falcon25Horse',
-      'string75Cat0Dog25Falcon0Horse',
-      'string25Cat25Dog25Falcon25HorseAdvancedRules',
-      'boolDefaultTrue',
-      'boolDefaultFalse',
-      'bool30TrueAdvancedRules',
-      'integer25One25Two25Three25FourAdvancedRules',
-      'integerDefaultOne',
-      'doubleDefaultPi',
-      'double25Pi25E25Gr25Zero',
-      'keySampleText'
+      "stringDefaultCat",
+      "stringIsInDogDefaultCat",
+      "stringIsNotInDogDefaultCat",
+      "stringContainsDogDefaultCat",
+      "stringNotContainsDogDefaultCat",
+      "string25Cat25Dog25Falcon25Horse",
+      "string75Cat0Dog25Falcon0Horse",
+      "string25Cat25Dog25Falcon25HorseAdvancedRules",
+      "boolDefaultTrue",
+      "boolDefaultFalse",
+      "bool30TrueAdvancedRules",
+      "integer25One25Two25Three25FourAdvancedRules",
+      "integerDefaultOne",
+      "doubleDefaultPi",
+      "double25Pi25E25Gr25Zero",
+      "keySampleText"
     ]);
   });
 
@@ -362,7 +362,7 @@ describe("Integration tests", () => {
 
     const defaultValue: string = "NOT_CAT";
 
-    let actual = await clientAutoPoll.getVariationIdAsync("stringDefaultCat", defaultValue);
+    let actual: string = await clientAutoPoll.getVariationIdAsync("stringDefaultCat", defaultValue);
     assert.strictEqual(actual, "7a0be518");
 
     actual = await clientAutoPoll.getVariationIdAsync("boolDefaultTrue", defaultValue);
@@ -371,46 +371,46 @@ describe("Integration tests", () => {
 
   it("Auto poll - getVariationIds() works", async () => {
 
-    let actual = await clientAutoPoll.getAllVariationIds(actual => {
+    clientAutoPoll.getAllVariationIds(actual => {
       assert.equal(actual.length, 16);
-      assert.strictEqual(actual[0], '7a0be518');
-      assert.strictEqual(actual[1], '83372510');
-      assert.strictEqual(actual[2], '2459598d');
-      assert.strictEqual(actual[3], 'ce564c3a');
-      assert.strictEqual(actual[4], '44ab483a');
-      assert.strictEqual(actual[5], '2588a3e6');
-      assert.strictEqual(actual[6], 'aa65b5ce');
-      assert.strictEqual(actual[7], '8250ef5a');
-      assert.strictEqual(actual[8], '09513143');
-      assert.strictEqual(actual[9], '489a16d2');
-      assert.strictEqual(actual[10], '607147d5');
-      assert.strictEqual(actual[11], 'ce3c4f5a');
-      assert.strictEqual(actual[12], 'faadbf54');
-      assert.strictEqual(actual[13], '5af8acc7');
-      assert.strictEqual(actual[14], '9503a1de');
-      assert.strictEqual(actual[15], '69ef126c');
+      assert.strictEqual(actual[0], "7a0be518");
+      assert.strictEqual(actual[1], "83372510");
+      assert.strictEqual(actual[2], "2459598d");
+      assert.strictEqual(actual[3], "ce564c3a");
+      assert.strictEqual(actual[4], "44ab483a");
+      assert.strictEqual(actual[5], "2588a3e6");
+      assert.strictEqual(actual[6], "aa65b5ce");
+      assert.strictEqual(actual[7], "8250ef5a");
+      assert.strictEqual(actual[8], "09513143");
+      assert.strictEqual(actual[9], "489a16d2");
+      assert.strictEqual(actual[10], "607147d5");
+      assert.strictEqual(actual[11], "ce3c4f5a");
+      assert.strictEqual(actual[12], "faadbf54");
+      assert.strictEqual(actual[13], "5af8acc7");
+      assert.strictEqual(actual[14], "9503a1de");
+      assert.strictEqual(actual[15], "69ef126c");
     });
   });
 
   it("Auto poll - getVariationIdsAsync() works", async () => {
 
-    let actual = await clientAutoPoll.getAllVariationIdsAsync();
+    let actual: string[] = await clientAutoPoll.getAllVariationIdsAsync();
     assert.equal(actual.length, 16);
-    assert.strictEqual(actual[0], '7a0be518');
-      assert.strictEqual(actual[1], '83372510');
-      assert.strictEqual(actual[2], '2459598d');
-      assert.strictEqual(actual[3], 'ce564c3a');
-      assert.strictEqual(actual[4], '44ab483a');
-      assert.strictEqual(actual[5], '2588a3e6');
-      assert.strictEqual(actual[6], 'aa65b5ce');
-      assert.strictEqual(actual[7], '8250ef5a');
-      assert.strictEqual(actual[8], '09513143');
-      assert.strictEqual(actual[9], '489a16d2');
-      assert.strictEqual(actual[10], '607147d5');
-      assert.strictEqual(actual[11], 'ce3c4f5a');
-      assert.strictEqual(actual[12], 'faadbf54');
-      assert.strictEqual(actual[13], '5af8acc7');
-      assert.strictEqual(actual[14], '9503a1de');
-      assert.strictEqual(actual[15], '69ef126c');
+    assert.strictEqual(actual[0], "7a0be518");
+      assert.strictEqual(actual[1], "83372510");
+      assert.strictEqual(actual[2], "2459598d");
+      assert.strictEqual(actual[3], "ce564c3a");
+      assert.strictEqual(actual[4], "44ab483a");
+      assert.strictEqual(actual[5], "2588a3e6");
+      assert.strictEqual(actual[6], "aa65b5ce");
+      assert.strictEqual(actual[7], "8250ef5a");
+      assert.strictEqual(actual[8], "09513143");
+      assert.strictEqual(actual[9], "489a16d2");
+      assert.strictEqual(actual[10], "607147d5");
+      assert.strictEqual(actual[11], "ce3c4f5a");
+      assert.strictEqual(actual[12], "faadbf54");
+      assert.strictEqual(actual[13], "5af8acc7");
+      assert.strictEqual(actual[14], "9503a1de");
+      assert.strictEqual(actual[15], "69ef126c");
   });
 });
