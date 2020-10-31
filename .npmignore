@@ -14,3 +14,5 @@ tsconfig.json
 .nyc_output/
 media/
 DEPLOY.md
+deploy.sh
+update-samples.sh
