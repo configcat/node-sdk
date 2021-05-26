@@ -56,8 +56,10 @@ export class HttpConfigFetcher implements IConfigFetcher {
                     JSON.stringify(lastProjectConfig.ConfigJSON),
                     response.headers.etag as string));
             } else {
-                // tslint:disable-next-line:max-line-length
-                options.logger.error(`Failed to download feature flags & settings from ConfigCat. Status: ${response && response.statusCode} - ${response && response.statusMessage}`);
+                const errorDetails = response  
+                    ? `Status: ${response.statusCode} - ${response.statusMessage}`
+                    : `Empty response from API. Error: ${reason.message}`;
+                options.logger.error(`Failed to download feature flags & settings from ConfigCat. ${errorDetails}`);
                 options.logger.info("Double-check your SDK Key on https://app.configcat.com/sdkkey");
                 callback(lastProjectConfig);
             }
