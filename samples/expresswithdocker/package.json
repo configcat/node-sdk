@@ -10,8 +10,8 @@
   "license": "MIT",
   "description": "Sample application for ConfigCat SDK",
   "dependencies": {
-    "configcat-node": "^6.5.2",
+    "configcat-node": "^6.5.5",
     "express": "^4.17.1",
-    "semver": "^7.0.0"
+    "semver": "^7.3.5"
   }
 }
