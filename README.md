@@ -22,8 +22,8 @@ npm i configcat-node
 const configcat = require("configcat-node");
 ```
 
-### 2. Go to the <a href="https://app.configcat.com/sdkkey" target="_blank">Dashboard</a> tab to get your *SDK Key*:
-![SDK-KEY](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/media/readme01.png  "SDK-KEY")
+### 2. Go to the <a href="https://app.configcat.com/sdkkey" target="_blank">Dashboard</a> to get your *SDK Key*:
+![SDK-KEY](https://raw.githubusercontent.com/ConfigCat/node-sdk/master/media/readme02-2.png  "SDK-KEY")
 
 ### 3. Create a *ConfigCat* client instance:
 ```js
