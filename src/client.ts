@@ -9,7 +9,7 @@ import { LogLevel } from "configcat-common/lib/index";
  * @param options - Options for Auto Polling
  */
 export function createClient(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
-    return this.createClientWithAutoPoll(sdkKey, options);
+    return createClientWithAutoPoll(sdkKey, options);
 }
 
 /**
