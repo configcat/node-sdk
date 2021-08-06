@@ -6,4 +6,6 @@ cd ../expresswithdocker
 npm i configcat-node@latest
 cd ../realtimeupdate
 npm i configcat-node@latest
+cd ../customcache
+npm i configcat-node@latest
 cd ../..
