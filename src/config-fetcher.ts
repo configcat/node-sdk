@@ -1,5 +1,5 @@
-import * as got from "got";
 import * as tunnel from "tunnel";
+import got from "got";
 import { IConfigFetcher } from "configcat-common";
 import { ProjectConfig } from "configcat-common/lib/ProjectConfig";
 import { OptionsBase } from "configcat-common/lib/ConfigCatClientOptions";
@@ -32,7 +32,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
             headers: {
                 "User-Agent": "ConfigCat-Node/" + options.clientVersion,
                 "X-ConfigCat-UserAgent": "ConfigCat-Node/" + options.clientVersion,
-                "If-None-Match": (lastProjectConfig && lastProjectConfig.HttpETag) ? lastProjectConfig.HttpETag : null
+                "If-None-Match": (lastProjectConfig && lastProjectConfig.HttpETag) ? lastProjectConfig.HttpETag : undefined
             }
         }).then((response) => {
             if (response && response.statusCode === 304) {
