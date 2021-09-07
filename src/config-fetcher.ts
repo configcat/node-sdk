@@ -1,5 +1,5 @@
 import * as tunnel from "tunnel";
-import * as got from "got";
+import got from "got";
 import { IConfigFetcher } from "configcat-common";
 import { ProjectConfig } from "configcat-common/lib/ProjectConfig";
 import { OptionsBase } from "configcat-common/lib/ConfigCatClientOptions";
