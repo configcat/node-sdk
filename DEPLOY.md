@@ -1,5 +1,9 @@
 # How to deploy
 
+## Before deployment
+
+Make sure the CI is running: https://github.com/configcat/node-sdk/actions/workflows/node-ci.yml
+
 ## Updating `configcat-common` only
   
 1. Run `./deploy.sh`
