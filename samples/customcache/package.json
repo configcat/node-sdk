@@ -10,7 +10,7 @@
   "author": "configcat",
   "license": "MIT",
   "dependencies": {
-    "configcat-node": "^6.5.9",
+    "configcat-node": "^6.6.0",
     "redis": "^3.1.2"
   }
 }
