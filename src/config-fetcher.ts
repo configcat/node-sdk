@@ -1,12 +1,11 @@
 import * as tunnel from "tunnel";
 import * as got from "got";
-import { IConfigFetcher } from "configcat-common";
-import { ProjectConfig } from "configcat-common/lib/ProjectConfig";
+import { FetchResult, IConfigFetcher } from "configcat-common";
 import { OptionsBase } from "configcat-common/lib/ConfigCatClientOptions";
 
 export class HttpConfigFetcher implements IConfigFetcher {
 
-    fetchLogic(options: OptionsBase, lastProjectConfig: ProjectConfig, callback: (newProjectConfig: ProjectConfig) => void): void {
+    fetchLogic(options: OptionsBase, lastEtag: string, callback: (result: FetchResult) => void): void {
 
         let agent: any;
         if (options.proxy) {
@@ -32,36 +31,30 @@ export class HttpConfigFetcher implements IConfigFetcher {
             headers: {
                 "User-Agent": "ConfigCat-Node/" + options.clientVersion,
                 "X-ConfigCat-UserAgent": "ConfigCat-Node/" + options.clientVersion,
-                "If-None-Match": (lastProjectConfig && lastProjectConfig.HttpETag) ? lastProjectConfig.HttpETag : undefined
+                "If-None-Match": (lastEtag) ? lastEtag : undefined
             }
         }).then((response) => {
             if (response && response.statusCode === 304) {
-                callback(new ProjectConfig(
-                    new Date().getTime(),
-                    JSON.stringify(lastProjectConfig.ConfigJSON),
-                    response.headers.etag as string));
+                callback(FetchResult.notModified());
             } else if (response && response.statusCode === 200) {
-                callback(new ProjectConfig(new Date().getTime(), response.body, response.headers.etag as string));
+                callback(FetchResult.success(response.body, response.headers.etag as string));
             } else {
                 // tslint:disable-next-line:max-line-length
                 options.logger.error(`Failed to download feature flags & settings from ConfigCat. Status: ${response && response.statusCode} - ${response && response.statusMessage}`);
                 options.logger.info("Double-check your SDK Key on https://app.configcat.com/sdkkey");
-                callback(lastProjectConfig);
+                callback(FetchResult.error());
             }
         }).catch((reason) => {
             const response: any = reason.response;
             if (response && response.status === 304) {
-                callback(new ProjectConfig(
-                    new Date().getTime(),
-                    JSON.stringify(lastProjectConfig.ConfigJSON),
-                    response.headers.etag as string));
+                callback(FetchResult.notModified());
             } else {
                 const errorDetails = response  
                     ? `Status: ${response.statusCode} - ${response.statusMessage}`
                     : `Empty response from API. Error: ${reason.message}`;
                 options.logger.error(`Failed to download feature flags & settings from ConfigCat. ${errorDetails}`);
                 options.logger.info("Double-check your SDK Key on https://app.configcat.com/sdkkey");
-                callback(lastProjectConfig);
+                callback(FetchResult.error());
             }
         });
     }
