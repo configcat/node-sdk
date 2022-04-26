@@ -7,6 +7,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
 
     fetchLogic(options: OptionsBase, lastEtag: string, callback: (result: FetchResult) => void): void {
 
+        options.logger.debug("HttpConfigFetcher.fetchLogic() called.");
         let agent: any;
         if (options.proxy) {
             try {
@@ -34,6 +35,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
                 "If-None-Match": (lastEtag) ? lastEtag : undefined
             }
         }).then((response) => {
+            options.logger.debug("HttpConfigFetcher.fetchLogic(): success. response?.statusCode: " + response?.statusCode);
             if (response && response.statusCode === 304) {
                 callback(FetchResult.notModified());
             } else if (response && response.statusCode === 200) {
@@ -45,6 +47,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
                 callback(FetchResult.error());
             }
         }).catch((reason) => {
+            options.logger.debug("HttpConfigFetcher.fetchLogic(): catch. reason: " + reason);
             const response: any = reason.response;
             if (response && response.status === 304) {
                 callback(FetchResult.notModified());
