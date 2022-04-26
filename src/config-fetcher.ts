@@ -35,6 +35,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
                 "If-None-Match": (lastEtag) ? lastEtag : undefined
             }
         }).then((response) => {
+            options.logger.debug("HttpConfigFetcher.fetchLogic(): success. response?.statusCode: " + response?.statusCode);
             if (response && response.statusCode === 304) {
                 callback(FetchResult.notModified());
             } else if (response && response.statusCode === 200) {
