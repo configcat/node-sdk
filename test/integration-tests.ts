@@ -450,6 +450,29 @@ describe("Integration tests", () => {
     });
   });
 
+  it("getAllValuesAsync() should return all values", async () => {
+    let sks: SettingKeyValue[] = await clientAutoPoll.getAllValuesAsync();
+    const settingKeys: any = {};
+    sks.forEach((i) => (settingKeys[i.settingKey] = i.settingValue));
+    assert.equal(sks.length, 16);
+    assert.equal(settingKeys.stringDefaultCat, "Cat");
+    assert.equal(settingKeys.stringIsInDogDefaultCat, "Cat");
+    assert.equal(settingKeys.stringIsNotInDogDefaultCat, "Cat");
+    assert.equal(settingKeys.stringContainsDogDefaultCat, "Cat");
+    assert.equal(settingKeys.stringNotContainsDogDefaultCat, "Cat");
+    assert.equal(settingKeys.string25Cat25Dog25Falcon25Horse, "Chicken");
+    assert.equal(settingKeys.string75Cat0Dog25Falcon0Horse, "Chicken");
+    assert.equal(settingKeys.string25Cat25Dog25Falcon25HorseAdvancedRules, "Chicken");
+    assert.equal(settingKeys.boolDefaultTrue, true);
+    assert.equal(settingKeys.boolDefaultFalse, false);
+    assert.equal(settingKeys.bool30TrueAdvancedRules, true);
+    assert.equal(settingKeys.integer25One25Two25Three25FourAdvancedRules, -1);
+    assert.equal(settingKeys.integerDefaultOne, 1);
+    assert.equal(settingKeys.doubleDefaultPi, 3.1415);
+    assert.equal(settingKeys.double25Pi25E25Gr25Zero, -1);
+    assert.equal(settingKeys.keySampleText, "Cat");
+  });
+
   it("Override - local only", async () => {
     const defaultValue = "DEFAULT_CAT";
 
