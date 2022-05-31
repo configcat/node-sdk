@@ -3,6 +3,7 @@ import { HttpConfigFetcher } from "./config-fetcher";
 import { InMemoryCache } from "configcat-common/lib/Cache";
 import { IConfigCatClient } from "configcat-common/lib/ConfigCatClient";
 import { LogLevel } from "configcat-common/lib/index";
+import CONFIGCAT_SDK_VERSION from "./version";
 
 /** Create an instance of ConfigCatClient and setup Auto Polling mode with default options
  * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
@@ -20,7 +21,12 @@ export function createClient(sdkKey: string, options?: INodeAutoPollOptions): IC
 export function createClientWithAutoPoll(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
     return configcatcommon.createClientWithAutoPoll(
         sdkKey,
-        { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() },
+        {
+            configFetcher: new HttpConfigFetcher(),
+            cache: new InMemoryCache(),
+            sdkType: "ConfigCat-Node",
+            sdkVersion: CONFIGCAT_SDK_VERSION
+        },
         options);
 }
 
@@ -32,7 +38,12 @@ export function createClientWithAutoPoll(sdkKey: string, options?: INodeAutoPoll
 export function createClientWithManualPoll(sdkKey: string, options?: INodeManualPollOptions): IConfigCatClient {
     return configcatcommon.createClientWithManualPoll(
         sdkKey,
-        { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() },
+        {
+            configFetcher: new HttpConfigFetcher(),
+            cache: new InMemoryCache(),
+            sdkType: "ConfigCat-Node",
+            sdkVersion: CONFIGCAT_SDK_VERSION
+        },
         options);
 }
 
@@ -44,7 +55,12 @@ export function createClientWithManualPoll(sdkKey: string, options?: INodeManual
 export function createClientWithLazyLoad(sdkKey: string, options?: INodeLazyLoadingOptions): IConfigCatClient {
     return configcatcommon.createClientWithLazyLoad(
         sdkKey,
-        { configFetcher: new HttpConfigFetcher(), cache: new InMemoryCache() },
+        {
+            configFetcher: new HttpConfigFetcher(),
+            cache: new InMemoryCache(),
+            sdkType: "ConfigCat-Node",
+            sdkVersion: CONFIGCAT_SDK_VERSION
+        },
         options);
 }
 

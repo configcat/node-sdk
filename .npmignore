@@ -17,3 +17,4 @@ DEPLOY.md
 deploy.sh
 update-samples.sh
 .github/
+gulpfile.js
