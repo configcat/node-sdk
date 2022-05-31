@@ -30,8 +30,8 @@ export class HttpConfigFetcher implements IConfigFetcher {
         got.get(options.getUrl(), {
             agent,
             headers: {
-                "User-Agent": "ConfigCat-Node/" + options.clientVersion,
-                "X-ConfigCat-UserAgent": "ConfigCat-Node/" + options.clientVersion,
+                "User-Agent": options.clientVersion,
+                "X-ConfigCat-UserAgent": options.clientVersion,
                 "If-None-Match": (lastEtag) ? lastEtag : undefined
             }
         }).then((response) => {
