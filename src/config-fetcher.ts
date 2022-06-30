@@ -24,7 +24,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
                     proxy: {
                         host: proxy.hostname,
                         port: proxy.port,
-                        proxyAuth: `${proxy.username}:${proxy.password}`
+                        proxyAuth: (proxy.username && proxy.password) ? `${proxy.username}:${proxy.password}` : null
                     }
                 });
             } catch {
