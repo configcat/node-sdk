@@ -1,64 +1,76 @@
+import * as http from "http"
+import * as https from "https"
 import * as tunnel from "tunnel";
-import * as got from "got";
+import { URL } from "url";
 import { FetchResult, IConfigFetcher } from "configcat-common";
 import { OptionsBase } from "configcat-common/lib/ConfigCatClientOptions";
 
 export class HttpConfigFetcher implements IConfigFetcher {
-
     fetchLogic(options: OptionsBase, lastEtag: string, callback: (result: FetchResult) => void): void {
-
         options.logger.debug("HttpConfigFetcher.fetchLogic() called.");
+        const baseUrl = options.getUrl();
+        const isBaseUrlSecure = baseUrl.startsWith("https");
         let agent: any;
         if (options.proxy) {
             try {
                 const proxy: URL = new URL(options.proxy);
-                let agentFactory: any = tunnel.httpsOverHttp;
+                let agentFactory: any;
                 if (proxy.protocol === "https:") {
-                    agentFactory = tunnel.httpsOverHttps;
+                    agentFactory = isBaseUrlSecure ? tunnel.httpsOverHttps : tunnel.httpOverHttps;
+                } else {
+                    agentFactory = isBaseUrlSecure ? tunnel.httpsOverHttp : tunnel.httpOverHttp;
                 }
                 agent = agentFactory({
                     proxy: {
                         host: proxy.hostname,
                         port: proxy.port,
+                        proxyAuth: (proxy.username && proxy.password) ? `${proxy.username}:${proxy.password}` : null
                     }
                 });
             } catch {
-                options.logger.log("Failed to parse options.proxy: " + options.proxy);
+                options.logger.error(`Failed to parse options.proxy: ${options.proxy}`);
             }
         }
 
-        got.get(options.getUrl(), {
+        const requestOptions = {
             agent,
-            headers: {
+            headers: { 
                 "User-Agent": options.clientVersion,
-                "If-None-Match": (lastEtag) ? lastEtag : undefined
-            }
-        }).then((response) => {
-            options.logger.debug("HttpConfigFetcher.fetchLogic(): success. response?.statusCode: " + response?.statusCode);
-            if (response && response.statusCode === 304) {
-                callback(FetchResult.notModified());
-            } else if (response && response.statusCode === 200) {
-                callback(FetchResult.success(response.body, response.headers.etag as string));
-            } else {
-                // tslint:disable-next-line:max-line-length
-                options.logger.error(`Failed to download feature flags & settings from ConfigCat. Status: ${response && response.statusCode} - ${response && response.statusMessage}`);
-                options.logger.info("Double-check your SDK Key on https://app.configcat.com/sdkkey");
-                callback(FetchResult.error());
-            }
-        }).catch((reason) => {
-            options.logger.debug("HttpConfigFetcher.fetchLogic(): catch. reason: " + reason);
-            const response: any = reason.response;
-            if (response && response.status === 304) {
-                callback(FetchResult.notModified());
-            } else {
-                const errorDetails = response  
+                "If-None-Match": (lastEtag) ? lastEtag : null
+            },
+            timeout: options.requestTimeoutMs,
+        };        
+        options.logger.debug(JSON.stringify(requestOptions));
+
+        const request = (isBaseUrlSecure ? https : http).get(baseUrl, requestOptions, response => {
+            const chunks = [];
+            response.on("data", chunk => {
+                chunks.push(chunk);
+            });
+            response.on("end", () => {
+                if (chunks && response && response.statusCode === 200) {
+                    options.logger.debug("HttpConfigFetcher.fetchLogic() Response received, status = 200.");
+                    callback(FetchResult.success(Buffer.concat(chunks).toString(), response.headers["etag"]));
+                } else if (response && response.statusCode === 304) {
+                    options.logger.debug("HttpConfigFetcher.fetchLogic() Response received, status = 304.");
+                    callback(FetchResult.notModified());
+                } else {
+                    const errorDetails = response  
                     ? `Status: ${response.statusCode} - ${response.statusMessage}`
-                    : `Empty response from API. Error: ${reason.message}`;
-                options.logger.error(`Failed to download feature flags & settings from ConfigCat. ${errorDetails}`);
-                options.logger.info("Double-check your SDK Key on https://app.configcat.com/sdkkey");
-                callback(FetchResult.error());
-            }
+                    : "Empty response from API.";
+                    options.logger.error(`Failed to download feature flags & settings from ConfigCat. ${errorDetails}`);
+                    options.logger.error("Double-check your SDK Key on https://app.configcat.com/sdkkey");
+                    callback(FetchResult.error());
+                }
+            });
         });
+        request.on("timeout", () => {
+            // No further logging required as destroy() will trigger the 'error' event with this custom error.
+            request.destroy(new Error(`Request timed out. Timeout value: ${options.requestTimeoutMs}ms`));
+        }).on("error", error => {
+            options.logger.error(`Failed to download feature flags & settings from ConfigCat. ${error}`);
+            callback(FetchResult.error());
+        }).end();
     }
 }
 

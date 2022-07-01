@@ -13,11 +13,35 @@ on:
   
 jobs:
   test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+        
+      - name: Install dependencies
+        run: npm install
+          
+      - name: Build
+        run: npm run build
+        
+      - name: Test
+        run: npm run test
+  
+  coverage:
+    needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
         
@@ -29,20 +53,20 @@ jobs:
       - name: Build
         run: npm run build
         
-      - name: Coverage
+      - name: Test
         run: npm run test
         
       - name: Upload coverage report
         run: codecov
-        
+
   publish:
-    needs: test
+    needs: coverage
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags')
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14
           registry-url: 'https://registry.npmjs.org'
