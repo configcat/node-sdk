@@ -2,6 +2,8 @@
 set -e
 cd samples/console
 npm i configcat-node@latest
+cd samples/console-esm
+npm i configcat-node@latest
 cd ../expresswithdocker
 npm i configcat-node@latest
 cd ../realtimeupdate
