@@ -22,7 +22,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
                             reject(err);
                         }
                     })
-                    .on("error", err => reject(new FetchError("failure", err.message, err)));
+                    .on("error", err => reject(new FetchError("failure", err)));
             }
             else
             {
@@ -86,7 +86,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
                             reject(new FetchError("timeout", options.requestTimeoutMs));
                         }
                     })
-                    .on("error", err => reject(new FetchError("failure", err.message, err)))
+                    .on("error", err => reject(new FetchError("failure", err)))
                     .end();
             }
             catch (err) {

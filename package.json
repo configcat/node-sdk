@@ -5,7 +5,7 @@
   "main": "lib/client.js",
   "types": "lib/client.d.ts",
   "scripts": {
-    "test": "cross-env NODE_EXTRA_CA_CERTS=./test/cert/testCA.pem nyc mocha --require ts-node/register test/**/*.ts --exit --timeout 30000",
+    "test": "cross-env NODE_EXTRA_CA_CERTS=./test/cert/testCA.pem nyc mocha --require ts-node/register 'test/**/*.ts' --exit --timeout 30000",
     "build": "tsc && gulp",
     "prepare": "npm run build"
   },

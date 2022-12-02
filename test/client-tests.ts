@@ -1,9 +1,20 @@
 import { assert } from "chai";
 import "mocha";
 import * as configcatClient from "../src/client";
-import { FlagOverrides, IConfigCatClient } from "configcat-common";
+import { FlagOverrides, IConfigCatClient, PollingMode } from "configcat-common";
 
 describe("ConfigCatClient tests", () => {
+
+    for (let pollingMode of [PollingMode.AutoPoll, PollingMode.LazyLoad, PollingMode.ManualPoll]) {
+        it(`getClient() should createInstance with ${PollingMode[pollingMode]}`, () => {
+
+            var client: IConfigCatClient = configcatClient.getClient("SDKKEY", pollingMode);
+    
+            assert.isDefined(client);
+
+            client.dispose();
+        });
+    }
 
     it("createClient() should createInstance", () => {
 
