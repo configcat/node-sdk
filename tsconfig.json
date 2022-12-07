@@ -1,16 +1,9 @@
 {
+  /* Common TS compiler settings for compilation outputs, IDEs (like VSCode) and test runner (Mocha) */
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "strict": true,
+    "target": "ESNext",
     "importHelpers": true,
-    "moduleResolution": "Node",
-    "outDir": "./lib",
-    "sourceMap": false,
-    "declaration": true,
-    "declarationMap": true,
-    "strict": true
-  },
-  "include": [
-    "src/**/*.ts"
-  ]
+    "moduleResolution": "Node"
+  }
 }
