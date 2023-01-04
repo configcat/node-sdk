@@ -5,7 +5,7 @@ samples/
 test/
 coverage/
 package-lock.json
-tsconfig.json
+tsconfig*.json
 .gitignore
 .travis.yml
 *.tgz
@@ -13,6 +13,7 @@ tsconfig.json
 .idea/
 .nyc_output/
 media/
+DEPENDENCIES.md
 DEPLOY.md
 deploy.sh
 update-samples.sh
