@@ -2,7 +2,7 @@
 set -e
 cd samples/console
 npm i configcat-node@latest
-cd samples/console-esm
+cd ../console-esm
 npm i configcat-node@latest
 cd ../expresswithdocker
 npm i configcat-node@latest
