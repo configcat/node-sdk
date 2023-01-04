@@ -10,7 +10,7 @@ const pubnubSubscriberKey = "demo";
 const pubnubPublishKey = "demo";
 
 // ConfigCat instance with manual poll. Polls ConfigCat and updates the cache only when forceRefresh() is called.
-var configCatClient = configcat.createClientWithManualPoll(configcatSdkKey);
+var configCatClient = configcat.getClient(configcatSdkKey, configcat.PollingMode.ManualPoll);
 
 // PubNub instance
 var pubnub = new PubNub({

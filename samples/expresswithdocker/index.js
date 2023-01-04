@@ -7,9 +7,9 @@ var configcat = require("configcat-node");
 var app = express();
 app.disable("x-powered-by");
 
-var logger = configcat.createConsoleLogger(3); // Setting log level to 3 (= Info) to show detailed feature flag evaluation
+var logger = configcat.createConsoleLogger(configcat.LogLevel.Info); // Setting log level to Info to show detailed feature flag evaluation
 
-let configCatClient = configcat.createClientWithAutoPoll(SDKKEY, { logger: logger, pollIntervalSeconds: 2 });
+let configCatClient = configcat.getClient(SDKKEY, configcat.PollingMode.AutoPoll, { logger: logger, pollIntervalSeconds: 2 });
 
 app.get("/", function (req, res) {
     res.send("Express is running...");

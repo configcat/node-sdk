@@ -4,7 +4,7 @@ const configcatRedisCache = require("./configcat-redis-cache");
 
 const redisOptions = { host : "localhost", port: 6379 };
 
-const configCatClient = configcat.createClientWithAutoPoll('PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb30i9wi17GQ', 
+const configCatClient = configcat.getClient('PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb30i9wi17GQ', configcat.PollingMode.AutoPoll,
 {
      cache: new configcatRedisCache(redisOptions)     
 });
