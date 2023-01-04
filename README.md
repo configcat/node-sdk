@@ -27,21 +27,32 @@ const configcat = require("configcat-node");
 
 ### 3. Create a *ConfigCat* client instance:
 ```js
-let configCatClient = configcat.createClient("#YOUR-SDK-KEY#");
+const configCatClient = configcat.getClient("#YOUR-SDK-KEY#");
 ```
 
 > We strongly recommend using the *ConfigCat Client* as a Singleton object in your application.
 
 ### 4. Get your setting value:
+The async/await way:
 ```js
-configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false)
-.then((value) => {
-    if(value) {
-        do_the_new_thing();
+const value = await configCatClient.getValueAsync('isMyAwesomeFeatureEnabled', false);
+
+if (value) {
+  do_the_new_thing();
+} else {
+  do_the_old_thing();
+}
+```
+or the Promise way:
+```js
+configCatClient.getValueAsync('isMyAwesomeFeatureEnabled', false)
+  .then((value) => {
+    if (value) {
+      do_the_new_thing();
     } else {
-        do_the_old_thing();
+      do_the_old_thing();
     }
-});
+  });
 ```
 
 ## Getting user specific setting values with Targeting
@@ -49,19 +60,19 @@ Using this feature, you will be able to get different setting values for differe
 
 Read more about [Targeting here](https://configcat.com/docs/advanced/targeting/).
 ```js
-const userObject = { identifier : "#USER-IDENTIFIER#" };
-configCatClient.getValueAsync("isMyAwesomeFeatureEnabled", false, userObject)
-.then((value) => {
-    if(value) {
-        do_the_new_thing();
-    } else {
-        do_the_old_thing();
-    }
-});
+const userObject = new configcat.User("#USER-IDENTIFIER#");
+const value = await configCatClient.getValueAsync('isMyAwesomeFeatureEnabled', false, userObject);
+
+if (value) {
+  do_the_new_thing();
+} else {
+  do_the_old_thing();
+}
 ```
 
 ## Sample/Demo app
   * [Sample Console application](https://github.com/configcat/node-sdk/tree/master/samples/console)
+  * [Sample Console application with ECMAScript module system](https://github.com/configcat/node-sdk/tree/master/samples/console-esm)
   * [Sample application using Express and Docker](https://github.com/configcat/node-sdk/tree/master/samples/expresswithdocker)
   * [Sample on how to get real time updates on feature flag changes](https://github.com/configcat/node-sdk/tree/master/samples/realtimeupdate)
 
