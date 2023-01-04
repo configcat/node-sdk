@@ -42,7 +42,6 @@ describe("HTTP tests", () => {
     });
 
     it("404 Not found", async () => {
-      const errorMessage = "Something went wrong";
       server.forAnyRequest().thenReply(404, "Not Found");
 
       const logger = new FakeLogger();
@@ -62,7 +61,6 @@ describe("HTTP tests", () => {
     });
     
     it("Unexpected status code", async () => {
-      const errorMessage = "Something went wrong";
       server.forAnyRequest().thenReply(502, "Bad Gateway");
 
       const logger = new FakeLogger();
@@ -82,7 +80,6 @@ describe("HTTP tests", () => {
     });
 
     it("Unexpected error", async () => {
-      const errorMessage = "Something went wrong";
       server.forAnyRequest().thenCloseConnection();
 
       const logger = new FakeLogger();

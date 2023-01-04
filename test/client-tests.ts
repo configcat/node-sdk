@@ -8,7 +8,7 @@ describe("ConfigCatClient tests", () => {
     for (let pollingMode of [PollingMode.AutoPoll, PollingMode.LazyLoad, PollingMode.ManualPoll]) {
         it(`getClient() should createInstance with ${PollingMode[pollingMode]}`, () => {
 
-            var client: IConfigCatClient = configcatClient.getClient("SDKKEY", pollingMode);
+            const client: IConfigCatClient = configcatClient.getClient("SDKKEY", pollingMode);
     
             assert.isDefined(client);
 
@@ -18,14 +18,14 @@ describe("ConfigCatClient tests", () => {
 
     it("createClient() should createInstance", () => {
 
-        var client: IConfigCatClient = configcatClient.createClient("SDKKEY");
+        const client: IConfigCatClient = configcatClient.createClient("SDKKEY");
 
         assert.isDefined(client);
     });
 
     it("createClientWithAutoPoll() should createInstance", () => {
 
-        var client: IConfigCatClient = configcatClient.createClientWithAutoPoll("SDKKEY", { "pollIntervalSeconds": 15 });
+        const client: IConfigCatClient = configcatClient.createClientWithAutoPoll("SDKKEY", { "pollIntervalSeconds": 15 });
 
         assert.isDefined(client);
 
@@ -34,14 +34,14 @@ describe("ConfigCatClient tests", () => {
 
     it("createClientWithLazyLoad() should createInstance", () => {
 
-        var client: IConfigCatClient = configcatClient.createClientWithLazyLoad("SDKKEY", { "cacheTimeToLiveSeconds": 15 });
+        const client: IConfigCatClient = configcatClient.createClientWithLazyLoad("SDKKEY", { "cacheTimeToLiveSeconds": 15 });
 
         assert.isDefined(client);
     });
 
     it("createClientWithManualPoll() should createInstance", () => {
 
-        var client: IConfigCatClient = configcatClient.createClientWithManualPoll("SDKKEY");
+        const client: IConfigCatClient = configcatClient.createClientWithManualPoll("SDKKEY");
 
         assert.isDefined(client);
     });
