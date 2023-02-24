@@ -17,5 +17,5 @@ function updateVersion_lib(){
   return updateVersion(OUT_LIB, 'version.js');
 }
 
-exports.default = gulp.series(    
+exports.default = gulp.series(
   gulp.parallel(updateVersion_lib));

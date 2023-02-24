@@ -10,7 +10,7 @@ function configcatRedisCache(redisClientOps){
     console.log('Connected to Redis');
     this.isRedisAvailable = true;
   });
-    
+
   this.cacheClient.on('error', function(err) {
     console.log('Redis error: ' + err);
     this.isRedisAvailable = false;
@@ -36,7 +36,7 @@ configcatRedisCache.prototype.get = async function(key) {
 }
 
 configcatRedisCache.prototype.set = async function(key, item) {
-    
+
   this.lastCacheItems[key] = item;
 
   try{

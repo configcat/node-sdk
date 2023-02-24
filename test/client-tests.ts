@@ -9,7 +9,7 @@ describe("ConfigCatClient tests", () => {
     it(`getClient() should createInstance with ${PollingMode[pollingMode]}`, () => {
 
       const client: IConfigCatClient = configcatClient.getClient("SDKKEY", pollingMode);
-    
+
       assert.isDefined(client);
 
       client.dispose();

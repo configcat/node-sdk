@@ -34,7 +34,7 @@ describe("HTTP tests", () => {
     await client.forceRefreshAsync();
     const duration = new Date().getTime() - startTime;
     assert.isTrue(duration > 1000 && duration < 2000);
-  
+
     const defaultValue = "NOT_CAT"
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
@@ -59,7 +59,7 @@ describe("HTTP tests", () => {
 
     assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Double-check your SDK Key")));
   });
-    
+
   it("Unexpected status code", async () => {
     server.forAnyRequest().thenReply(502, "Bad Gateway");
 
@@ -105,13 +105,13 @@ describe("HTTP tests", () => {
         proxyCalled = true;
       }
     });
-  
+
     const client = configcatClient.createClientWithManualPoll(sdkKey, {
       proxy: server.url
     });
     await client.forceRefreshAsync();
     assert.isTrue(proxyCalled);
-  
+
     const defaultValue = "NOT_CAT"
     assert.strictEqual("Cat", await client.getValueAsync("stringDefaultCat", defaultValue));
   });
