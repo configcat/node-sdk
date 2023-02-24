@@ -5,7 +5,7 @@ import { FlagOverrides, IConfigCatClient, PollingMode } from "configcat-common";
 
 describe("ConfigCatClient tests", () => {
 
-  for (let pollingMode of [PollingMode.AutoPoll, PollingMode.LazyLoad, PollingMode.ManualPoll]) {
+  for (const pollingMode of [PollingMode.AutoPoll, PollingMode.LazyLoad, PollingMode.ManualPoll]) {
     it(`getClient() should createInstance with ${PollingMode[pollingMode]}`, () => {
 
       const client: IConfigCatClient = configcatClient.getClient("SDKKEY", pollingMode);

@@ -1,5 +1,5 @@
 var configcat = require("configcat-node");
-var PubNub = require('pubnub');
+var PubNub = require("pubnub");
 
 // ConfigCat related variables
 const configcatSettingKey = "isAwesomeFeatureEnabled"; // Copy your feature flag or setting key from https://app.configcat.com
@@ -35,7 +35,7 @@ pubnub.addListener({
 
 // Subscribing to the working demo channel
 pubnub.subscribe({
-  channels: ['configcat-channel']
+  channels: ["configcat-channel"]
 });
 
 // Reading the cached feature flag value.

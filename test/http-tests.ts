@@ -7,7 +7,7 @@ import { LogLevel } from "../src/client";
 
 describe("HTTP tests", () => {
   let server: mockttp.Mockttp;
-  let sdkKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
+  const sdkKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
 
   beforeEach(async () => {
     server = mockttp.getLocal({
@@ -38,7 +38,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Request timed out.")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Request timed out.")));
   });
 
   it("404 Not found", async () => {
@@ -57,7 +57,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Double-check your SDK Key")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Double-check your SDK Key")));
   });
 
   it("Unexpected status code", async () => {
@@ -76,7 +76,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Unexpected HTTP response was received:")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Unexpected HTTP response was received:")));
   });
 
   it("Unexpected error", async () => {
@@ -95,7 +95,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Request failed due to a network or protocol error.")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Request failed due to a network or protocol error.")));
   });
 
   it("HTTP proxy", async () => {

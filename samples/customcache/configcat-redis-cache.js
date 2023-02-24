@@ -6,13 +6,13 @@ function configcatRedisCache(redisClientOps) {
   this.isRedisAvailable = false;
   this.cacheClient = redis.createClient(redisClientOps);
 
-  this.cacheClient.on('connect', function() {
-    console.log('Connected to Redis');
+  this.cacheClient.on("connect", function() {
+    console.log("Connected to Redis");
     this.isRedisAvailable = true;
   });
 
-  this.cacheClient.on('error', function(err) {
-    console.log('Redis error: ' + err);
+  this.cacheClient.on("error", function(err) {
+    console.log("Redis error: " + err);
     this.isRedisAvailable = false;
   });
 
