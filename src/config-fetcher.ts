@@ -24,8 +24,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
           })
           .on("error", err => reject(new FetchError("failure", err)));
       }
-      else
-      {
+      else {
         // Consume response data to free up memory
         response.resume();
 
