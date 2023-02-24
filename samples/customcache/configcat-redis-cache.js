@@ -4,7 +4,7 @@ const redis = require("redis");
 function configcatRedisCache(redisClientOps) {
 
   this.isRedisAvailable = false;
-  this.cacheClient = redis.createClient(redisClientOps)
+  this.cacheClient = redis.createClient(redisClientOps);
 
   this.cacheClient.on('connect', function() {
     console.log('Connected to Redis');
@@ -33,7 +33,7 @@ configcatRedisCache.prototype.get = async function(key) {
     console.error("Cache read failed!\n" + e);
     return this.lastCacheItems[key];
   }
-}
+};
 
 configcatRedisCache.prototype.set = async function(key, item) {
 
@@ -46,6 +46,6 @@ configcatRedisCache.prototype.set = async function(key, item) {
   } catch (e) {
     console.error("Cache write failed!\n" + e);
   }
-}
+};
 
 module.exports = configcatRedisCache;

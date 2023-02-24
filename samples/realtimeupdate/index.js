@@ -17,7 +17,7 @@ var pubnub = new PubNub({
   subscribeKey: pubnubSubscriberKey,
   publishKey: pubnubPublishKey,
   uuid: "configCat-pubNub-sample"
-})
+});
 
 // Adding a listener for PubNub messages
 pubnub.addListener({
@@ -28,7 +28,7 @@ pubnub.addListener({
       // Updates the cache if the message is: { CMD: 'FORCEUPDATE' }
       configCatClient.forceRefreshAsync().then(value => {
         console.log("Force update message received from PubNub. Updated cache.");
-      })
+      });
     }
   }
 });
@@ -47,5 +47,5 @@ function readValueFromCache() {
 
 // Updating the cache once when the app starts to make sure ConfigCat service is accessible and a valid value gets cached.
 configCatClient.forceRefreshAsync().then(() => {
-  setInterval(() => { readValueFromCache() }, 5000);
+  setInterval(() => { readValueFromCache(); }, 5000);
 });

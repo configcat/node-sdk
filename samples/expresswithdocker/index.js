@@ -16,7 +16,7 @@ app.get("/", function(req, res) {
 });
 
 app.get("/" + SAMPLE_KEY, async function(req, res) {
-  const feature2 = await configCatClient.getValueAsync(SAMPLE_KEY, false)
+  const feature2 = await configCatClient.getValueAsync(SAMPLE_KEY, false);
   console.log(SAMPLE_KEY + ": " + feature2);
 
   res.send(SAMPLE_KEY + " -> " + feature2);

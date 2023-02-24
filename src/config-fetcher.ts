@@ -1,5 +1,5 @@
-import * as http from "http"
-import * as https from "https"
+import * as http from "http";
+import * as https from "https";
 import * as tunnel from "tunnel";
 import { URL } from "url";
 import { FetchError, IConfigFetcher, IFetchResponse, OptionsBase } from "configcat-common";
@@ -10,7 +10,7 @@ export class HttpConfigFetcher implements IConfigFetcher {
       const { statusCode, statusMessage: reasonPhrase } = response as { statusCode: number, statusMessage: string };
 
       if (statusCode === 200) {
-        const eTag = response.headers["etag"]
+        const eTag = response.headers["etag"];
         const chunks: any[] = [];
         response
           .on("data", chunk => chunks.push(chunk))
