@@ -7,7 +7,7 @@ import { FetchError, IConfigFetcher, IFetchResponse, OptionsBase } from "configc
 export class HttpConfigFetcher implements IConfigFetcher {
   private handleResponse(response: http.IncomingMessage, resolve: (value: IFetchResponse) => void, reject: (reason?: any) => void) {
     try {
-      const { statusCode, statusMessage: reasonPhrase } = response as { statusCode: number, statusMessage: string };
+      const { statusCode, statusMessage: reasonPhrase } = response as { statusCode: number; statusMessage: string };
 
       if (statusCode === 200) {
         const eTag = response.headers["etag"];
