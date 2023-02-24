@@ -1,7 +1,7 @@
 import { IConfigCatLogger, LogLevel } from "../../src/client";
 
 export class FakeLogger implements IConfigCatLogger {
-  public messages: [LogLevel, string][] = [];
+  messages: [LogLevel, string][] = [];
 
   constructor(public level = LogLevel.Info) { }
 
