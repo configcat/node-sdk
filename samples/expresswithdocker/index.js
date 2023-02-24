@@ -11,18 +11,18 @@ var logger = configcat.createConsoleLogger(configcat.LogLevel.Info); // Setting 
 
 let configCatClient = configcat.getClient(SDKKEY, configcat.PollingMode.AutoPoll, { logger: logger, pollIntervalSeconds: 2 });
 
-app.get("/", function (req, res) {
+app.get("/", function(req, res) {
   res.send("Express is running...");
 });
 
-app.get("/" + SAMPLE_KEY, async function (req, res) {
+app.get("/" + SAMPLE_KEY, async function(req, res) {
   const feature2 = await configCatClient.getValueAsync(SAMPLE_KEY, false)
   console.log(SAMPLE_KEY + ": " + feature2);
 
   res.send(SAMPLE_KEY + " -> " + feature2);
 });
 
-app.get("/keys", async function (req, res) {
+app.get("/keys", async function(req, res) {
   const keys = await configCatClient.getAllKeysAsync();
   console.log("keys: " + keys);
 

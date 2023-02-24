@@ -1,4 +1,4 @@
-function myDebugCache(){
+function myDebugCache() {
   this.c = null;
 }
 

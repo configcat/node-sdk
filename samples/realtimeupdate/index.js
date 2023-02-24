@@ -21,7 +21,7 @@ var pubnub = new PubNub({
 
 // Adding a listener for PubNub messages
 pubnub.addListener({
-  message: function (m) {
+  message: function(m) {
     var msg = m.message;
     console.log(msg);
     if (msg.CMD == "FORCEUPDATE") {

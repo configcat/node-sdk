@@ -4,7 +4,7 @@ var fs = require('fs');
 
 const OUT_LIB = 'lib';
 
-function updateVersion(dst, file){
+function updateVersion(dst, file) {
 
   const VERSION = JSON.parse(fs.readFileSync('./package.json')).version;
 
@@ -13,7 +13,7 @@ function updateVersion(dst, file){
     .pipe(gulp.dest(dst));
 }
 
-function updateVersion_lib(){
+function updateVersion_lib() {
   return updateVersion(OUT_LIB, 'version.js');
 }
 
