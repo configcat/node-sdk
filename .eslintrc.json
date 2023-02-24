@@ -142,6 +142,13 @@
       "warn",
       "always"
     ],
+    "quotes": [
+      "warn",
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ],
     "rest-spread-spacing": [
       "warn",
       "never"

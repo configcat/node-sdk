@@ -12,8 +12,8 @@ describe("HTTP tests", () => {
   beforeEach(async () => {
     server = mockttp.getLocal({
       https: {
-        keyPath: './test/cert/testCA.key',
-        certPath: './test/cert/testCA.pem'
+        keyPath: "./test/cert/testCA.key",
+        certPath: "./test/cert/testCA.pem"
       }
     });
     await server.start();
