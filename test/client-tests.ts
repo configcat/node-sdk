@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import "mocha";
-import * as configcatClient from "../src/client";
 import { FlagOverrides, IConfigCatClient, PollingMode } from "configcat-common";
+import * as configcatClient from "../src/client";
 
 describe("ConfigCatClient tests", () => {
 

@@ -1,9 +1,9 @@
+import type { IFetchResponse, OptionsBase } from "configcat-common";
+import { FetchError, IConfigFetcher } from "configcat-common";
 import * as http from "http";
 import * as https from "https";
 import * as tunnel from "tunnel";
 import { URL } from "url";
-import type { IFetchResponse, OptionsBase } from "configcat-common";
-import { FetchError, IConfigFetcher } from "configcat-common";
 
 export class HttpConfigFetcher implements IConfigFetcher {
   private handleResponse(response: http.IncomingMessage, resolve: (value: IFetchResponse) => void, reject: (reason?: any) => void) {

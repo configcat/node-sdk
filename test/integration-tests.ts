@@ -1,8 +1,8 @@
 import { assert } from "chai";
 import "mocha";
-import { IConfigCatClient, IOptions, PollingMode, IEvaluationDetails, User, LogLevel, SettingKeyValue } from "configcat-common";
+import { IConfigCatClient, IEvaluationDetails, IOptions, LogLevel, PollingMode, SettingKeyValue, User } from "configcat-common";
 import * as configcatClient from "../src/client";
-import { createConsoleLogger, OptionsForPollingMode } from "../src/client";
+import { OptionsForPollingMode, createConsoleLogger } from "../src/client";
 
 type InitFunc = (callback: (...args: any[]) => void) => void;
 

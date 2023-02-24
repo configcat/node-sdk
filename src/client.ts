@@ -1,5 +1,5 @@
-import * as configcatcommon from "configcat-common";
 import type { IAutoPollOptions, IConfigCatClient, IConfigCatLogger, ILazyLoadingOptions, IManualPollOptions, LogLevel } from "configcat-common";
+import * as configcatcommon from "configcat-common";
 import { FlagOverrides, InMemoryCache, MapOverrideDataSource, PollingMode } from "configcat-common";
 import { HttpConfigFetcher } from "./config-fetcher";
 import CONFIGCAT_SDK_VERSION from "./version";

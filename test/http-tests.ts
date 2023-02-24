@@ -1,9 +1,9 @@
 import { assert } from "chai";
 import "mocha";
-import * as configcatClient from "../src/client";
 import * as mockttp from "mockttp";
-import { FakeLogger } from "./helpers/fakes";
+import * as configcatClient from "../src/client";
 import { LogLevel } from "../src/client";
+import { FakeLogger } from "./helpers/fakes";
 
 describe("HTTP tests", () => {
   let server: mockttp.Mockttp;
