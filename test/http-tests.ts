@@ -7,7 +7,7 @@ import { LogLevel } from "../src/client";
 
 describe("HTTP tests", () => {
   let server: mockttp.Mockttp;
-  const sdkKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
+  const sdkKey = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
 
   beforeEach(async () => {
     server = mockttp.getLocal({
