@@ -1,8 +1,12 @@
 {
-    "cSpell.words": [
-        "FORCEUPDATE",
-        "expressdemo",
-        "lcov",
-        "pubnub"
-    ]
+  "eslint.format.enable": true,
+  "eslint.validate": [
+    "typescript"
+  ],
+  "cSpell.words": [
+    "FORCEUPDATE",
+    "expressdemo",
+    "lcov",
+    "pubnub"
+  ]
 }

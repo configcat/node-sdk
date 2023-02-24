@@ -1,3 +1,4 @@
+.*
 .vscode/
 node_modules/
 src/
@@ -6,8 +7,6 @@ test/
 coverage/
 package-lock.json
 tsconfig*.json
-.gitignore
-.travis.yml
 *.tgz
 *.log
 .idea/
