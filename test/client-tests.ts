@@ -5,51 +5,51 @@ import { FlagOverrides, IConfigCatClient, PollingMode } from "configcat-common";
 
 describe("ConfigCatClient tests", () => {
 
-    for (let pollingMode of [PollingMode.AutoPoll, PollingMode.LazyLoad, PollingMode.ManualPoll]) {
-        it(`getClient() should createInstance with ${PollingMode[pollingMode]}`, () => {
+  for (let pollingMode of [PollingMode.AutoPoll, PollingMode.LazyLoad, PollingMode.ManualPoll]) {
+    it(`getClient() should createInstance with ${PollingMode[pollingMode]}`, () => {
 
-            const client: IConfigCatClient = configcatClient.getClient("SDKKEY", pollingMode);
+      const client: IConfigCatClient = configcatClient.getClient("SDKKEY", pollingMode);
     
-            assert.isDefined(client);
+      assert.isDefined(client);
 
-            client.dispose();
-        });
-    }
-
-    it("createClient() should createInstance", () => {
-
-        const client: IConfigCatClient = configcatClient.createClient("SDKKEY");
-
-        assert.isDefined(client);
+      client.dispose();
     });
+  }
 
-    it("createClientWithAutoPoll() should createInstance", () => {
+  it("createClient() should createInstance", () => {
 
-        const client: IConfigCatClient = configcatClient.createClientWithAutoPoll("SDKKEY", { "pollIntervalSeconds": 15 });
+    const client: IConfigCatClient = configcatClient.createClient("SDKKEY");
 
-        assert.isDefined(client);
+    assert.isDefined(client);
+  });
 
-        client.dispose();
-    });
+  it("createClientWithAutoPoll() should createInstance", () => {
 
-    it("createClientWithLazyLoad() should createInstance", () => {
+    const client: IConfigCatClient = configcatClient.createClientWithAutoPoll("SDKKEY", { "pollIntervalSeconds": 15 });
 
-        const client: IConfigCatClient = configcatClient.createClientWithLazyLoad("SDKKEY", { "cacheTimeToLiveSeconds": 15 });
+    assert.isDefined(client);
 
-        assert.isDefined(client);
-    });
+    client.dispose();
+  });
 
-    it("createClientWithManualPoll() should createInstance", () => {
+  it("createClientWithLazyLoad() should createInstance", () => {
 
-        const client: IConfigCatClient = configcatClient.createClientWithManualPoll("SDKKEY");
+    const client: IConfigCatClient = configcatClient.createClientWithLazyLoad("SDKKEY", { "cacheTimeToLiveSeconds": 15 });
 
-        assert.isDefined(client);
-    });
+    assert.isDefined(client);
+  });
 
-    it("createFlagOverridesFromMap() should createOverrides", () => {
+  it("createClientWithManualPoll() should createInstance", () => {
 
-        const overrides: FlagOverrides = configcatClient.createFlagOverridesFromMap({ test: true }, configcatClient.OverrideBehaviour.LocalOnly);
+    const client: IConfigCatClient = configcatClient.createClientWithManualPoll("SDKKEY");
 
-        assert.isDefined(overrides);
-    });
+    assert.isDefined(client);
+  });
+
+  it("createFlagOverridesFromMap() should createOverrides", () => {
+
+    const overrides: FlagOverrides = configcatClient.createFlagOverridesFromMap({ test: true }, configcatClient.OverrideBehaviour.LocalOnly);
+
+    assert.isDefined(overrides);
+  });
 });

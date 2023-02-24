@@ -14,20 +14,20 @@ import CONFIGCAT_SDK_VERSION from "./version";
  * @param options Options for the specified polling mode
  */
 export function getClient<TMode extends PollingMode | undefined>(sdkKey: string, pollingMode?: TMode, options?: OptionsForPollingMode<TMode>): IConfigCatClient {
-    return configcatcommon.getClient(sdkKey, pollingMode ?? PollingMode.AutoPoll, options,
-        {
-            configFetcher: new HttpConfigFetcher(),
-            cache: new InMemoryCache(),
-            sdkType: "ConfigCat-Node",
-            sdkVersion: CONFIGCAT_SDK_VERSION
-        });
+  return configcatcommon.getClient(sdkKey, pollingMode ?? PollingMode.AutoPoll, options,
+    {
+      configFetcher: new HttpConfigFetcher(),
+      cache: new InMemoryCache(),
+      sdkType: "ConfigCat-Node",
+      sdkVersion: CONFIGCAT_SDK_VERSION
+    });
 }
 
 /**
  * Disposes all existing ConfigCatClient instances.
  */
 export function disposeAllClients(): void {
-    configcatcommon.disposeAllClients();
+  configcatcommon.disposeAllClients();
 }
 
 /** Create an instance of ConfigCatClient and setup Auto Polling mode with default options
@@ -36,7 +36,7 @@ export function disposeAllClients(): void {
  * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with auto polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.AutoPoll, options, ...)' format.
  */
 export function createClient(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
-    return createClientWithAutoPoll(sdkKey, options);
+  return createClientWithAutoPoll(sdkKey, options);
 }
 
 /**
@@ -46,15 +46,15 @@ export function createClient(sdkKey: string, options?: INodeAutoPollOptions): IC
  * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with auto polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.AutoPoll, options, ...)' format.
  */
 export function createClientWithAutoPoll(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
-    return configcatcommon.createClientWithAutoPoll(
-        sdkKey,
-        {
-            configFetcher: new HttpConfigFetcher(),
-            cache: new InMemoryCache(),
-            sdkType: "ConfigCat-Node",
-            sdkVersion: CONFIGCAT_SDK_VERSION
-        },
-        options);
+  return configcatcommon.createClientWithAutoPoll(
+    sdkKey,
+    {
+      configFetcher: new HttpConfigFetcher(),
+      cache: new InMemoryCache(),
+      sdkType: "ConfigCat-Node",
+      sdkVersion: CONFIGCAT_SDK_VERSION
+    },
+    options);
 }
 
 /**
@@ -64,15 +64,15 @@ export function createClientWithAutoPoll(sdkKey: string, options?: INodeAutoPoll
  * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with manual polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.ManualPoll, options, ...)' format.
  */
 export function createClientWithManualPoll(sdkKey: string, options?: INodeManualPollOptions): IConfigCatClient {
-    return configcatcommon.createClientWithManualPoll(
-        sdkKey,
-        {
-            configFetcher: new HttpConfigFetcher(),
-            cache: new InMemoryCache(),
-            sdkType: "ConfigCat-Node",
-            sdkVersion: CONFIGCAT_SDK_VERSION
-        },
-        options);
+  return configcatcommon.createClientWithManualPoll(
+    sdkKey,
+    {
+      configFetcher: new HttpConfigFetcher(),
+      cache: new InMemoryCache(),
+      sdkType: "ConfigCat-Node",
+      sdkVersion: CONFIGCAT_SDK_VERSION
+    },
+    options);
 }
 
 /**
@@ -82,15 +82,15 @@ export function createClientWithManualPoll(sdkKey: string, options?: INodeManual
  * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with lazy loading for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.LazyLoad, options, ...)' format.
  */
 export function createClientWithLazyLoad(sdkKey: string, options?: INodeLazyLoadingOptions): IConfigCatClient {
-    return configcatcommon.createClientWithLazyLoad(
-        sdkKey,
-        {
-            configFetcher: new HttpConfigFetcher(),
-            cache: new InMemoryCache(),
-            sdkType: "ConfigCat-Node",
-            sdkVersion: CONFIGCAT_SDK_VERSION
-        },
-        options);
+  return configcatcommon.createClientWithLazyLoad(
+    sdkKey,
+    {
+      configFetcher: new HttpConfigFetcher(),
+      cache: new InMemoryCache(),
+      sdkType: "ConfigCat-Node",
+      sdkVersion: CONFIGCAT_SDK_VERSION
+    },
+    options);
 }
 
 /**
@@ -98,11 +98,11 @@ export function createClientWithLazyLoad(sdkKey: string, options?: INodeLazyLoad
  * @param logLevel Specifies message's filtering to output for the CofigCatConsoleLogger.
  */
 export function createConsoleLogger(logLevel: LogLevel): IConfigCatLogger {
-    return configcatcommon.createConsoleLogger(logLevel);
+  return configcatcommon.createConsoleLogger(logLevel);
 }
 
 export function createFlagOverridesFromMap(map: { [name: string]: any }, behaviour: number): FlagOverrides {
-    return new FlagOverrides(new MapOverrideDataSource(map), behaviour);
+  return new FlagOverrides(new MapOverrideDataSource(map), behaviour);
 }
 
 export interface INodeAutoPollOptions extends IAutoPollOptions {

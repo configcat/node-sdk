@@ -6,113 +6,113 @@ import { FakeLogger } from "./helpers/fakes";
 import { LogLevel } from "../src/client";
 
 describe("HTTP tests", () => {
-    let server: mockttp.Mockttp;
-    let sdkKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
+  let server: mockttp.Mockttp;
+  let sdkKey: string = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
 
-    beforeEach(async () => {
-        server = mockttp.getLocal({
-            https: {
-              keyPath: './test/cert/testCA.key',
-              certPath: './test/cert/testCA.pem'
-            }
-          });
-        await server.start();
+  beforeEach(async () => {
+    server = mockttp.getLocal({
+      https: {
+        keyPath: './test/cert/testCA.key',
+        certPath: './test/cert/testCA.pem'
+      }
     });
-    afterEach(() => server.stop());
+    await server.start();
+  });
+  afterEach(() => server.stop());
 
-    it("HTTP timeout", async () => {
-      server.forAnyRequest().thenTimeout();
+  it("HTTP timeout", async () => {
+    server.forAnyRequest().thenTimeout();
 
-      const logger = new FakeLogger();
+    const logger = new FakeLogger();
 
-      const client = configcatClient.createClientWithManualPoll(sdkKey, {
-        requestTimeoutMs: 1000,
-        baseUrl: server.url,
-        logger
-      });
-      const startTime = new Date().getTime();
-      await client.forceRefreshAsync();
-      const duration = new Date().getTime() - startTime;
-      assert.isTrue(duration > 1000 && duration < 2000);
+    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+      requestTimeoutMs: 1000,
+      baseUrl: server.url,
+      logger
+    });
+    const startTime = new Date().getTime();
+    await client.forceRefreshAsync();
+    const duration = new Date().getTime() - startTime;
+    assert.isTrue(duration > 1000 && duration < 2000);
   
-      const defaultValue = "NOT_CAT"
-      assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
+    const defaultValue = "NOT_CAT"
+    assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-      assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Request timed out.")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Request timed out.")));
+  });
+
+  it("404 Not found", async () => {
+    server.forAnyRequest().thenReply(404, "Not Found");
+
+    const logger = new FakeLogger();
+
+    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+      requestTimeoutMs: 1000,
+      baseUrl: server.url,
+      logger
     });
 
-    it("404 Not found", async () => {
-      server.forAnyRequest().thenReply(404, "Not Found");
+    await client.forceRefreshAsync();
 
-      const logger = new FakeLogger();
+    const defaultValue = "NOT_CAT"
+    assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-      const client = configcatClient.createClientWithManualPoll(sdkKey, {
-        requestTimeoutMs: 1000,
-        baseUrl: server.url,
-        logger
-      });
-
-      await client.forceRefreshAsync();
-
-      const defaultValue = "NOT_CAT"
-      assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
-
-      assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Double-check your SDK Key")));
-    });
+    assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Double-check your SDK Key")));
+  });
     
-    it("Unexpected status code", async () => {
-      server.forAnyRequest().thenReply(502, "Bad Gateway");
+  it("Unexpected status code", async () => {
+    server.forAnyRequest().thenReply(502, "Bad Gateway");
 
-      const logger = new FakeLogger();
+    const logger = new FakeLogger();
 
-      const client = configcatClient.createClientWithManualPoll(sdkKey, {
-        requestTimeoutMs: 1000,
-        baseUrl: server.url,
-        logger
-      });
-
-      await client.forceRefreshAsync();
-
-      const defaultValue = "NOT_CAT"
-      assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
-
-      assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Unexpected HTTP response was received:")));
+    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+      requestTimeoutMs: 1000,
+      baseUrl: server.url,
+      logger
     });
 
-    it("Unexpected error", async () => {
-      server.forAnyRequest().thenCloseConnection();
+    await client.forceRefreshAsync();
 
-      const logger = new FakeLogger();
+    const defaultValue = "NOT_CAT"
+    assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-      const client = configcatClient.createClientWithManualPoll(sdkKey, {
-        requestTimeoutMs: 1000,
-        baseUrl: server.url,
-        logger
-      });
+    assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Unexpected HTTP response was received:")));
+  });
 
-      await client.forceRefreshAsync();
+  it("Unexpected error", async () => {
+    server.forAnyRequest().thenCloseConnection();
 
-      const defaultValue = "NOT_CAT"
-      assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
+    const logger = new FakeLogger();
 
-      assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Request failed due to a network or protocol error.")));
+    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+      requestTimeoutMs: 1000,
+      baseUrl: server.url,
+      logger
     });
 
-    it("HTTP proxy", async () => {
-      let proxyCalled = false;
-      server.forAnyRequest().forHost("cdn-global.configcat.com").thenPassThrough({
-        beforeRequest: (_: any) => {
-          proxyCalled = true;
-        }
-      });
+    await client.forceRefreshAsync();
+
+    const defaultValue = "NOT_CAT"
+    assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
+
+    assert.isDefined(logger.messages.find(([level, msg]) => level == LogLevel.Error && msg.startsWith("Request failed due to a network or protocol error.")));
+  });
+
+  it("HTTP proxy", async () => {
+    let proxyCalled = false;
+    server.forAnyRequest().forHost("cdn-global.configcat.com").thenPassThrough({
+      beforeRequest: (_: any) => {
+        proxyCalled = true;
+      }
+    });
   
-      const client = configcatClient.createClientWithManualPoll(sdkKey, {
-        proxy: server.url
-      });
-      await client.forceRefreshAsync();
-      assert.isTrue(proxyCalled);
-  
-      const defaultValue = "NOT_CAT"
-      assert.strictEqual("Cat", await client.getValueAsync("stringDefaultCat", defaultValue));
+    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+      proxy: server.url
     });
+    await client.forceRefreshAsync();
+    assert.isTrue(proxyCalled);
+  
+    const defaultValue = "NOT_CAT"
+    assert.strictEqual("Cat", await client.getValueAsync("stringDefaultCat", defaultValue));
+  });
 });
