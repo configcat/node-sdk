@@ -7,8 +7,8 @@ ConfigCat is a feature flag and configuration management service that lets you s
 
 ConfigCat is a <a href="https://configcat.com" target="_blank">hosted feature flag service</a>. Manage feature toggles across frontend, backend, mobile, desktop apps. <a href="https://configcat.com" target="_blank">Alternative to LaunchDarkly</a>. Management app + feature flag SDKs.
 
-[![Node CI](https://github.com/configcat/node-sdk/actions/workflows/node-ci.yml/badge.svg?branch=master)](https://github.com/configcat/node-sdk/actions/workflows/node-ci.yml) [![codecov](https://codecov.io/gh/configcat/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/configcat/node-sdk) [![Known Vulnerabilities](https://snyk.io/test/github/configcat/node-sdk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/configcat/node-sdk?targetFile=package.json) ![License](https://img.shields.io/github/license/configcat/node-sdk.svg) \
-[![NPM](https://nodei.co/npm/configcat-node.png)](https://nodei.co/npm/configcat-node/)
+[![Node CI](https://github.com/configcat/node-sdk/actions/workflows/node-ci.yml/badge.svg?branch=master)](https://github.com/configcat/node-sdk/actions/workflows/node-ci.yml) [![codecov](https://codecov.io/gh/configcat/node-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/configcat/node-sdk) [![Known Vulnerabilities](https://snyk.io/test/github/configcat/node-sdk/badge.svg?targetFile=package.json)](https://snyk.io/test/github/configcat/node-sdk?targetFile=package.json) ![License](https://img.shields.io/github/license/configcat/node-sdk.svg) [![Node.JS](https://img.shields.io/node/v/configcat-node)](https://img.shields.io/node/v/configcat-node) \
+[![NPM](https://nodei.co/npm/configcat-node.png)](https://nodei.co/npm/configcat-node/) 
 
 ## Getting Started
 
