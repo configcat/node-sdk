@@ -1,9 +1,9 @@
 import { assert } from "chai";
 import "mocha";
 import * as mockttp from "mockttp";
-import * as configcatClient from "../src/client";
 import { LogLevel } from "../src/client";
 import { FakeLogger } from "./helpers/fakes";
+import * as utils from "./helpers/utils";
 
 describe("HTTP tests", () => {
   let server: mockttp.Mockttp;
@@ -25,7 +25,7 @@ describe("HTTP tests", () => {
 
     const logger = new FakeLogger();
 
-    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+    const client = utils.createClientWithManualPoll(sdkKey, {
       requestTimeoutMs: 1000,
       baseUrl: server.url,
       logger
@@ -38,7 +38,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Request timed out.")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Request timed out while trying to fetch config JSON.")));
   });
 
   it("404 Not found", async () => {
@@ -46,7 +46,7 @@ describe("HTTP tests", () => {
 
     const logger = new FakeLogger();
 
-    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+    const client = utils.createClientWithManualPoll(sdkKey, {
       requestTimeoutMs: 1000,
       baseUrl: server.url,
       logger
@@ -57,7 +57,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Double-check your SDK Key")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Your SDK Key seems to be wrong.")));
   });
 
   it("Unexpected status code", async () => {
@@ -65,7 +65,7 @@ describe("HTTP tests", () => {
 
     const logger = new FakeLogger();
 
-    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+    const client = utils.createClientWithManualPoll(sdkKey, {
       requestTimeoutMs: 1000,
       baseUrl: server.url,
       logger
@@ -76,7 +76,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Unexpected HTTP response was received:")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Unexpected HTTP response was received while trying to fetch config JSON:")));
   });
 
   it("Unexpected error", async () => {
@@ -84,7 +84,7 @@ describe("HTTP tests", () => {
 
     const logger = new FakeLogger();
 
-    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+    const client = utils.createClientWithManualPoll(sdkKey, {
       requestTimeoutMs: 1000,
       baseUrl: server.url,
       logger
@@ -95,7 +95,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Request failed due to a network or protocol error.")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Unexpected error occurred while trying to fetch config JSON.")));
   });
 
   it("HTTP proxy", async () => {
@@ -106,7 +106,7 @@ describe("HTTP tests", () => {
       }
     });
 
-    const client = configcatClient.createClientWithManualPoll(sdkKey, {
+    const client = utils.createClientWithManualPoll(sdkKey, {
       proxy: server.url
     });
     await client.forceRefreshAsync();
