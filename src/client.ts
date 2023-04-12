@@ -31,69 +31,6 @@ export function disposeAllClients(): void {
   configcatcommon.disposeAllClients();
 }
 
-/** Create an instance of ConfigCatClient and setup Auto Polling mode with default options
- * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
- * @param options - Options for Auto Polling
- * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with auto polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.AutoPoll, options, ...)' format.
- */
-export function createClient(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
-  return createClientWithAutoPoll(sdkKey, options);
-}
-
-/**
- * Create an instance of ConfigCatClient and setup Auto Polling mode with custom options
- * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
- * @param options - Options for Auto Polling
- * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with auto polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.AutoPoll, options, ...)' format.
- */
-export function createClientWithAutoPoll(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
-  return configcatcommon.createClientWithAutoPoll(
-    sdkKey,
-    {
-      configFetcher: new HttpConfigFetcher(),
-      cache: new InMemoryCache(),
-      sdkType: "ConfigCat-Node",
-      sdkVersion: CONFIGCAT_SDK_VERSION
-    },
-    options);
-}
-
-/**
- * Create an instance of ConfigCatClient and setup Manual Polling mode with custom options
- * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
- * @param options - Options for Manual Polling
- * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with manual polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.ManualPoll, options, ...)' format.
- */
-export function createClientWithManualPoll(sdkKey: string, options?: INodeManualPollOptions): IConfigCatClient {
-  return configcatcommon.createClientWithManualPoll(
-    sdkKey,
-    {
-      configFetcher: new HttpConfigFetcher(),
-      cache: new InMemoryCache(),
-      sdkType: "ConfigCat-Node",
-      sdkVersion: CONFIGCAT_SDK_VERSION
-    },
-    options);
-}
-
-/**
- * Create an instance of ConfigCatClient and setup Lazy Loading mode with custom options
- * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
- * @param options - Option for Lazy Loading
- * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with lazy loading for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.LazyLoad, options, ...)' format.
- */
-export function createClientWithLazyLoad(sdkKey: string, options?: INodeLazyLoadingOptions): IConfigCatClient {
-  return configcatcommon.createClientWithLazyLoad(
-    sdkKey,
-    {
-      configFetcher: new HttpConfigFetcher(),
-      cache: new InMemoryCache(),
-      sdkType: "ConfigCat-Node",
-      sdkVersion: CONFIGCAT_SDK_VERSION
-    },
-    options);
-}
-
 /**
  * Create an instance of ConfigCatConsoleLogger
  * @param logLevel Specifies message's filtering to output for the CofigCatConsoleLogger.
@@ -136,7 +73,11 @@ export { DataGovernance } from "configcat-common";
 
 export type { IConfigCatLogger } from "configcat-common";
 
+export type { LogEventId, LogMessage } from "configcat-common";
+
 export { LogLevel } from "configcat-common";
+
+export { FormattableLogMessage } from "configcat-common";
 
 export type { ICache } from "configcat-common";
 
@@ -146,7 +87,7 @@ export type { IConfigCatClient } from "configcat-common";
 
 export { SettingKeyValue } from "configcat-common";
 
-export type { IEvaluationDetails, SettingTypeOf, SettingValue, VariationIdTypeOf, VariationIdValue } from "configcat-common";
+export type { IEvaluationDetails, SettingTypeOf, SettingValue, VariationIdValue } from "configcat-common";
 
 export { User } from "configcat-common";
 

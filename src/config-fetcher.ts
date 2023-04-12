@@ -1,5 +1,5 @@
 import type { IFetchResponse, OptionsBase } from "configcat-common";
-import { FetchError, IConfigFetcher } from "configcat-common";
+import { FetchError, FormattableLogMessage, IConfigFetcher, LogLevel } from "configcat-common";
 import * as http from "http";
 import * as https from "https";
 import * as tunnel from "tunnel";
@@ -62,8 +62,8 @@ export class HttpConfigFetcher implements IConfigFetcher {
               }
             });
           }
-          catch {
-            options.logger.error(`Failed to parse options.proxy: ${options.proxy}`);
+          catch (err) {
+            options.logger.log(LogLevel.Error, 0, FormattableLogMessage.from("PROXY")`Failed to parse \`options.proxy\`: '${options.proxy}'.`, err);
           }
         }
 
