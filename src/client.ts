@@ -1,6 +1,6 @@
-import type { IAutoPollOptions, IConfigCatClient, IConfigCatLogger, ILazyLoadingOptions, IManualPollOptions, LogLevel } from "configcat-common";
+import type { IAutoPollOptions, IConfigCatClient, IConfigCatLogger, ILazyLoadingOptions, IManualPollOptions, LogLevel, OverrideBehaviour, SettingValue } from "configcat-common";
 import * as configcatcommon from "configcat-common";
-import { FlagOverrides, InMemoryCache, MapOverrideDataSource, PollingMode } from "configcat-common";
+import { FlagOverrides, MapOverrideDataSource, PollingMode } from "configcat-common";
 import { HttpConfigFetcher } from "./config-fetcher";
 import CONFIGCAT_SDK_VERSION from "./version";
 
@@ -18,7 +18,6 @@ export function getClient<TMode extends PollingMode | undefined>(sdkKey: string,
   return configcatcommon.getClient(sdkKey, pollingMode ?? PollingMode.AutoPoll, options,
     {
       configFetcher: new HttpConfigFetcher(),
-      cache: new InMemoryCache(),
       sdkType: "ConfigCat-Node",
       sdkVersion: CONFIGCAT_SDK_VERSION
     });
@@ -31,69 +30,6 @@ export function disposeAllClients(): void {
   configcatcommon.disposeAllClients();
 }
 
-/** Create an instance of ConfigCatClient and setup Auto Polling mode with default options
- * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
- * @param options - Options for Auto Polling
- * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with auto polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.AutoPoll, options, ...)' format.
- */
-export function createClient(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
-  return createClientWithAutoPoll(sdkKey, options);
-}
-
-/**
- * Create an instance of ConfigCatClient and setup Auto Polling mode with custom options
- * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
- * @param options - Options for Auto Polling
- * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with auto polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.AutoPoll, options, ...)' format.
- */
-export function createClientWithAutoPoll(sdkKey: string, options?: INodeAutoPollOptions): IConfigCatClient {
-  return configcatcommon.createClientWithAutoPoll(
-    sdkKey,
-    {
-      configFetcher: new HttpConfigFetcher(),
-      cache: new InMemoryCache(),
-      sdkType: "ConfigCat-Node",
-      sdkVersion: CONFIGCAT_SDK_VERSION
-    },
-    options);
-}
-
-/**
- * Create an instance of ConfigCatClient and setup Manual Polling mode with custom options
- * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
- * @param options - Options for Manual Polling
- * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with manual polling for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.ManualPoll, options, ...)' format.
- */
-export function createClientWithManualPoll(sdkKey: string, options?: INodeManualPollOptions): IConfigCatClient {
-  return configcatcommon.createClientWithManualPoll(
-    sdkKey,
-    {
-      configFetcher: new HttpConfigFetcher(),
-      cache: new InMemoryCache(),
-      sdkType: "ConfigCat-Node",
-      sdkVersion: CONFIGCAT_SDK_VERSION
-    },
-    options);
-}
-
-/**
- * Create an instance of ConfigCatClient and setup Lazy Loading mode with custom options
- * @param {string} sdkKey - ConfigCat SdkKey to access your configuration.
- * @param options - Option for Lazy Loading
- * @deprecated This function is obsolete and will be removed from the public API in a future major version. To obtain a ConfigCatClient instance with lazy loading for a specific SDK Key, please use the 'getClient(sdkKey, PollingMode.LazyLoad, options, ...)' format.
- */
-export function createClientWithLazyLoad(sdkKey: string, options?: INodeLazyLoadingOptions): IConfigCatClient {
-  return configcatcommon.createClientWithLazyLoad(
-    sdkKey,
-    {
-      configFetcher: new HttpConfigFetcher(),
-      cache: new InMemoryCache(),
-      sdkType: "ConfigCat-Node",
-      sdkVersion: CONFIGCAT_SDK_VERSION
-    },
-    options);
-}
-
 /**
  * Create an instance of ConfigCatConsoleLogger
  * @param logLevel Specifies message's filtering to output for the CofigCatConsoleLogger.
@@ -102,7 +38,7 @@ export function createConsoleLogger(logLevel: LogLevel): IConfigCatLogger {
   return configcatcommon.createConsoleLogger(logLevel);
 }
 
-export function createFlagOverridesFromMap(map: { [name: string]: any }, behaviour: number): FlagOverrides {
+export function createFlagOverridesFromMap(map: { [name: string]: NonNullable<SettingValue> }, behaviour: OverrideBehaviour): FlagOverrides {
   return new FlagOverrides(new MapOverrideDataSource(map), behaviour);
 }
 
@@ -136,23 +72,29 @@ export { DataGovernance } from "configcat-common";
 
 export type { IConfigCatLogger } from "configcat-common";
 
+export type { LogEventId, LogMessage } from "configcat-common";
+
 export { LogLevel } from "configcat-common";
 
-export type { ICache } from "configcat-common";
+export { FormattableLogMessage } from "configcat-common";
 
-export { ProjectConfig, RolloutRule, RolloutPercentageItem, Setting } from "configcat-common";
+export type { IConfigCatCache } from "configcat-common";
+
+export type { IConfig, ISetting, ITargetingRule, IPercentageOption, SettingValue, VariationIdValue } from "configcat-common";
+
+export { SettingType, Comparator } from "configcat-common";
 
 export type { IConfigCatClient } from "configcat-common";
 
 export { SettingKeyValue } from "configcat-common";
 
-export type { IEvaluationDetails, SettingTypeOf, SettingValue, VariationIdTypeOf, VariationIdValue } from "configcat-common";
+export type { IEvaluationDetails, SettingTypeOf } from "configcat-common";
 
 export { User } from "configcat-common";
 
-export type { IOverrideDataSource } from "configcat-common";
+export type { FlagOverrides } from "configcat-common";
 
-export { FlagOverrides, MapOverrideDataSource, OverrideBehaviour } from "configcat-common";
+export { OverrideBehaviour } from "configcat-common";
 
 export { RefreshResult } from "configcat-common";
 

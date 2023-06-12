@@ -16,36 +16,6 @@ describe("ConfigCatClient tests", () => {
     });
   }
 
-  it("createClient() should createInstance", () => {
-
-    const client: IConfigCatClient = configcatClient.createClient("SDKKEY");
-
-    assert.isDefined(client);
-  });
-
-  it("createClientWithAutoPoll() should createInstance", () => {
-
-    const client: IConfigCatClient = configcatClient.createClientWithAutoPoll("SDKKEY", { "pollIntervalSeconds": 15 });
-
-    assert.isDefined(client);
-
-    client.dispose();
-  });
-
-  it("createClientWithLazyLoad() should createInstance", () => {
-
-    const client: IConfigCatClient = configcatClient.createClientWithLazyLoad("SDKKEY", { "cacheTimeToLiveSeconds": 15 });
-
-    assert.isDefined(client);
-  });
-
-  it("createClientWithManualPoll() should createInstance", () => {
-
-    const client: IConfigCatClient = configcatClient.createClientWithManualPoll("SDKKEY");
-
-    assert.isDefined(client);
-  });
-
   it("createFlagOverridesFromMap() should createOverrides", () => {
 
     const overrides: FlagOverrides = configcatClient.createFlagOverridesFromMap({ test: true }, configcatClient.OverrideBehaviour.LocalOnly);
