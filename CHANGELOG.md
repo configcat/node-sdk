@@ -1,0 +1,1 @@
+Please check the [Github Releases](https://github.com/configcat/node-sdk/releases) page for the changelog of the ConfigCat SDK for Node.js.
