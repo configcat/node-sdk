@@ -3,13 +3,14 @@ function myDebugCache() {
 }
 
 myDebugCache.prototype.get = function() {
-  console.log("GET - " + (this.c ? this.c.HttpETag : this.c));
+  console.log("GET - " + this.c);
 
   return this.c;
 };
 
 myDebugCache.prototype.set = function(key, item) {
-  console.log("SET - " + item.HttpETag);
+  console.log("SET - " + item);
+
   this.c = item;
 };
 
