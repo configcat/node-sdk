@@ -32,7 +32,7 @@
   },
   "engine-strict": true,
   "dependencies": {
-    "configcat-common": "^8.0.0",
+    "configcat-common": "^8.0.1",
     "tslib": "^2.4.1",
     "tunnel": "0.0.6"
   },
