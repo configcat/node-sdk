@@ -5,6 +5,8 @@ import { LogLevel } from "../src/client";
 import { FakeLogger } from "./helpers/fakes";
 import * as utils from "./helpers/utils";
 
+// If the tests are failing with strange https or proxy errors, it is most likely that the local .key and .pem files are expired.
+// You can regenerate them anytime (./test/cert/regenerate.md).
 describe("HTTP tests", () => {
   let server: mockttp.Mockttp;
   const sdkKey = "PKDVCLf-Hq-h-kCzMp-L7Q/psuH7BGHoUmdONrzzUOY7A";
