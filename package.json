@@ -52,7 +52,7 @@
     "gulp-replace": "^1.1.3",
     "gulp-typescript": "^6.0.0-alpha.1",
     "mocha": "^10.2.0",
-    "mockttp": "^3.4.0",
+    "mockttp": "^3.9.1",
     "nyc": "^15.1.0",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.1",
