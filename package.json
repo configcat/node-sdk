@@ -1,6 +1,6 @@
 {
   "name": "configcat-node",
-  "version": "10.1.0",
+  "version": "10.1.1",
   "description": "Official ConfigCat SDK to help you access your feature flags from a Node.js application.",
   "main": "lib/client.js",
   "types": "lib/client.d.ts",
@@ -32,7 +32,7 @@
   },
   "engine-strict": true,
   "dependencies": {
-    "configcat-common": "^8.1.0",
+    "configcat-common": "^8.1.1",
     "tslib": "^2.4.1",
     "tunnel": "0.0.6"
   },
@@ -56,7 +56,7 @@
     "nyc": "^15.1.0",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.0.2"
   },
   "overrides": {
     "chokidar": "3.5.3",
