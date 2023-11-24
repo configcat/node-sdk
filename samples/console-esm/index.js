@@ -9,7 +9,7 @@ const value = await configCatClient.getValueAsync("isAwesomeFeatureEnabled", fal
 console.log("isAwesomeFeatureEnabled: " + value);
 
 // Read more about the User Object: https://configcat.com/docs/sdk-reference/node/#user-object
-const userObject = { identifier: "#SOME-USER-ID#", email: "configcat@example.com" };
+const userObject = new configcat.User("#SOME-USER-ID#", "configcat@example.com");
 
 const value2 = await configCatClient.getValueAsync("isPOCFeatureEnabled", false, userObject);
 console.log("isPOCFeatureEnabled: " + value2);

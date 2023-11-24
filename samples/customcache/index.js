@@ -10,7 +10,7 @@ const configCatClient = configcat.getClient("PKDVCLf-Hq-h-kCzMp-L7Q/HhOWfwVtZ0mb
   });
 
 setInterval(() => {
-  configCatClient.getValueAsync("isPOCFeatureEnabled", false, { email: "configcat@example.com" }).then(value => {
+  configCatClient.getValueAsync("isPOCFeatureEnabled", false, new configcat.User("", "configcat@example.com")).then(value => {
     console.log(new Date().toTimeString() + " isPOCFeatureEnabled: " + value);
   });
 }, 5000);
