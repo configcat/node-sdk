@@ -1,6 +1,6 @@
 {
   "name": "configcat-node",
-  "version": "11.3.0",
+  "version": "11.3.1",
   "description": "Official ConfigCat SDK to help you access your feature flags from a Node.js application.",
   "main": "lib/client.js",
   "types": "lib/client.d.ts",
