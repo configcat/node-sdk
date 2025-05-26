@@ -6,6 +6,9 @@
       "request": "launch",
       "name": "Run tests",
       "cwd": "${workspaceRoot}",
+      "env": {
+        "NODE_EXTRA_CA_CERTS": "${workspaceRoot}/test/cert/testCA.pem"
+      },
       "runtimeArgs": [
         "--expose-gc"
       ],
