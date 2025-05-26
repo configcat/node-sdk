@@ -59,7 +59,7 @@ describe("HTTP tests", () => {
     const defaultValue = "NOT_CAT";
     assert.strictEqual(defaultValue, await client.getValueAsync("stringDefaultCat", defaultValue));
 
-    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Your SDK Key seems to be wrong.")));
+    assert.isDefined(logger.messages.find(([level, msg]) => level === LogLevel.Error && msg.startsWith("Your SDK Key seems to be wrong:")));
   });
 
   it("Unexpected status code", async () => {
