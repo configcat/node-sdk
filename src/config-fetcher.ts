@@ -75,7 +75,10 @@ export class HttpConfigFetcher implements IConfigFetcher {
           },
           timeout: options.requestTimeoutMs,
         };
-        options.logger.debug(JSON.stringify(requestOptions));
+
+        if (options.logger.isEnabled(LogLevel.Debug)) {
+          options.logger.debug("HttpConfigFetcher.fetchAsync() requestOptions: " + JSON.stringify({ ...requestOptions, agent: agent?.toString() }));
+        }
 
         const request = (isBaseUrlSecure ? https : http).get(baseUrl, requestOptions, response => this.handleResponse(response, resolve, reject))
           .on("timeout", () => {
